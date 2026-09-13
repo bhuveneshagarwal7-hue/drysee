@@ -1,0 +1,2419 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="drysee — Purely Packed. Joyfully Shared. Premium handpicked dry fruits, nuts, berries, and super seeds delivered across India with sunshine crunch." />
+    <title>drysee — Purely Packed. Joyfully Shared.</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&family=Playfair+Display:ital,wght@0,600..900;1,600..900&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --forest: #1c382b;
+        --forest-deep: #12241c;
+        --leaf: #54784a;
+        --leaf-light: #e6ede3;
+        --honey: #d97706;
+        --honey-warm: #e69124;
+        --honey-light: #fdf5ea;
+        --terracotta: #c4643c;
+        --terracotta-light: #faeee7;
+        --berry: #832746;
+        --berry-light: #faeaf0;
+        --cream: #fdfaf4;
+        --cream-dark: #f5eee0;
+        --sand: #ede3d1;
+        --ink: #1e2823;
+        --ink-muted: #5e6d64;
+        --white: #ffffff;
+        --border: #e7dfce;
+        --shadow-soft: 0 10px 30px rgba(50, 40, 25, 0.05);
+        --shadow-card: 0 16px 36px rgba(50, 40, 25, 0.08);
+        --radius-sm: 8px;
+        --radius-md: 16px;
+        --radius-lg: 24px;
+        --radius-full: 9999px;
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--cream);
+        font-family: "DM Sans", sans-serif;
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      h1, h2, h3, h4, .font-serif {
+        font-family: "Playfair Display", Georgia, serif;
+      }
+
+      button, input, select { font: inherit; outline: none; }
+      button { cursor: pointer; border: none; background: none; }
+      a { color: inherit; text-decoration: none; }
+
+      /* Top Announcement Banner */
+      .announcement {
+        background: linear-gradient(90deg, #1c382b, #2b4f3e, #1c382b);
+        color: #fff;
+        padding: 10px 20px;
+        font-size: 0.82rem;
+        letter-spacing: 0.03em;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .announcement-inner {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .badge-live {
+        background: rgba(255, 255, 255, 0.18);
+        padding: 2px 9px;
+        border-radius: var(--radius-full);
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      /* Sticky Navigation */
+      .nav-wrap {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(253, 250, 244, 0.95);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+        transition: all 0.25s ease;
+      }
+      .nav {
+        max-width: 1280px;
+        margin: 0 auto;
+        height: 82px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 clamp(20px, 4vw, 40px);
+      }
+      .logo {
+        display: inline-flex;
+        align-items: center;
+        height: 100%;
+      }
+      .logo-full {
+        height: 48px;
+        width: auto;
+        max-width: 230px;
+        display: block;
+      }
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+      }
+      .nav-links a {
+        font-size: 0.92rem;
+        font-weight: 600;
+        color: var(--forest);
+        position: relative;
+        padding: 6px 0;
+        transition: color 0.2s;
+      }
+      .nav-links a::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background: var(--honey);
+        border-radius: 2px;
+        transition: all 0.25s ease;
+        transform: translateX(-50%);
+      }
+      .nav-links a:hover { color: var(--honey); }
+      .nav-links a:hover::after { width: 100%; }
+
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .action-btn {
+        width: 44px;
+        height: 44px;
+        border-radius: var(--radius-full);
+        border: 1px solid var(--border);
+        background: var(--white);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--forest);
+        transition: all 0.2s;
+        position: relative;
+      }
+      .action-btn:hover {
+        background: var(--cream-dark);
+        border-color: var(--honey);
+        color: var(--honey);
+        transform: translateY(-2px);
+      }
+      .action-btn svg { width: 20px; height: 20px; stroke-width: 2; }
+      .badge-counter {
+        position: absolute;
+        top: -4px;
+        right: -4px;
+        background: var(--terracotta);
+        color: #fff;
+        font-size: 0.68rem;
+        font-weight: 700;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid var(--white);
+      }
+      .menu-btn { display: none; }
+
+      /* Buttons */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 14px 28px;
+        border-radius: var(--radius-full);
+        font-size: 0.92rem;
+        font-weight: 700;
+        transition: all 0.25s ease;
+        box-shadow: 0 4px 14px rgba(28, 56, 43, 0.12);
+      }
+      .btn-primary { background: var(--forest); color: #fff; }
+      .btn-primary:hover {
+        background: #14281f;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(28, 56, 43, 0.2);
+      }
+      .btn-warm { background: var(--honey); color: #fff; }
+      .btn-warm:hover {
+        background: #bf6605;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(217, 119, 6, 0.3);
+      }
+      .btn-secondary {
+        background: var(--white);
+        color: var(--forest);
+        border: 1px solid var(--border);
+      }
+      .btn-secondary:hover {
+        background: var(--cream-dark);
+        border-color: var(--sand);
+        transform: translateY(-2px);
+      }
+
+      /* Hero Section */
+      .hero {
+        padding: clamp(40px, 6vw, 70px) clamp(20px, 4vw, 40px);
+        max-width: 1280px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1.15fr 1fr;
+        gap: clamp(30px, 5vw, 60px);
+        align-items: center;
+      }
+      .hero-content {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .joyful-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--honey-light);
+        color: var(--honey);
+        border: 1px solid rgba(217, 119, 6, 0.25);
+        padding: 6px 16px;
+        border-radius: var(--radius-full);
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+      }
+      .hero h1 {
+        font-size: clamp(2.8rem, 5.2vw, 4.6rem);
+        line-height: 1.05;
+        letter-spacing: -0.04em;
+        color: var(--forest);
+        margin-bottom: 20px;
+      }
+      .hero h1 span.highlight {
+        color: var(--terracotta);
+        position: relative;
+        display: inline-block;
+      }
+      .hero h1 span.highlight::after {
+        content: '';
+        position: absolute;
+        bottom: 8px;
+        left: 0;
+        width: 100%;
+        height: 10px;
+        background: rgba(229, 152, 55, 0.25);
+        border-radius: 4px;
+        z-index: -1;
+      }
+      .hero p {
+        font-size: 1.12rem;
+        line-height: 1.75;
+        color: var(--ink-muted);
+        max-width: 540px;
+        margin-bottom: 32px;
+      }
+      .hero-cta-group {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin-bottom: 36px;
+      }
+      .social-proof-hero {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border);
+        width: 100%;
+        max-width: 500px;
+      }
+      .avatar-group { display: flex; }
+      .avatar {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        border: 2px solid var(--white);
+        margin-left: -8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: #fff;
+      }
+      .avatar:first-child { margin-left: 0; }
+      .av1 { background: #b87333; }
+      .av2 { background: #4d7044; }
+      .av3 { background: #d97706; }
+      .av4 { background: #1c382b; }
+      .proof-text { font-size: 0.85rem; color: var(--ink-muted); line-height: 1.4; }
+      .proof-text b { color: var(--forest); }
+      .stars-gold { color: #f59e0b; font-size: 0.95rem; }
+
+      .hero-media { position: relative; }
+      .hero-frame {
+        border-radius: 28px;
+        overflow: hidden;
+        box-shadow: 0 24px 60px rgba(50, 40, 25, 0.14);
+        border: 4px solid var(--white);
+        position: relative;
+        background: #eae2d1;
+      }
+      .hero-frame img {
+        width: 100%;
+        height: auto;
+        display: block;
+        transform: scale(1.02);
+        transition: transform 0.6s ease;
+      }
+      .hero-frame:hover img { transform: scale(1.05); }
+
+      .float-badge {
+        position: absolute;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 12px 18px;
+        border-radius: var(--radius-md);
+        box-shadow: 0 12px 30px rgba(28, 56, 43, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        z-index: 2;
+        animation: floatAnim 4s ease-in-out infinite alternate;
+      }
+      .float-badge.top-right { top: -16px; right: -16px; animation-delay: -1s; }
+      .float-badge.bottom-left { bottom: -20px; left: -20px; animation-delay: -2.5s; }
+      @keyframes floatAnim {
+        0% { transform: translateY(0px); }
+        100% { transform: translateY(-8px); }
+      }
+      .badge-icon-box {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: var(--honey-light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+      }
+      .float-badge h5 { font-size: 0.88rem; font-weight: 700; color: var(--forest); }
+      .float-badge p { font-size: 0.74rem; color: var(--ink-muted); }
+
+      /* Trust & Provenance Bar */
+      .trust-band {
+        background: var(--white);
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+        padding: 40px clamp(20px, 4vw, 40px);
+      }
+      .trust-grid {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 28px;
+      }
+      .trust-card { display: flex; align-items: flex-start; gap: 16px; }
+      .trust-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: var(--radius-md);
+        background: var(--honey-light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--honey);
+        flex-shrink: 0;
+      }
+      .trust-icon svg { width: 24px; height: 24px; }
+      .trust-card h4 { font-size: 1.02rem; font-weight: 700; color: var(--forest); margin-bottom: 4px; }
+      .trust-card p { font-size: 0.84rem; color: var(--ink-muted); line-height: 1.45; }
+
+      /* Category & Mood Filter Strip */
+      .catalog-controls {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 60px clamp(20px, 4vw, 40px) 25px;
+      }
+      .section-header {
+        text-align: center;
+        max-width: 680px;
+        margin: 0 auto 35px;
+      }
+      .section-eyebrow {
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--leaf);
+        margin-bottom: 10px;
+        display: inline-block;
+      }
+      .section-title {
+        font-size: clamp(2rem, 3.4vw, 3rem);
+        color: var(--forest);
+        letter-spacing: -0.035em;
+        line-height: 1.15;
+        margin-bottom: 12px;
+      }
+      .section-sub { font-size: 1.05rem; color: var(--ink-muted); }
+
+      /* Primary Category Bar */
+      .category-pills {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+      .cat-pill {
+        padding: 11px 24px;
+        border-radius: var(--radius-full);
+        background: var(--white);
+        border: 1px solid var(--border);
+        color: var(--forest);
+        font-size: 0.92rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      }
+      .cat-pill:hover {
+        border-color: var(--honey);
+        background: var(--cream-dark);
+        transform: translateY(-2px);
+      }
+      .cat-pill.active {
+        background: var(--forest);
+        color: #fff;
+        border-color: var(--forest);
+        box-shadow: 0 6px 18px rgba(28, 56, 43, 0.2);
+      }
+
+      /* Secondary Mood Filter */
+      .mood-strip {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+        font-size: 0.82rem;
+      }
+      .mood-label {
+        font-weight: 700;
+        color: var(--ink-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+      .mood-tag {
+        padding: 6px 14px;
+        border-radius: var(--radius-full);
+        background: var(--cream-dark);
+        border: 1px solid var(--border);
+        color: var(--forest);
+        font-size: 0.78rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+      .mood-tag:hover { border-color: var(--honey); }
+      .mood-tag.active {
+        background: var(--honey-light);
+        border-color: var(--honey);
+        color: var(--honey);
+      }
+
+      /* Products Grid */
+      .products-grid {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 clamp(20px, 4vw, 40px) 90px;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+        gap: 30px;
+      }
+      .product-card {
+        background: var(--white);
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border);
+        overflow: hidden;
+        box-shadow: var(--shadow-soft);
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        display: flex;
+        flex-direction: column;
+        position: relative;
+      }
+      .product-card:hover {
+        transform: translateY(-6px);
+        box-shadow: var(--shadow-card);
+        border-color: var(--sand);
+      }
+      .card-media {
+        position: relative;
+        height: 250px;
+        background: #fbf7ee;
+        overflow: hidden;
+      }
+      .card-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+      .product-card:hover .card-media img { transform: scale(1.08); }
+      .card-tag {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        background: rgba(255, 255, 255, 0.94);
+        backdrop-filter: blur(6px);
+        color: var(--terracotta);
+        font-size: 0.72rem;
+        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: var(--radius-full);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+      .btn-wish {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(6px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--forest);
+        transition: all 0.2s;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+      }
+      .btn-wish:hover { transform: scale(1.1); color: #e11d48; }
+      .btn-wish.active { color: #e11d48; background: #fff; }
+      .btn-wish svg { width: 18px; height: 18px; }
+
+      .card-body {
+        padding: 22px;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+      .card-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+        font-size: 0.78rem;
+      }
+      .card-origin { color: var(--leaf); font-weight: 600; }
+      .card-rating { color: #f59e0b; display: flex; align-items: center; gap: 4px; }
+
+      .card-title {
+        font-size: 1.25rem;
+        color: var(--forest);
+        margin-bottom: 6px;
+        font-weight: 700;
+        line-height: 1.3;
+      }
+      .card-desc {
+        font-size: 0.85rem;
+        color: var(--ink-muted);
+        margin-bottom: 14px;
+        line-height: 1.5;
+      }
+
+      /* Nutritional Benefit Pills */
+      .nutrition-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-bottom: 14px;
+      }
+      .nutri-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 0.73rem;
+        font-weight: 700;
+        padding: 3px 9px;
+        border-radius: var(--radius-full);
+        background: var(--leaf-light);
+        color: #2e5326;
+      }
+      .nutri-pill.gold { background: var(--honey-light); color: #9c5806; }
+      .nutri-pill.berry { background: var(--berry-light); color: var(--berry); }
+      .nutri-pill.terracotta { background: var(--terracotta-light); color: #983f1d; }
+
+      .btn-facts-trigger {
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: var(--forest);
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        margin-bottom: 16px;
+        text-decoration: underline;
+        text-underline-offset: 4px;
+        padding: 2px 0;
+        transition: color 0.2s;
+      }
+      .btn-facts-trigger:hover { color: var(--honey); }
+
+      /* Weight selector chips */
+      .weight-selector {
+        display: flex;
+        gap: 6px;
+        margin-bottom: 18px;
+        margin-top: auto;
+      }
+      .weight-chip {
+        flex: 1;
+        padding: 6px 4px;
+        border-radius: 8px;
+        font-size: 0.76rem;
+        font-weight: 700;
+        border: 1px solid var(--border);
+        background: var(--cream);
+        color: var(--forest);
+        text-align: center;
+        transition: all 0.15s;
+      }
+      .weight-chip:hover { border-color: var(--honey); }
+      .weight-chip.active {
+        background: var(--honey-light);
+        border-color: var(--honey);
+        color: var(--honey);
+      }
+
+      .card-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding-top: 14px;
+        border-top: 1px solid var(--border);
+      }
+      .price-group { display: flex; flex-direction: column; }
+      .price-curr { font-size: 1.3rem; font-weight: 800; color: var(--forest); }
+      .price-old { font-size: 0.82rem; color: #94a39b; text-decoration: line-through; }
+      .btn-add-bag {
+        padding: 10px 18px;
+        border-radius: var(--radius-full);
+        background: var(--forest);
+        color: #fff;
+        font-size: 0.82rem;
+        font-weight: 700;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.2s;
+      }
+      .btn-add-bag:hover {
+        background: var(--honey);
+        transform: translateY(-2px);
+      }
+      .btn-add-bag svg { width: 16px; height: 16px; }
+
+      /* Nutrition Modal */
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(18, 36, 28, 0.5);
+        backdrop-filter: blur(5px);
+        z-index: 1500;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+      .modal-overlay.open { opacity: 1; pointer-events: auto; }
+      .modal-card {
+        background: var(--white);
+        border-radius: 22px;
+        max-width: 520px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+        padding: 32px;
+        box-shadow: 0 24px 60px rgba(0,0,0,0.2);
+        position: relative;
+        transform: translateY(20px);
+        transition: transform 0.25s ease;
+      }
+      .modal-overlay.open .modal-card { transform: translateY(0); }
+      .modal-close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 1.6rem;
+        color: var(--ink-muted);
+        line-height: 1;
+      }
+      .modal-title { font-size: 1.45rem; color: var(--forest); margin-bottom: 4px; }
+      .modal-sub { font-size: 0.84rem; color: var(--leaf); font-weight: 700; margin-bottom: 20px; }
+      .facts-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 22px;
+        font-size: 0.88rem;
+      }
+      .facts-table th, .facts-table td {
+        padding: 10px 12px;
+        text-align: left;
+        border-bottom: 1px solid #f0e9dd;
+      }
+      .facts-table th { background: #faf6ee; color: var(--forest); font-weight: 700; }
+      .facts-table tr:last-child td { border-bottom: none; }
+      .benefits-box {
+        background: var(--leaf-light);
+        border-radius: var(--radius-md);
+        padding: 18px;
+        margin-bottom: 20px;
+      }
+      .benefits-box h5 {
+        color: #244b3b;
+        font-size: 0.92rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+      .benefits-box ul {
+        padding-left: 18px;
+        font-size: 0.84rem;
+        color: #3b5a34;
+        line-height: 1.6;
+      }
+
+      /* Sensory Story Section */
+      .sensory-section {
+        background: #f4ede0;
+        padding: 90px clamp(20px, 4vw, 40px);
+        position: relative;
+        overflow: hidden;
+      }
+      .sensory-grid {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+      }
+      .sensory-text h2 {
+        font-size: clamp(2.4rem, 4vw, 3.5rem);
+        color: var(--forest);
+        line-height: 1.1;
+        letter-spacing: -0.04em;
+        margin-bottom: 24px;
+      }
+      .sensory-text p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #4b5e53;
+        margin-bottom: 24px;
+      }
+      .sensory-features {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-top: 30px;
+      }
+      .s-feat {
+        background: var(--white);
+        padding: 20px;
+        border-radius: var(--radius-md);
+        border: 1px solid rgba(0,0,0,0.04);
+      }
+      .s-feat b { display: block; color: var(--forest); font-size: 1.05rem; margin-bottom: 6px; }
+      .s-feat p { font-size: 0.84rem; color: var(--ink-muted); line-height: 1.45; margin: 0; }
+      .sensory-card-visual {
+        background: var(--forest);
+        border-radius: 28px;
+        padding: 40px;
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 20px 50px rgba(28, 56, 43, 0.2);
+      }
+      .sensory-card-visual::before {
+        content: "CRUNCH";
+        position: absolute;
+        font-size: 9rem;
+        font-weight: 900;
+        color: rgba(255, 255, 255, 0.04);
+        right: -30px;
+        bottom: -30px;
+        letter-spacing: -0.05em;
+        line-height: 1;
+      }
+      .quote-mark { font-size: 3rem; color: var(--honey); line-height: 1; margin-bottom: 10px; }
+      .sensory-quote {
+        font-family: "Playfair Display", serif;
+        font-size: 1.55rem;
+        line-height: 1.45;
+        margin-bottom: 24px;
+        font-style: italic;
+      }
+
+      /* Corporate & Gifting Section */
+      .gifting-section {
+        max-width: 1280px;
+        margin: 80px auto;
+        padding: 0 clamp(20px, 4vw, 40px);
+      }
+      .gifting-card {
+        background: linear-gradient(135deg, #244b3b, #19362a);
+        color: #fff;
+        border-radius: 28px;
+        padding: clamp(40px, 6vw, 70px);
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 40px;
+        align-items: center;
+        box-shadow: 0 20px 50px rgba(28, 56, 43, 0.18);
+        position: relative;
+        overflow: hidden;
+      }
+      .gifting-card::after {
+        content: '🎁';
+        position: absolute;
+        right: 30px;
+        bottom: -20px;
+        font-size: 11rem;
+        opacity: 0.1;
+      }
+      .gifting-card h2 {
+        font-size: clamp(2.2rem, 3.8vw, 3.2rem);
+        line-height: 1.15;
+        letter-spacing: -0.035em;
+        margin-bottom: 18px;
+        color: #fff;
+      }
+      .gifting-card p {
+        font-size: 1.05rem;
+        line-height: 1.7;
+        color: #d1dcd5;
+        max-width: 520px;
+        margin-bottom: 28px;
+      }
+      .gift-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+
+      /* Testimonials Wall */
+      .reviews-section {
+        max-width: 1280px;
+        margin: 0 auto 90px;
+        padding: 0 clamp(20px, 4vw, 40px);
+      }
+      .reviews-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+      .review-card {
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        padding: 28px;
+        box-shadow: var(--shadow-soft);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .review-stars { color: #f59e0b; margin-bottom: 14px; font-size: 1rem; }
+      .review-text {
+        font-size: 0.95rem;
+        line-height: 1.65;
+        color: #4b5e53;
+        margin-bottom: 20px;
+        flex: 1;
+      }
+      .reviewer { display: flex; align-items: center; gap: 12px; }
+      .reviewer-img {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: var(--honey-light);
+        color: var(--honey);
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .reviewer-name { font-size: 0.9rem; font-weight: 700; color: var(--forest); }
+      .reviewer-city { font-size: 0.76rem; color: var(--ink-muted); }
+
+      /* Slide-Over Cart Drawer */
+      .cart-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(18, 36, 28, 0.45);
+        backdrop-filter: blur(4px);
+        z-index: 999;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+      }
+      .cart-overlay.open { opacity: 1; pointer-events: auto; }
+      .cart-drawer {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: min(440px, 90vw);
+        height: 100vh;
+        background: var(--white);
+        z-index: 1000;
+        box-shadow: -10px 0 40px rgba(0,0,0,0.15);
+        transform: translateX(100%);
+        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        display: flex;
+        flex-direction: column;
+      }
+      .cart-overlay.open .cart-drawer { transform: translateX(0); }
+      .cart-header {
+        padding: 22px 26px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .cart-header h3 { font-size: 1.35rem; color: var(--forest); }
+      .cart-close-btn { font-size: 1.5rem; color: var(--ink-muted); line-height: 1; padding: 4px; }
+      .cart-free-shipping {
+        background: var(--honey-light);
+        border-bottom: 1px solid var(--border);
+        padding: 14px 26px;
+        font-size: 0.82rem;
+      }
+      .free-ship-bar {
+        height: 6px;
+        background: #e9dec9;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-top: 8px;
+      }
+      .free-ship-fill {
+        height: 100%;
+        background: var(--honey);
+        border-radius: 4px;
+        transition: width 0.3s ease;
+      }
+      .cart-items {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px 26px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+      .cart-item {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        padding-bottom: 18px;
+        border-bottom: 1px solid #f0e9dc;
+      }
+      .cart-thumb {
+        width: 68px;
+        height: 68px;
+        border-radius: var(--radius-sm);
+        background: #f5eedf;
+        object-fit: cover;
+        flex-shrink: 0;
+      }
+      .cart-item-info { flex: 1; }
+      .cart-item-title { font-size: 0.95rem; font-weight: 700; color: var(--forest); }
+      .cart-item-weight { font-size: 0.78rem; color: var(--ink-muted); margin-bottom: 6px; }
+      .cart-qty-row { display: flex; align-items: center; justify-content: space-between; }
+      .qty-stepper {
+        display: inline-flex;
+        align-items: center;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-full);
+        background: var(--cream);
+      }
+      .qty-btn {
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: var(--forest);
+      }
+      .qty-val { padding: 0 8px; font-size: 0.82rem; font-weight: 700; }
+      .cart-item-price { font-weight: 700; color: var(--forest); font-size: 0.95rem; }
+      .cart-footer {
+        padding: 24px 26px;
+        background: #faf6ee;
+        border-top: 1px solid var(--border);
+      }
+      .cart-total-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 1.15rem;
+        font-weight: 800;
+        color: var(--forest);
+        margin-bottom: 16px;
+      }
+      .btn-checkout {
+        width: 100%;
+        padding: 16px;
+        border-radius: var(--radius-full);
+        background: var(--honey);
+        color: #fff;
+        font-size: 1rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        box-shadow: 0 6px 20px rgba(217, 119, 6, 0.3);
+        transition: all 0.2s;
+      }
+      .btn-checkout:hover { background: #bf6605; transform: translateY(-2px); }
+
+      /* Mobile Drawer Navigation */
+      .mobile-menu {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.4);
+        z-index: 999;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+      }
+      .mobile-menu.open { opacity: 1; pointer-events: auto; }
+      .mobile-panel {
+        width: 290px;
+        height: 100vh;
+        background: var(--cream);
+        transform: translateX(-100%);
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        padding: 30px 24px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .mobile-menu.open .mobile-panel { transform: translateX(0); }
+      .mobile-links { display: flex; flex-direction: column; gap: 20px; margin-top: 30px; }
+      .mobile-links a { font-size: 1.15rem; font-weight: 700; color: var(--forest); }
+
+      /* Toast Notifications */
+      .toast {
+        position: fixed;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%) translateY(100px);
+        background: var(--forest);
+        color: #fff;
+        padding: 14px 24px;
+        border-radius: var(--radius-full);
+        font-size: 0.9rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 12px 35px rgba(0,0,0,0.2);
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        z-index: 2000;
+        pointer-events: none;
+      }
+      .toast.show { transform: translateX(-50%) translateY(0); }
+
+      /* Footer */
+      footer {
+        background: var(--forest-deep);
+        color: #ebe7dc;
+        padding: 80px clamp(20px, 4vw, 40px) 35px;
+      }
+      .footer-grid {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 2fr repeat(3, 1fr);
+        gap: 40px;
+      }
+      .footer-brand p {
+        color: #bec7c1;
+        font-size: 0.9rem;
+        line-height: 1.7;
+        margin-top: 14px;
+        max-width: 320px;
+      }
+      footer h4 {
+        color: #fff;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 20px;
+      }
+      footer a {
+        color: #bec7c1;
+        font-size: 0.9rem;
+        display: block;
+        margin-bottom: 12px;
+        transition: color 0.2s;
+      }
+      footer a:hover { color: var(--honey); }
+      .footer-bottom {
+        max-width: 1280px;
+        margin: 60px auto 0;
+        padding-top: 24px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 16px;
+        font-size: 0.82rem;
+        color: #8c9c92;
+      }
+
+      /* Responsive rules */
+      @media (max-width: 1024px) {
+        .hero { grid-template-columns: 1fr; text-align: center; }
+        .hero-content { align-items: center; }
+        .hero p { margin-left: auto; margin-right: auto; }
+        .hero-cta-group { justify-content: center; }
+        .social-proof-hero { justify-content: center; }
+        .trust-grid { grid-template-columns: repeat(2, 1fr); }
+        .sensory-grid { grid-template-columns: 1fr; }
+        .gifting-card { grid-template-columns: 1fr; }
+        .reviews-grid { grid-template-columns: 1fr; }
+        .footer-grid { grid-template-columns: 1fr 1fr; }
+      }
+      @media (max-width: 768px) {
+        .nav-links { display: none; }
+        .menu-btn { display: flex; }
+        .trust-grid { grid-template-columns: 1fr; }
+        .float-badge { display: none; }
+        .footer-grid { grid-template-columns: 1fr; }
+        .footer-bottom { flex-direction: column; text-align: center; }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Top Cheerful Announcement -->
+    <div class="announcement">
+      <div class="announcement-inner">
+        <span class="badge-live">✨ Autumn Harvest Special</span>
+        <span><b>Free shipping</b> on all orders above ₹999</span>
+        <span>•</span>
+        <span>Vacuum-packed within 24h of roasting</span>
+        <span>•</span>
+        <span>Use code <b>CRUNCH10</b> for 10% off</span>
+      </div>
+    </div>
+
+    <!-- Sticky Navigation -->
+    <header class="nav-wrap">
+      <nav class="nav">
+        <a class="logo" href="#home" aria-label="drysee home">
+          <img src="assets/logo.svg" alt="drysee — Purely Packed. Joyfully Shared." class="logo-full" />
+        </a>
+
+        <div class="nav-links">
+          <a href="#shop">Shop Harvest</a>
+          <a href="#shop" onclick="selectCategory('dry-fruits')">Dry Fruits &amp; Nuts</a>
+          <a href="#shop" onclick="selectCategory('seeds')">Super Seeds</a>
+          <a href="#story">Our Story</a>
+          <a href="#gifting">Corporate &amp; Gifting</a>
+        </div>
+
+        <div class="nav-actions">
+          <button class="action-btn" onclick="openSearch()" aria-label="Search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          </button>
+          <button class="action-btn" onclick="openWishlistToast()" aria-label="Wishlist">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            <span class="badge-counter" id="wishlist-count">3</span>
+          </button>
+          <button class="action-btn" onclick="toggleCart()" aria-label="Shopping Bag">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+            <span class="badge-counter" id="cart-count">2</span>
+          </button>
+          <button class="action-btn menu-btn" onclick="toggleMobileMenu()" aria-label="Menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <!-- Hero Section -->
+      <section class="hero" id="home">
+        <div class="hero-content">
+          <div class="joyful-pill">
+            <span>☀️</span> Sunshine in Every Handful
+          </div>
+          <h1>Purely packed.<br><span class="highlight">Joyfully shared.</span></h1>
+          <p>
+            From California nonpareil almonds and royal jumbo cashews to mineral-rich pumpkin and super seeds. Each kernel is handpicked, slow-roasted, and AromaLock™ packed for clean energy and joyful nourishment.
+          </p>
+          <div class="hero-cta-group">
+            <a href="#shop" class="btn btn-warm">Shop All Harvest →</a>
+            <a href="#gifting" class="btn btn-secondary">Build a Gift Box 🎁</a>
+          </div>
+          <div class="social-proof-hero">
+            <div class="avatar-group">
+              <div class="avatar av1">P</div>
+              <div class="avatar av2">A</div>
+              <div class="avatar av3">R</div>
+              <div class="avatar av4">S</div>
+            </div>
+            <div class="proof-text">
+              <div class="stars-gold">★★★★★ <b>4.9/5</b></div>
+              Loved by <b>5,200+ snacker families</b> across India
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-media">
+          <div class="hero-frame">
+            <img src="assets/hero-dryfruits.jpg" alt="drysee artisanal dry fruits and seeds bowl" />
+          </div>
+          <div class="float-badge top-right">
+            <div class="badge-icon-box">🌰</div>
+            <div>
+              <h5>AromaLock™ Fresh</h5>
+              <p>Stays crispy 6+ months</p>
+            </div>
+          </div>
+          <div class="float-badge bottom-left">
+            <div class="badge-icon-box">🌱</div>
+            <div>
+              <h5>100% Raw &amp; Pure</h5>
+              <p>Zero preservatives or oils</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Trust & Provenance Bar -->
+      <div class="trust-band">
+        <div class="trust-grid">
+          <div class="trust-card">
+            <div class="trust-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
+            </div>
+            <div>
+              <h4>Handpicked Whole Nuts</h4>
+              <p>Grade-A jumbo kernels only. No dust, broken chips, or artificial shine.</p>
+            </div>
+          </div>
+          <div class="trust-card">
+            <div class="trust-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            </div>
+            <div>
+              <h4>AromaLock™ Sealed</h4>
+              <p>Nitrogen-flushed multi-barrier pouches that lock in natural oils and crunch.</p>
+            </div>
+          </div>
+          <div class="trust-card">
+            <div class="trust-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+            </div>
+            <div>
+              <h4>Pan-India Express</h4>
+              <p>Dispatched in 24 hours. Free shipping on all orders over ₹999.</p>
+            </div>
+          </div>
+          <div class="trust-card">
+            <div class="trust-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            </div>
+            <div>
+              <h4>Nutrient Dense</h4>
+              <p>Rich in healthy Omega-3, plant protein, magnesium, zinc, and dietary fiber.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Catalog Controls: Category & Mood Filter -->
+      <section class="catalog-controls" id="shop">
+        <div class="section-header">
+          <span class="section-eyebrow">Handpicked Goodness</span>
+          <h2 class="section-title">The Complete drysee Harvest</h2>
+          <p class="section-sub">Explore our full collection of premium dry fruits, rich nuts, succulent berries, and nutrient-dense super seeds.</p>
+        </div>
+
+        <!-- Primary Category Pills -->
+        <div class="category-pills">
+          <button class="cat-pill active" onclick="filterCategory('all', this)">
+            <span>🌾</span> All Products (9)
+          </button>
+          <button class="cat-pill" onclick="filterCategory('nuts', this)">
+            <span>🌰</span> Dry Fruits &amp; Nuts (4)
+          </button>
+          <button class="cat-pill" onclick="filterCategory('seeds', this)">
+            <span>🌱</span> Super Seeds (4)
+          </button>
+          <button class="cat-pill" onclick="filterCategory('dried-fruits', this)">
+            <span>🫐</span> Sun-Dried Fruits &amp; Figs (1)
+          </button>
+        </div>
+
+        <!-- Secondary Mood Tags -->
+        <div class="mood-strip">
+          <span class="mood-label">Snack Mood:</span>
+          <span class="mood-tag active" onclick="filterMood('all', this)">🌟 All Moods</span>
+          <span class="mood-tag" onclick="filterMood('energy', this)">⚡ Energy Boost</span>
+          <span class="mood-tag" onclick="filterMood('mindful', this)">🧘 Mindful Crunch</span>
+          <span class="mood-tag" onclick="filterMood('royal', this)">👑 Royal Indulgence</span>
+          <span class="mood-tag" onclick="filterMood('immunity', this)">🛡️ Daily Immunity</span>
+        </div>
+      </section>
+
+      <!-- Products Grid -->
+      <section class="products-grid" id="products-container">
+        <!-- Product 1: Almonds -->
+        <article class="product-card" data-category="nuts" data-mood="energy royal immunity" data-id="1">
+          <div class="card-media">
+            <span class="card-tag">🔥 Bestseller</span>
+            <button class="btn-wish" onclick="toggleWish(this)" aria-label="Save to wishlist">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+            <img src="assets/product-almonds.jpg" alt="California Roasted Almonds" />
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="card-origin">🌱 California, Nonpareil</span>
+              <span class="card-rating">★ 4.9 <small>(184)</small></span>
+            </div>
+            <h3 class="card-title">California Roasted Almonds</h3>
+            <p class="card-desc">Plump, slow-roasted almonds with a delicate golden crispness and natural vitamin E sweetness.</p>
+
+            <!-- Nutritional Benefit Pills -->
+            <div class="nutrition-pills">
+              <span class="nutri-pill">💪 21.2g Protein</span>
+              <span class="nutri-pill gold">✨ Vitamin E (170% DV)</span>
+              <span class="nutri-pill terracotta">❤️ Lowers LDL</span>
+            </div>
+
+            <button class="btn-facts-trigger" onclick="openNutritionModal(1)">
+              📊 View Nutrition Facts &amp; Benefits →
+            </button>
+
+            <div class="weight-selector">
+              <button class="weight-chip active" onclick="setWeight(this, 349, 399, '250g')">250g</button>
+              <button class="weight-chip" onclick="setWeight(this, 649, 749, '500g')">500g</button>
+              <button class="weight-chip" onclick="setWeight(this, 1199, 1399, '1kg')">1kg</button>
+            </div>
+
+            <div class="card-bottom">
+              <div class="price-group">
+                <span class="price-curr">₹349</span>
+                <span class="price-old">₹399</span>
+              </div>
+              <button class="btn-add-bag" onclick="addToCart('California Roasted Almonds', 349, 'assets/product-almonds.jpg')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                Add to Bag
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product 2: Cashews -->
+        <article class="product-card" data-category="nuts" data-mood="royal immunity" data-id="2">
+          <div class="card-media">
+            <span class="card-tag">👑 King Size W240</span>
+            <button class="btn-wish" onclick="toggleWish(this)" aria-label="Save to wishlist">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+            <img src="assets/product-cashews.jpg" alt="Royal Jumbo Cashews" />
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="card-origin">🌱 Mangalore &amp; Goa</span>
+              <span class="card-rating">★ 5.0 <small>(128)</small></span>
+            </div>
+            <h3 class="card-title">Royal Jumbo Whole Cashews</h3>
+            <p class="card-desc">Buttery, velvety whole kernels gently sun-dried to lock in wholesome natural fats and rich flavor.</p>
+
+            <div class="nutrition-pills">
+              <span class="nutri-pill gold">🛡️ 5.8mg Zinc</span>
+              <span class="nutri-pill">🧠 292mg Magnesium</span>
+              <span class="nutri-pill terracotta">🧈 Zero Cholesterol</span>
+            </div>
+
+            <button class="btn-facts-trigger" onclick="openNutritionModal(2)">
+              📊 View Nutrition Facts &amp; Benefits →
+            </button>
+
+            <div class="weight-selector">
+              <button class="weight-chip active" onclick="setWeight(this, 389, 440, '250g')">250g</button>
+              <button class="weight-chip" onclick="setWeight(this, 720, 820, '500g')">500g</button>
+              <button class="weight-chip" onclick="setWeight(this, 1349, 1550, '1kg')">1kg</button>
+            </div>
+
+            <div class="card-bottom">
+              <div class="price-group">
+                <span class="price-curr">₹389</span>
+                <span class="price-old">₹440</span>
+              </div>
+              <button class="btn-add-bag" onclick="addToCart('Royal Jumbo Whole Cashews', 389, 'assets/product-cashews.jpg')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                Add to Bag
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product 3: Walnuts -->
+        <article class="product-card" data-category="nuts" data-mood="energy mindful" data-id="3">
+          <div class="card-media">
+            <span class="card-tag">🧠 Brain Power</span>
+            <button class="btn-wish" onclick="toggleWish(this)" aria-label="Save to wishlist">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+            <img src="assets/product-walnuts.jpg" alt="Kashmiri Walnut Halves" />
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="card-origin">🌱 Kashmiri Valleys</span>
+              <span class="card-rating">★ 4.8 <small>(94)</small></span>
+            </div>
+            <h3 class="card-title">Kashmiri Golden Walnut Halves</h3>
+            <p class="card-desc">Omega-3 powerhouse kernels with delicate pale amber color and smooth, zero-bitterness finish.</p>
+
+            <div class="nutrition-pills">
+              <span class="nutri-pill">🐟 9.1g Omega-3 ALA</span>
+              <span class="nutri-pill gold">💤 Natural Melatonin</span>
+              <span class="nutri-pill terracotta">🧬 Polyphenol Rich</span>
+            </div>
+
+            <button class="btn-facts-trigger" onclick="openNutritionModal(3)">
+              📊 View Nutrition Facts &amp; Benefits →
+            </button>
+
+            <div class="weight-selector">
+              <button class="weight-chip active" onclick="setWeight(this, 449, 499, '250g')">250g</button>
+              <button class="weight-chip" onclick="setWeight(this, 849, 950, '500g')">500g</button>
+              <button class="weight-chip" onclick="setWeight(this, 1599, 1799, '1kg')">1kg</button>
+            </div>
+
+            <div class="card-bottom">
+              <div class="price-group">
+                <span class="price-curr">₹449</span>
+                <span class="price-old">₹499</span>
+              </div>
+              <button class="btn-add-bag" onclick="addToCart('Kashmiri Golden Walnut Halves', 449, 'assets/product-walnuts.jpg')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                Add to Bag
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product 4: Pistachios -->
+        <article class="product-card" data-category="nuts" data-mood="mindful energy royal" data-id="4">
+          <div class="card-media">
+            <span class="card-tag">🌿 In-Shell Roasted</span>
+            <button class="btn-wish" onclick="toggleWish(this)" aria-label="Save to wishlist">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+            <img src="assets/product-pistachios.jpg" alt="Roasted California &amp; Iranian Pistachios" />
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="card-origin">🌱 California &amp; Iran</span>
+              <span class="card-rating">★ 4.9 <small>(136)</small></span>
+            </div>
+            <h3 class="card-title">Slow-Roasted In-Shell Pistachios</h3>
+            <p class="card-desc">Vibrant emerald green kernels lightly dusted with sea salt, offering satisfying crunch and natural fiber.</p>
+
+            <div class="nutrition-pills">
+              <span class="nutri-pill">👁️ Lutein for Eyes</span>
+              <span class="nutri-pill gold">💪 20.3g Protein</span>
+              <span class="nutri-pill terracotta">⚡ Vitamin B6</span>
+            </div>
+
+            <button class="btn-facts-trigger" onclick="openNutritionModal(4)">
+              📊 View Nutrition Facts &amp; Benefits →
+            </button>
+
+            <div class="weight-selector">
+              <button class="weight-chip active" onclick="setWeight(this, 399, 460, '250g')">250g</button>
+              <button class="weight-chip" onclick="setWeight(this, 749, 850, '500g')">500g</button>
+              <button class="weight-chip" onclick="setWeight(this, 1399, 1600, '1kg')">1kg</button>
+            </div>
+
+            <div class="card-bottom">
+              <div class="price-group">
+                <span class="price-curr">₹399</span>
+                <span class="price-old">₹460</span>
+              </div>
+              <button class="btn-add-bag" onclick="addToCart('Slow-Roasted In-Shell Pistachios', 399, 'assets/product-pistachios.jpg')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                Add to Bag
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product 5: Medjool Dates & Figs -->
+        <article class="product-card" data-category="dried-fruits" data-mood="energy royal" data-id="5">
+          <div class="card-media">
+            <span class="card-tag">🍯 Natural Caramel</span>
+            <button class="btn-wish" onclick="toggleWish(this)" aria-label="Save to wishlist">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+            <img src="assets/product-dates.jpg" alt="Royal Medjool Dates and Turkish Dried Figs" />
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="card-origin">🌱 Jordan &amp; Turkey</span>
+              <span class="card-rating">★ 5.0 <small>(162)</small></span>
+            </div>
+            <h3 class="card-title">Royal Medjool Dates &amp; Turkish Figs</h3>
+            <p class="card-desc">Plump, succulent dates with caramel sweetness and golden sun-dried figs packed with dietary fiber.</p>
+
+            <div class="nutrition-pills">
+              <span class="nutri-pill gold">🩸 Natural Iron</span>
+              <span class="nutri-pill">🌱 7.5g Dietary Fiber</span>
+              <span class="nutri-pill berry">⚡ Pre-Workout Fuel</span>
+            </div>
+
+            <button class="btn-facts-trigger" onclick="openNutritionModal(5)">
+              📊 View Nutrition Facts &amp; Benefits →
+            </button>
+
+            <div class="weight-selector">
+              <button class="weight-chip active" onclick="setWeight(this, 329, 380, '250g')">250g</button>
+              <button class="weight-chip" onclick="setWeight(this, 599, 699, '500g')">500g</button>
+              <button class="weight-chip" onclick="setWeight(this, 1149, 1350, '1kg')">1kg</button>
+            </div>
+
+            <div class="card-bottom">
+              <div class="price-group">
+                <span class="price-curr">₹329</span>
+                <span class="price-old">₹380</span>
+              </div>
+              <button class="btn-add-bag" onclick="addToCart('Royal Medjool Dates & Turkish Figs', 329, 'assets/product-dates.jpg')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                Add to Bag
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product 6: Chia & Flax Seeds -->
+        <article class="product-card" data-category="seeds" data-mood="mindful immunity" data-id="6">
+          <div class="card-media">
+            <span class="card-tag">💧 Superfood Duo</span>
+            <button class="btn-wish" onclick="toggleWish(this)" aria-label="Save to wishlist">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+            <img src="assets/product-chia.jpg" alt="Organic Chia Seeds and Golden Flax Seeds" />
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="card-origin">🌱 Organic Certified, MP</span>
+              <span class="card-rating">★ 4.9 <small>(88)</small></span>
+            </div>
+            <h3 class="card-title">Organic Chia &amp; Golden Flax Seeds</h3>
+            <p class="card-desc">Hydrophilic super seeds packed with soluble gut-friendly fiber, calcium, and plant lignans.</p>
+
+            <div class="nutrition-pills">
+              <span class="nutri-pill">🌊 34.4g Soluble Fiber</span>
+              <span class="nutri-pill gold">🦴 631mg Calcium</span>
+              <span class="nutri-pill terracotta">🐟 17.8g Omega-3</span>
+            </div>
+
+            <button class="btn-facts-trigger" onclick="openNutritionModal(6)">
+              📊 View Nutrition Facts &amp; Benefits →
+            </button>
+
+            <div class="weight-selector">
+              <button class="weight-chip active" onclick="setWeight(this, 199, 240, '250g')">250g</button>
+              <button class="weight-chip" onclick="setWeight(this, 369, 440, '500g')">500g</button>
+              <button class="weight-chip" onclick="setWeight(this, 689, 790, '1kg')">1kg</button>
+            </div>
+
+            <div class="card-bottom">
+              <div class="price-group">
+                <span class="price-curr">₹199</span>
+                <span class="price-old">₹240</span>
+              </div>
+              <button class="btn-add-bag" onclick="addToCart('Organic Chia & Golden Flax Seeds', 199, 'assets/product-chia.jpg')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                Add to Bag
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product 7: 5-Seed Power Mix -->
+        <article class="product-card" data-category="seeds" data-mood="energy mindful" data-id="7">
+          <div class="card-media">
+            <span class="card-tag">⚡ All-in-One Power</span>
+            <button class="btn-wish" onclick="toggleWish(this)" aria-label="Save to wishlist">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+            <img src="assets/product-seedmix.jpg" alt="5-Seed Power Crunch Mix" />
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="card-origin">🌱 Harvest Blend, India</span>
+              <span class="card-rating">★ 5.0 <small>(142)</small></span>
+            </div>
+            <h3 class="card-title">The Daily 5-Seed Power Crunch Mix</h3>
+            <p class="card-desc">Pumpkin, sunflower, watermelon, chia, and flax seeds slow-roasted for high-protein breakfast bowls.</p>
+
+            <div class="nutrition-pills">
+              <span class="nutri-pill">💪 24.5g Plant Protein</span>
+              <span class="nutri-pill gold">🛡️ High Zinc &amp; Selenium</span>
+              <span class="nutri-pill terracotta">🌱 18.2g Fiber</span>
+            </div>
+
+            <button class="btn-facts-trigger" onclick="openNutritionModal(7)">
+              📊 View Nutrition Facts &amp; Benefits →
+            </button>
+
+            <div class="weight-selector">
+              <button class="weight-chip active" onclick="setWeight(this, 269, 310, '250g')">250g</button>
+              <button class="weight-chip" onclick="setWeight(this, 499, 580, '500g')">500g</button>
+              <button class="weight-chip" onclick="setWeight(this, 920, 1050, '1kg')">1kg</button>
+            </div>
+
+            <div class="card-bottom">
+              <div class="price-group">
+                <span class="price-curr">₹269</span>
+                <span class="price-old">₹310</span>
+              </div>
+              <button class="btn-add-bag" onclick="addToCart('The Daily 5-Seed Power Crunch Mix', 269, 'assets/product-seedmix.jpg')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                Add to Bag
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product 8: Dried Berries -->
+        <article class="product-card" data-category="seeds dried-fruits" data-mood="mindful immunity" data-id="8">
+          <div class="card-media">
+            <span class="card-tag">🫐 Superfood Berry</span>
+            <button class="btn-wish" onclick="toggleWish(this)" aria-label="Save to wishlist">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+            <img src="assets/product-berries.jpg" alt="Wild Dried Blueberries and Cranberries" />
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="card-origin">🌱 Pacific Northwest &amp; Canada</span>
+              <span class="card-rating">★ 4.9 <small>(98)</small></span>
+            </div>
+            <h3 class="card-title">Wild Blueberries &amp; Ruby Cranberries</h3>
+            <p class="card-desc">Naturally sun-dried berries with explosive sweet-tart flavor, bursting with age-defying anthocyanins.</p>
+
+            <div class="nutrition-pills">
+              <span class="nutri-pill berry">🌟 9,621 ORAC Antioxidants</span>
+              <span class="nutri-pill">🛡️ Urinary Health</span>
+              <span class="nutri-pill gold">✨ Vitamin C</span>
+            </div>
+
+            <button class="btn-facts-trigger" onclick="openNutritionModal(8)">
+              📊 View Nutrition Facts &amp; Benefits →
+            </button>
+
+            <div class="weight-selector">
+              <button class="weight-chip active" onclick="setWeight(this, 319, 360, '250g')">250g</button>
+              <button class="weight-chip" onclick="setWeight(this, 599, 690, '500g')">500g</button>
+              <button class="weight-chip" onclick="setWeight(this, 1099, 1250, '1kg')">1kg</button>
+            </div>
+
+            <div class="card-bottom">
+              <div class="price-group">
+                <span class="price-curr">₹319</span>
+                <span class="price-old">₹360</span>
+              </div>
+              <button class="btn-add-bag" onclick="addToCart('Wild Blueberries & Ruby Cranberries', 319, 'assets/product-berries.jpg')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                Add to Bag
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product 9: Roasted Watermelon Seeds -->
+        <article class="product-card" data-category="seeds" data-mood="energy mindful immunity" data-id="9">
+          <div class="card-media">
+            <span class="card-tag">⚡ 31g Plant Protein</span>
+            <button class="btn-wish" onclick="toggleWish(this)" aria-label="Save to wishlist">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+            <img src="assets/product-watermelon.jpg" alt="Slow-Roasted Crispy Watermelon Seeds" />
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="card-origin">🌱 Rajasthan &amp; Gujarat Sun-Harvest</span>
+              <span class="card-rating">★ 4.9 <small>(112)</small></span>
+            </div>
+            <h3 class="card-title">Slow-Roasted Crispy Watermelon Seeds</h3>
+            <p class="card-desc">Shelled tarbooj magaj kernels gently roasted with a pinch of rock salt; exceptionally high in protein, zinc, and magnesium.</p>
+
+            <div class="nutrition-pills">
+              <span class="nutri-pill">💪 30.6g Protein</span>
+              <span class="nutri-pill gold">🛡️ 10.2mg Zinc</span>
+              <span class="nutri-pill terracotta">🧠 515mg Magnesium</span>
+            </div>
+
+            <button class="btn-facts-trigger" onclick="openNutritionModal(9)">
+              📊 View Nutrition Facts &amp; Benefits →
+            </button>
+
+            <div class="weight-selector">
+              <button class="weight-chip active" onclick="setWeight(this, 189, 230, '250g')">250g</button>
+              <button class="weight-chip" onclick="setWeight(this, 349, 420, '500g')">500g</button>
+              <button class="weight-chip" onclick="setWeight(this, 649, 790, '1kg')">1kg</button>
+            </div>
+
+            <div class="card-bottom">
+              <div class="price-group">
+                <span class="price-curr">₹189</span>
+                <span class="price-old">₹230</span>
+              </div>
+              <button class="btn-add-bag" onclick="addToCart('Slow-Roasted Crispy Watermelon Seeds', 189, 'assets/product-watermelon.jpg')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                Add to Bag
+              </button>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- Sensory Brand Story -->
+      <section class="sensory-section" id="story">
+        <div class="sensory-grid">
+          <div class="sensory-text">
+            <span class="section-eyebrow">The drysee Philosophy</span>
+            <h2>Small everyday rituals, crafted with pure joy.</h2>
+            <p>
+              We believe snacking shouldn't be a hurried compromise filled with hidden palm oils, artificial glazes, and tired nuts that lost their snap weeks ago.
+            </p>
+            <p>
+              At drysee, we inspect every harvest lot by hand, roast slowly in small batches without added grease, and pack directly into light-blocking pouches. You taste the true freshness of the earth, just as nature intended.
+            </p>
+            <div class="sensory-features">
+              <div class="s-feat">
+                <b>🌿 100% Traceable</b>
+                <p>Origin printed transparently on every single pouch.</p>
+              </div>
+              <div class="s-feat">
+                <b>🥜 Hand-Sorted</b>
+                <p>Uniform size, zero shriveled kernels or dust.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="sensory-card-visual">
+            <div class="quote-mark">“</div>
+            <p class="sensory-quote">
+              The first time you crack open a drysee pouch, the fresh roasted aroma takes over the room. It’s impossible to eat just one handful.
+            </p>
+            <p style="font-size:0.95rem;opacity:0.9;"><b>Arunima Sengupta</b> — Bengaluru, Long-time subscriber</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Corporate Gifting & Wholesale Box -->
+      <section class="gifting-section" id="gifting">
+        <div class="gifting-card">
+          <div>
+            <div class="joyful-pill" style="background:rgba(255,255,255,0.15);color:#fff;border-color:rgba(255,255,255,0.3)">
+              🎁 Festive &amp; B2B Gifting
+            </div>
+            <h2>Gifts that celebrate health and warmth.</h2>
+            <p>
+              Elevate your corporate gifting, wedding favors, and festive celebrations with handcrafted walnut-wood gift boxes and personalized brand sleeves.
+            </p>
+            <div class="gift-actions">
+              <button class="btn btn-warm" onclick="notify('Our corporate concierge will reach out within 2 business hours! 🎁')">
+                Request Gifting Catalog →
+              </button>
+              <a href="#shop" class="btn btn-secondary" style="background:transparent;color:#fff;border-color:rgba(255,255,255,0.4)">
+                Explore Samples
+              </a>
+            </div>
+          </div>
+          <div>
+            <div style="background:rgba(255,255,255,0.08);border-radius:18px;padding:26px;border:1px solid rgba(255,255,255,0.15)">
+              <h4 style="font-size:1.15rem;margin-bottom:12px">Why Companies Choose drysee:</h4>
+              <ul style="font-size:0.88rem;line-height:1.8;padding-left:18px;color:#d1dcd5">
+                <li>Bespoke branded packaging &amp; note cards</li>
+                <li>Direct doorstep delivery to 500+ employee homes</li>
+                <li>FSSAI certified, GST-compliant invoicing</li>
+                <li>Exclusive wholesale tiered rates</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Testimonials -->
+      <section class="reviews-section" id="reviews">
+        <div class="section-header">
+          <span class="section-eyebrow">Real Experiences</span>
+          <h2 class="section-title">Loved across 5,200+ happy homes</h2>
+          <p class="section-sub">Here is what our snacking community has to say about their daily crunch.</p>
+        </div>
+
+        <div class="reviews-grid">
+          <div class="review-card">
+            <div>
+              <div class="review-stars">★★★★★</div>
+              <p class="review-text">“The difference between supermarket almonds and drysee is night and day. You can actually taste the sweet almond oil, and the crunch is unreal.”</p>
+            </div>
+            <div class="reviewer">
+              <div class="reviewer-img">R</div>
+              <div>
+                <div class="reviewer-name">Rahul Mehra</div>
+                <div class="reviewer-city">Mumbai · Verified Buyer</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="review-card">
+            <div>
+              <div class="review-stars">★★★★★</div>
+              <p class="review-text">“We ordered 120 Diwali gift hampers for our client partners. The presentation in the earthy gift boxes with custom ribbons was stunning. Everyone loved it!”</p>
+            </div>
+            <div class="reviewer">
+              <div class="reviewer-img">S</div>
+              <div>
+                <div class="reviewer-name">Sneha Kapoor</div>
+                <div class="reviewer-city">Gurugram · HR Director</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="review-card">
+            <div>
+              <div class="review-stars">★★★★★</div>
+              <p class="review-text">“The 5-seed power mix with pumpkin, sunflower, and chia is my morning smoothie savior. Zero guilt, clean energy, and delivery is super fast.”</p>
+            </div>
+            <div class="reviewer">
+              <div class="reviewer-img">V</div>
+              <div>
+                <div class="reviewer-name">Vikramaditya N.</div>
+                <div class="reviewer-city">Hyderabad · Fitness Enthusiast</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Nutrition Facts Modal -->
+    <div class="modal-overlay" id="nutrition-modal" onclick="if(event.target===this) closeNutritionModal()">
+      <div class="modal-card">
+        <button class="modal-close" onclick="closeNutritionModal()" aria-label="Close">&times;</button>
+        <div id="modal-content">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="logo" href="#home" aria-label="drysee">
+            <img src="assets/logo-light.svg" alt="drysee logo" class="logo-full" style="height:48px" />
+          </a>
+          <p>
+            Purely Packed. Joyfully Shared.<br>
+            Sun-ripened dry fruits, whole nuts, and organic seeds delivered directly to homes and workplaces across India.
+          </p>
+        </div>
+
+        <div>
+          <h4>Shop Harvest</h4>
+          <a href="#shop" onclick="selectCategory('nuts')">California Almonds</a>
+          <a href="#shop" onclick="selectCategory('nuts')">Royal Jumbo Cashews</a>
+          <a href="#shop" onclick="selectCategory('nuts')">Kashmiri Walnuts</a>
+          <a href="#shop" onclick="selectCategory('nuts')">Iranian Pistachios</a>
+          <a href="#shop" onclick="selectCategory('seeds')">Super Seed Blends</a>
+        </div>
+
+        <div>
+          <h4>Customer Care</h4>
+          <a href="#" onclick="notify('Tracking portal opening...')">Track Your Order</a>
+          <a href="#" onclick="notify('Shipping policy: Dispatched within 24 hours.')">Shipping &amp; Delivery</a>
+          <a href="#" onclick="notify('Freshness Guarantee: 100% satisfaction or full refund.')">Freshness Guarantee</a>
+          <a href="#" onclick="notify('Contact our concierge: care@drysee.in')">Help &amp; FAQs</a>
+        </div>
+
+        <div>
+          <h4>Join the Crunch Club</h4>
+          <p style="font-size:0.86rem;color:#bec7c1;margin-bottom:14px">Get 10% off your first order plus secret festive drops.</p>
+          <form onsubmit="event.preventDefault(); notify('Welcome to the Crunch Club! 🎉 Check your inbox.'); this.reset();" style="display:flex;gap:8px">
+            <input type="email" placeholder="Your email address" required style="padding:10px 14px;border-radius:var(--radius-full);border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.08);color:#fff;font-size:0.85rem;flex:1" />
+            <button type="submit" class="btn btn-warm" style="padding:10px 18px;font-size:0.82rem">Join</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>© 2026 drysee Organic Goods Pvt Ltd. All rights reserved.</div>
+        <div style="display:flex;gap:20px">
+          <a href="#" style="margin:0">FSSAI Lic. 10021011000421</a>
+          <span>·</span>
+          <a href="#" style="margin:0">Privacy Policy</a>
+          <span>·</span>
+          <a href="#" style="margin:0">Terms of Service</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Slide-over Cart Drawer -->
+    <div class="cart-overlay" id="cart-overlay" onclick="if(event.target===this) toggleCart()">
+      <div class="cart-drawer">
+        <div class="cart-header">
+          <h3>Your Snack Bag (<span id="cart-drawer-count">2</span>)</h3>
+          <button class="cart-close-btn" onclick="toggleCart()" aria-label="Close cart">&times;</button>
+        </div>
+
+        <div class="cart-free-shipping">
+          <div id="ship-msg">Add <b>₹261</b> more for <b>FREE Express Delivery</b>! 🚚</div>
+          <div class="free-ship-bar">
+            <div class="free-ship-fill" id="ship-bar-fill" style="width: 74%;"></div>
+          </div>
+        </div>
+
+        <div class="cart-items" id="cart-items-container">
+          <!-- Populated by JS -->
+        </div>
+
+        <div class="cart-footer">
+          <div class="cart-total-row">
+            <span>Subtotal</span>
+            <span id="cart-subtotal">₹738</span>
+          </div>
+          <button class="btn-checkout" onclick="checkout()">
+            Proceed to Checkout →
+          </button>
+          <div style="text-align:center;font-size:0.75rem;color:#85938a;margin-top:10px">
+            🔒 256-Bit SSL Encrypted Checkout · UPI, Cards &amp; COD Accepted
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer Menu -->
+    <div class="mobile-menu" id="mobile-menu" onclick="if(event.target===this) toggleMobileMenu()">
+      <div class="mobile-panel">
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+            <img src="assets/logo.svg" alt="drysee" style="height:38px" />
+            <button onclick="toggleMobileMenu()" style="font-size:1.8rem;color:var(--forest)">&times;</button>
+          </div>
+          <div class="mobile-links">
+            <a href="#shop" onclick="toggleMobileMenu()">Shop All</a>
+            <a href="#shop" onclick="selectCategory('nuts'); toggleMobileMenu()">Dry Fruits &amp; Nuts</a>
+            <a href="#shop" onclick="selectCategory('seeds'); toggleMobileMenu()">Super Seeds</a>
+            <a href="#story" onclick="toggleMobileMenu()">Our Story</a>
+            <a href="#gifting" onclick="toggleMobileMenu()">Corporate Gifting</a>
+          </div>
+        </div>
+        <div>
+          <button class="btn btn-warm" style="width:100%" onclick="toggleCart(); toggleMobileMenu()">
+            View Bag 🛍️
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script>
+      // Nutrition Facts Database
+      const nutritionDB = {
+        1: {
+          title: "California Roasted Almonds",
+          origin: "California, Nonpareil Grade",
+          serving: "30g (approx. 23 kernels)",
+          calories: "174 kcal",
+          protein: "6.4g (21.2g per 100g)",
+          fat: "14.9g (Healthy Monounsaturated: 9.5g)",
+          carbs: "6.1g (Dietary Fiber: 3.7g, Net Carbs: 2.4g)",
+          vitamins: "Vitamin E (37% DV), Magnesium (20% DV), Calcium (8% DV), Iron (6% DV)",
+          benefits: [
+            "Rich in alpha-tocopherol Vitamin E, defending skin against UV and oxidative stress.",
+            "High dietary fiber promotes smooth digestion and long-lasting satiety.",
+            "Monounsaturated fatty acids actively help regulate and lower LDL cholesterol."
+          ]
+        },
+        2: {
+          title: "Royal Jumbo Whole Cashews",
+          origin: "Goa & Mangalore Coastline",
+          serving: "30g (approx. 18 kernels)",
+          calories: "166 kcal",
+          protein: "5.5g (18.2g per 100g)",
+          fat: "13.1g (Zero Cholesterol, Heart-Friendly Oleic Acid)",
+          carbs: "9.1g (Dietary Fiber: 1.1g)",
+          vitamins: "Copper (70% DV), Magnesium (21% DV), Zinc (15% DV), Phosphorus (13% DV)",
+          benefits: [
+            "Exceptional plant copper and zinc for building immune resilience and collagen.",
+            "Abundant magnesium supports muscular relaxation, nerve calm, and restful sleep.",
+            "Zero cholesterol and heart-safe fats that nourish brain health without heaviness."
+          ]
+        },
+        3: {
+          title: "Kashmiri Golden Walnut Halves",
+          origin: "Kashmiri Mountain Valleys",
+          serving: "30g (approx. 14 halves)",
+          calories: "196 kcal",
+          protein: "4.6g (15.2g per 100g)",
+          fat: "19.5g (Plant Omega-3 ALA: 2.7g per serving)",
+          carbs: "4.1g (Dietary Fiber: 2.0g)",
+          vitamins: "Manganese (48% DV), Copper (22% DV), Vitamin B6 (8% DV), Folate",
+          benefits: [
+            "Contains highest plant Omega-3 ALA of any nut, powering brain cognition and memory.",
+            "Bioactive polyphenols fight arterial inflammation and support cardiac elasticity.",
+            "Natural source of melatonin for encouraging deep circadian sleep cycles."
+          ]
+        },
+        4: {
+          title: "Slow-Roasted In-Shell Pistachios",
+          origin: "California & Iranian Valleys",
+          serving: "30g (approx. 49 kernels)",
+          calories: "168 kcal",
+          protein: "6.1g (20.3g per 100g)",
+          fat: "13.3g (Low Saturated Fat: 1.6g)",
+          carbs: "8.2g (Dietary Fiber: 3.1g)",
+          vitamins: "Vitamin B6 (24% DV), Thiamine (21% DV), Potassium (310mg), Lutein",
+          benefits: [
+            "Abundant in lutein & zeaxanthin antioxidants that shield retinal eye health from blue light.",
+            "One of the lowest calorie, highest protein snack nuts for active weight management.",
+            "Vitamin B6 supports nervous system equilibrium and red blood cell formation."
+          ]
+        },
+        5: {
+          title: "Royal Medjool Dates & Turkish Figs",
+          origin: "Jordanian Valley & Aegean Turkey",
+          serving: "40g (2 Medjool Dates / 2 Figs)",
+          calories: "115 kcal",
+          protein: "1.2g",
+          fat: "0.2g (Virtually Fat Free)",
+          carbs: "30.0g (Dietary Fiber: 3.2g, 100% Raw Fruit Sugars)",
+          vitamins: "Potassium (280mg), Calcium (35mg), Iron (1.1mg), Magnesium",
+          benefits: [
+            "Quick-release natural glucose and fructose for pre-workout and afternoon vitality.",
+            "Rich in soluble pectin fiber from Turkish figs, soothing digestion and gut flora.",
+            "Natural iron and copper support red blood cell vitality and combat afternoon fatigue."
+          ]
+        },
+        6: {
+          title: "Organic Chia & Golden Flax Seeds",
+          origin: "Certified Organic Farms, Central India",
+          serving: "20g (approx. 2 tablespoons)",
+          calories: "102 kcal",
+          protein: "4.1g (20.5g per 100g)",
+          fat: "7.1g (Omega-3 ALA: 3.8g per serving)",
+          carbs: "7.8g (Soluble Fiber: 6.9g, Net Carbs: 0.9g)",
+          vitamins: "Calcium (135mg - 14% DV), Phosphorus (18% DV), Lignans",
+          benefits: [
+            "Absorbs 10x its weight in liquid, hydrating muscles and sustaining fullness for hours.",
+            "Richest plant source of lignans, offering cellular hormonal and cardiac balance.",
+            "Near-zero net carbs, making it the ultimate keto-friendly superfood booster."
+          ]
+        },
+        7: {
+          title: "The Daily 5-Seed Power Crunch Mix",
+          origin: "Sun-Dried Harvest Blend, India",
+          serving: "30g (approx. 3 tablespoons)",
+          calories: "175 kcal",
+          protein: "7.4g (24.5g per 100g)",
+          fat: "13.8g (Polyunsaturated: 7.2g, Monounsaturated: 4.8g)",
+          carbs: "5.5g (Dietary Fiber: 3.8g)",
+          vitamins: "Zinc (2.4mg - 22% DV), Magnesium (145mg - 36% DV), Iron (2.1mg)",
+          benefits: [
+            "Balanced 5-seed blend delivers complete amino acid plant protein profile.",
+            "High zinc and selenium content supports natural hair strength and cellular repair.",
+            "Delightful crispy crunch for oatmeal, greek yogurt bowls, or straight from the pouch."
+          ]
+        },
+        8: {
+          title: "Wild Blueberries & Ruby Cranberries",
+          origin: "Pacific Northwest & Canada",
+          serving: "30g (handful)",
+          calories: "92 kcal",
+          protein: "0.8g",
+          fat: "0.4g (Zero Saturated Fat)",
+          carbs: "22.5g (Dietary Fiber: 2.1g)",
+          vitamins: "Vitamin C (12% DV), Vitamin K (18% DV), Anthocyanins (9,621 ORAC)",
+          benefits: [
+            "Sky-high ORAC antioxidant score defends against premature cellular aging.",
+            "Unique proanthocyanidins (PACs) in cranberries support urinary and bladder health.",
+            "Tangy sweet burst that satisfies sugar cravings without processed sweets or guilt."
+          ]
+        },
+        9: {
+          title: "Slow-Roasted Crispy Watermelon Seeds (Tarbooj Magaj)",
+          origin: "Rajasthan & Gujarat Sun-Harvest",
+          serving: "30g (approx. 3 tablespoons)",
+          calories: "172 kcal",
+          protein: "9.2g (30.6g per 100g — Higher Protein than Almonds!)",
+          fat: "14.2g (Heart-Healthy Unsaturated Fats: 11.6g)",
+          carbs: "4.5g (Dietary Fiber: 2.1g, Net Carbs: 2.4g)",
+          vitamins: "Magnesium (155mg - 39% DV), Zinc (3.1mg - 28% DV), Iron (2.2mg - 12% DV), Folate",
+          benefits: [
+            "Remarkable 30.6% pure plant protein concentration—one of the highest natural seed protein sources.",
+            "Dense magnesium concentration fuels ATP cellular energy, muscle recovery, and metabolic vitality.",
+            "Abundant bioavailable zinc and iron enhance skin firmness, collagen formation, and immune stamina."
+          ]
+        }
+      };
+
+      function openNutritionModal(id) {
+        const item = nutritionDB[id];
+        if (!item) return;
+
+        const content = document.getElementById('modal-content');
+        content.innerHTML = `
+          <h3 class="modal-title">${item.title}</h3>
+          <div class="modal-sub">Origin: ${item.origin} · Serving: ${item.serving}</div>
+          
+          <table class="facts-table">
+            <thead>
+              <tr>
+                <th>Nutrient</th>
+                <th>Per Serving (${item.serving.split(' ')[0]})</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><b>Energy</b></td><td>${item.calories}</td></tr>
+              <tr><td><b>Protein</b></td><td>${item.protein}</td></tr>
+              <tr><td><b>Healthy Fats</b></td><td>${item.fat}</td></tr>
+              <tr><td><b>Carbohydrates</b></td><td>${item.carbs}</td></tr>
+              <tr><td><b>Vitamins &amp; Minerals</b></td><td>${item.vitamins}</td></tr>
+            </tbody>
+          </table>
+
+          <div class="benefits-box">
+            <h5>🌿 Key Health &amp; Wellness Benefits</h5>
+            <ul>
+              ${item.benefits.map(b => `<li>${b}</li>`).join('')}
+            </ul>
+          </div>
+
+          <div style="text-align:right">
+            <button class="btn btn-warm" style="padding:10px 22px;font-size:0.85rem" onclick="closeNutritionModal()">Got It, Thanks!</button>
+          </div>
+        `;
+
+        document.getElementById('nutrition-modal').classList.add('open');
+      }
+
+      function closeNutritionModal() {
+        document.getElementById('nutrition-modal').classList.remove('open');
+      }
+
+      // Filter by Primary Category
+      function filterCategory(cat, btn) {
+        const pills = document.querySelectorAll('.cat-pill');
+        pills.forEach(p => p.classList.remove('active'));
+        if (btn) btn.classList.add('active');
+
+        // Reset mood tags to all
+        document.querySelectorAll('.mood-tag').forEach(t => t.classList.remove('active'));
+        const allMoodTag = document.querySelector('.mood-tag');
+        if (allMoodTag) allMoodTag.classList.add('active');
+
+        const cards = document.querySelectorAll('.product-card');
+        cards.forEach(card => {
+          const cardCat = card.getAttribute('data-category') || '';
+          if (cat === 'all' || cardCat.includes(cat)) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      }
+
+      function selectCategory(cat) {
+        const catBtn = Array.from(document.querySelectorAll('.cat-pill')).find(b => b.getAttribute('onclick').includes(cat));
+        if (catBtn) {
+          filterCategory(cat, catBtn);
+        }
+      }
+
+      // Filter by Mood
+      function filterMood(mood, tag) {
+        const tags = document.querySelectorAll('.mood-tag');
+        tags.forEach(t => t.classList.remove('active'));
+        tag.classList.add('active');
+
+        // Also check if category filter is active
+        const activeCatPill = document.querySelector('.cat-pill.active');
+        let activeCat = 'all';
+        if (activeCatPill && activeCatPill.getAttribute('onclick')) {
+          const match = activeCatPill.getAttribute('onclick').match(/filterCategory\('([^']+)'/);
+          if (match) activeCat = match[1];
+        }
+
+        const cards = document.querySelectorAll('.product-card');
+        cards.forEach(card => {
+          const cardMood = card.getAttribute('data-mood') || '';
+          const cardCat = card.getAttribute('data-category') || '';
+          const catMatches = (activeCat === 'all' || cardCat.includes(activeCat));
+          const moodMatches = (mood === 'all' || cardMood.includes(mood));
+
+          if (catMatches && moodMatches) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      }
+
+      // Cart State Management
+      let cart = [
+        { id: 1, title: 'California Roasted Almonds', weight: '250g', price: 349, img: 'assets/product-almonds.jpg', qty: 1 },
+        { id: 2, title: 'Royal Jumbo Whole Cashews', weight: '250g', price: 389, img: 'assets/product-cashews.jpg', qty: 1 }
+      ];
+
+      function renderCart() {
+        const container = document.getElementById('cart-items-container');
+        const countBadges = document.querySelectorAll('#cart-count, #cart-drawer-count');
+        const subtotalEl = document.getElementById('cart-subtotal');
+        const shipMsg = document.getElementById('ship-msg');
+        const shipFill = document.getElementById('ship-bar-fill');
+
+        const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+        countBadges.forEach(b => b.textContent = totalItems);
+
+        if (cart.length === 0) {
+          container.innerHTML = `
+            <div style="text-align:center;padding:50px 20px;color:var(--ink-muted)">
+              <div style="font-size:3rem;margin-bottom:12px">🥜</div>
+              <h4 style="font-size:1.15rem;color:var(--forest);margin-bottom:6px">Your snack bag is empty</h4>
+              <p style="font-size:0.85rem">Fill it with our delicious, freshly roasted harvest.</p>
+              <button class="btn btn-warm" style="margin-top:20px" onclick="toggleCart()">Start Snacking</button>
+            </div>
+          `;
+          subtotalEl.textContent = '₹0';
+          shipFill.style.width = '0%';
+          shipMsg.innerHTML = 'Add <b>₹999</b> for <b>FREE Express Delivery</b>!';
+          return;
+        }
+
+        const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+        subtotalEl.textContent = '₹' + subtotal.toLocaleString('en-IN');
+
+        const freeThreshold = 999;
+        if (subtotal >= freeThreshold) {
+          shipMsg.innerHTML = '🎉 <b>Congratulations!</b> You unlocked <b>FREE Express Delivery</b>!';
+          shipFill.style.width = '100%';
+          shipFill.style.background = 'var(--leaf)';
+        } else {
+          const diff = freeThreshold - subtotal;
+          shipMsg.innerHTML = `Add <b>₹${diff}</b> more for <b>FREE Express Delivery</b>! 🚚`;
+          const pct = Math.min(100, Math.round((subtotal / freeThreshold) * 100));
+          shipFill.style.width = pct + '%';
+          shipFill.style.background = 'var(--honey)';
+        }
+
+        container.innerHTML = cart.map((item, idx) => `
+          <div class="cart-item">
+            <img src="${item.img}" alt="${item.title}" class="cart-thumb" />
+            <div class="cart-item-info">
+              <div class="cart-item-title">${item.title}</div>
+              <div class="cart-item-weight">${item.weight}</div>
+              <div class="cart-qty-row">
+                <div class="qty-stepper">
+                  <button class="qty-btn" onclick="updateQty(${idx}, -1)">&minus;</button>
+                  <span class="qty-val">${item.qty}</span>
+                  <button class="qty-btn" onclick="updateQty(${idx}, 1)">&plus;</button>
+                </div>
+                <div class="cart-item-price">₹${(item.price * item.qty).toLocaleString('en-IN')}</div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      function updateQty(index, delta) {
+        if (!cart[index]) return;
+        cart[index].qty += delta;
+        if (cart[index].qty <= 0) {
+          notify(`Removed ${cart[index].title} from bag.`);
+          cart.splice(index, 1);
+        }
+        renderCart();
+      }
+
+      function addToCart(title, price, img) {
+        const existing = cart.find(i => i.title === title && i.price === price);
+        if (existing) {
+          existing.qty++;
+        } else {
+          cart.push({ id: Date.now(), title, weight: '250g', price, img, qty: 1 });
+        }
+        renderCart();
+        notify(`Yum! Added ${title} to your bag 🛍️`);
+        const overlay = document.getElementById('cart-overlay');
+        if (!overlay.classList.contains('open')) {
+          overlay.classList.add('open');
+        }
+      }
+
+      function toggleCart() {
+        const overlay = document.getElementById('cart-overlay');
+        overlay.classList.toggle('open');
+      }
+
+      function toggleMobileMenu() {
+        const menu = document.getElementById('mobile-menu');
+        menu.classList.toggle('open');
+      }
+
+      function openSearch() {
+        const query = prompt('Search our harvest (e.g. Pistachios, Cashews, Dates, Chia seeds):');
+        if (query) {
+          notify(`Searching harvest for "${query}"...`);
+          const el = document.getElementById('shop');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+
+      function openWishlistToast() {
+        notify('Your wishlist has 3 saved favorites ❤️');
+      }
+
+      function checkout() {
+        if (cart.length === 0) {
+          notify('Your bag is empty! Add some goodness first.');
+          return;
+        }
+        notify('🚀 Directing to secure payment gateway...');
+      }
+
+      // Dynamic Weight selector chips
+      function setWeight(btn, price, oldPrice, weightStr) {
+        const card = btn.closest('.product-card');
+        const chips = card.querySelectorAll('.weight-chip');
+        chips.forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+
+        const currEl = card.querySelector('.price-curr');
+        const oldEl = card.querySelector('.price-old');
+        currEl.textContent = '₹' + price;
+        oldEl.textContent = '₹' + oldPrice;
+
+        const addBtn = card.querySelector('.btn-add-bag');
+        const title = card.querySelector('.card-title').textContent;
+        const img = card.querySelector('.card-media img').getAttribute('src');
+        addBtn.setAttribute('onclick', `addToCart('${title} (${weightStr})', ${price}, '${img}')`);
+      }
+
+      // Wishlist toggle
+      function toggleWish(btn) {
+        const active = btn.classList.toggle('active');
+        const count = document.getElementById('wishlist-count');
+        let current = parseInt(count.textContent) || 0;
+        count.textContent = active ? current + 1 : Math.max(0, current - 1);
+        notify(active ? 'Saved to your wishlist ❤️' : 'Removed from wishlist');
+      }
+
+      // Toast Feedback
+      function notify(msg) {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 2800);
+      }
+
+      // Initial Cart Render
+      window.addEventListener('DOMContentLoaded', () => {
+        renderCart();
+      });
+    </script>
+  </body>
+</html>

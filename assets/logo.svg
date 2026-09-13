@@ -1,0 +1,70 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 76" fill="none" width="100%" height="100%">
+  <defs>
+    <linearGradient id="c2LeafH" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6F9264" />
+      <stop offset="100%" stop-color="#96B48B" />
+    </linearGradient>
+    <linearGradient id="c2Gold1H" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#DFC090" />
+      <stop offset="100%" stop-color="#B88A52" />
+    </linearGradient>
+    <linearGradient id="c2Gold2H" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ECCFA0" />
+      <stop offset="100%" stop-color="#C5975F" />
+    </linearGradient>
+    <linearGradient id="c2StemH" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4F7146" />
+      <stop offset="100%" stop-color="#80A175" />
+    </linearGradient>
+  </defs>
+
+  <!-- Left Icon Mark -->
+  <g transform="translate(6, 4) scale(0.68)">
+    <!-- Stem & vine curl -->
+    <path d="M 12 50 C 10 44 11 38 14 36 C 17 34 20 37 19 41 C 18 45 14 47 13 54 C 12 63 17 72 24 74 C 27 75 29 73 28 70 C 26 64 24 54 26 42" 
+          stroke="url(#c2StemH)" stroke-width="3" stroke-linecap="round" fill="none" />
+    <circle cx="15" cy="37" r="2.5" fill="#80A175" />
+
+    <!-- Soft Sage Leaf (top-left) -->
+    <path d="M 25 42 C 24 30 31 18 47 12 C 49 26 43 38 29 44 C 27 45 25 44 25 42 Z" 
+          fill="url(#c2LeafH)" />
+    <path d="M 28 41 C 34 32 39 23 45 15" 
+          stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round" opacity="0.4" />
+
+    <!-- Primary Almond Seed (center-right, angled 24deg) -->
+    <g transform="rotate(24 64 42)">
+      <path d="M 64 12 C 78 22 84 40 76 60 C 66 74 52 70 48 54 C 44 38 52 18 64 12 Z" 
+            stroke="url(#c2Gold1H)" stroke-width="4.5" stroke-linejoin="round" fill="#FAF6EE" />
+      <path d="M 62 20 C 72 28 75 42 68 54 C 64 60 58 60 56 50" 
+            stroke="url(#c2Gold1H)" stroke-width="2.2" stroke-linecap="round" fill="none" opacity="0.75" />
+    </g>
+
+    <!-- Secondary Almond Seed (lower-left, nested 48deg) -->
+    <g transform="rotate(48 40 62)">
+      <path d="M 40 32 C 54 40 58 56 50 72 C 42 82 30 78 26 64 C 22 52 30 36 40 32 Z" 
+            stroke="url(#c2Gold2H)" stroke-width="4.2" stroke-linejoin="round" fill="#FDFBF7" />
+      <path d="M 39 39 C 48 45 50 56 44 66 C 40 71 36 69 34 62" 
+            stroke="url(#c2Gold2H)" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.7" />
+    </g>
+  </g>
+
+  <!-- Typography: Concept 2 Strong Serif Wordmark -->
+  <g transform="translate(80, 0)">
+    <!-- Wordmark "drysee" with high-contrast bold serif -->
+    <text x="0" y="47" 
+          font-family="'Playfair Display', Georgia, 'Times New Roman', serif" 
+          font-weight="800" 
+          font-size="46" 
+          letter-spacing="-0.035em" 
+          fill="#1C382B">dry<tspan fill="#244B3B">see</tspan></text>
+    
+    <!-- Subtitle tagline -->
+    <text x="2" y="66" 
+          font-family="'DM Sans', -apple-system, sans-serif" 
+          font-weight="700" 
+          font-size="8.8" 
+          letter-spacing="0.22em" 
+          fill="#6B7D72" 
+          text-transform="uppercase">PREMIUM ORGANIC DRY FRUITS &amp; SEEDS</text>
+  </g>
+</svg>
