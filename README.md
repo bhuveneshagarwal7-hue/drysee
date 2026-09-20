@@ -2,7 +2,7 @@
 
 > Premium handpicked dry fruits, nuts, berries, and super seeds delivered across India with sunshine crunch.
 
-Live Website: **[https://bhuveneshagarwal7-hue.github.io/drysee/](https://bhuveneshagarwal7-hue.github.io/drysee/)**
+Live Website: **[https://drysee.in/](https://drysee.in/)** (also mirrors on [GitHub Pages](https://bhuveneshagarwal7-hue.github.io/drysee/))
 
 ## ✨ Features
 - **Artisanal Food Photography**: High-resolution editorial imagery for all 10 harvest products and a signature hero visual featuring roasted watermelon seeds, pumpkin seeds, and premium dry fruits.
