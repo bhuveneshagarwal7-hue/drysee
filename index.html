@@ -1230,7 +1230,7 @@
           </div>
           <h1>Purely packed.<br><span class="highlight">Joyfully shared.</span></h1>
           <p>
-            From California nonpareil almonds and royal jumbo cashews to mineral-rich pumpkin and super seeds. Each kernel is handpicked, slow-roasted, and AromaLock™ packed for clean energy and joyful nourishment.
+            From California almonds and jumbo cashews to high-protein watermelon seeds (tarbooj magaj) and emerald pumpkin seeds. Each batch is handpicked, slow-roasted, and AromaLock™ packed for clean energy, sunshine crunch, and pure vitality.
           </p>
           <div class="hero-cta-group">
             <a href="#shop" class="btn btn-warm">Shop All Harvest →</a>
@@ -1252,7 +1252,7 @@
 
         <div class="hero-media">
           <div class="hero-frame">
-            <img src="assets/hero-dryfruits.jpg" alt="drysee artisanal dry fruits and seeds bowl" />
+            <img src="assets/hero-dryfruits.jpg" alt="drysee artisanal dry fruits, watermelon seeds, and pumpkin seeds harvest" />
           </div>
           <div class="float-badge top-right">
             <div class="badge-icon-box">🌰</div>
@@ -1264,8 +1264,8 @@
           <div class="float-badge bottom-left">
             <div class="badge-icon-box">🌱</div>
             <div>
-              <h5>100% Raw &amp; Pure</h5>
-              <p>Zero preservatives or oils</p>
+              <h5>Watermelon &amp; Pumpkin Seeds</h5>
+              <p>High protein &amp; mineral rich</p>
             </div>
           </div>
         </div>
@@ -1764,6 +1764,52 @@
             </div>
           </div>
         </article>
+
+        <!-- Product 10: Raw Green Pumpkin Seeds -->
+        <article class="product-card" data-category="seeds" data-mood="energy mindful immunity" data-id="10">
+          <div class="card-media">
+            <span class="card-tag">🌿 AAA Grade Pepitas</span>
+            <button class="btn-wish" onclick="toggleWish(this)" aria-label="Save to wishlist">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+            <img src="assets/product-pumpkin.jpg" alt="AAA Grade Raw Green Pumpkin Seeds" />
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="card-origin">🌱 Certified Organic Farms, India</span>
+              <span class="card-rating">★ 4.9 <small>(146)</small></span>
+            </div>
+            <h3 class="card-title">AAA Grade Raw Green Pumpkin Seeds</h3>
+            <p class="card-desc">Plump, vibrant emerald pepitas rich in zinc, magnesium, and natural tryptophan for immune stamina and restorative sleep.</p>
+
+            <div class="nutrition-pills">
+              <span class="nutri-pill">💪 30.2g Protein</span>
+              <span class="nutri-pill gold">🛡️ 7.8mg Zinc (71% DV)</span>
+              <span class="nutri-pill terracotta">😴 592mg Magnesium</span>
+            </div>
+
+            <button class="btn-facts-trigger" onclick="openNutritionModal(10)">
+              📊 View Nutrition Facts &amp; Benefits →
+            </button>
+
+            <div class="weight-selector">
+              <button class="weight-chip active" onclick="setWeight(this, 219, 260, '250g')">250g</button>
+              <button class="weight-chip" onclick="setWeight(this, 399, 480, '500g')">500g</button>
+              <button class="weight-chip" onclick="setWeight(this, 749, 920, '1kg')">1kg</button>
+            </div>
+
+            <div class="card-bottom">
+              <div class="price-group">
+                <span class="price-curr">₹219</span>
+                <span class="price-old">₹260</span>
+              </div>
+              <button class="btn-add-bag" onclick="addToCart('AAA Grade Raw Green Pumpkin Seeds', 219, 'assets/product-pumpkin.jpg')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                Add to Bag
+              </button>
+            </div>
+          </div>
+        </article>
       </section>
 
       <!-- Sensory Brand Story -->
@@ -2147,6 +2193,21 @@
             "Remarkable 30.6% pure plant protein concentration—one of the highest natural seed protein sources.",
             "Dense magnesium concentration fuels ATP cellular energy, muscle recovery, and metabolic vitality.",
             "Abundant bioavailable zinc and iron enhance skin firmness, collagen formation, and immune stamina."
+          ]
+        },
+        10: {
+          title: "AAA Grade Raw Green Pumpkin Seeds (Pepitas)",
+          origin: "Certified Organic Farms, Central India",
+          serving: "30g (approx. 3 tablespoons)",
+          calories: "163 kcal",
+          protein: "9.0g (30.2g per 100g)",
+          fat: "13.9g (Rich in Omega-6 and Oleic Acid)",
+          carbs: "4.2g (Dietary Fiber: 2.3g, Net Carbs: 1.9g)",
+          vitamins: "Magnesium (168mg - 42% DV), Zinc (2.4mg - 22% DV), Iron (2.5mg - 14% DV), Tryptophan",
+          benefits: [
+            "Dense natural zinc and plant sterols enhance cellular immunity, skin glow, and natural vitality.",
+            "High magnesium and natural L-tryptophan amino acids encourage muscle calmness and restorative deep sleep.",
+            "Superior 30% plant protein powerhouse that enriches morning breakfast bowls, fresh salads, or daily trail mix."
           ]
         }
       };
