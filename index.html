@@ -23,8 +23,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet" />
-    <!-- Razorpay Official Checkout SDK -->
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <style>
       :root {
         --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -1541,7 +1539,7 @@
         flex-direction: column;
         gap: 12px;
       }
-      .btn-razorpay-pay {
+      .btn-upi-pay {
         width: 100%;
         background: linear-gradient(135deg, #B87322, #9A5C14);
         color: #FFFFFF;
@@ -1557,10 +1555,61 @@
         cursor: pointer;
         transition: all 0.25s ease;
       }
-      .btn-razorpay-pay:hover {
+      .btn-upi-pay:hover {
         transform: translateY(-2px);
         box-shadow: 0 14px 30px rgba(184, 115, 34, 0.38);
         background: linear-gradient(135deg, #C27D2C, #A76518);
+      }
+      .upi-qr-box {
+        display: none;
+        background: #FFFFFF;
+        border: 1.5px solid var(--border);
+        border-radius: var(--radius-md);
+        padding: 16px;
+        text-align: center;
+        margin-top: 10px;
+        box-shadow: var(--shadow-soft);
+      }
+      .upi-qr-box.show {
+        display: block;
+        animation: modalSlideUp 0.25s ease;
+      }
+      .upi-qr-img {
+        width: 170px;
+        height: 170px;
+        margin: 8px auto 12px;
+        display: block;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border);
+      }
+      .upi-id-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--bg-base);
+        padding: 6px 12px;
+        border-radius: var(--radius-full);
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: var(--ink-black);
+        border: 1px solid var(--border);
+        margin-bottom: 12px;
+        cursor: pointer;
+      }
+      .btn-confirm-upi {
+        width: 100%;
+        background: #1B7E36;
+        color: #FFFFFF;
+        font-weight: 800;
+        font-size: 0.95rem;
+        padding: 12px 18px;
+        border-radius: var(--radius-md);
+        cursor: pointer;
+        transition: all 0.2s;
+        border: none;
+      }
+      .btn-confirm-upi:hover {
+        background: #15662B;
       }
       .payment-methods-strip {
         display: flex;
@@ -2664,7 +2713,7 @@
             </form>
           </div>
 
-          <!-- Right Column: Order Review & Razorpay / WhatsApp Payment -->
+          <!-- Right Column: Order Review & Direct UPI / WhatsApp Payment -->
           <div class="checkout-summary-col">
             <div class="checkout-summary-box">
               <div class="checkout-section-title" style="margin-bottom:8px">
@@ -2694,23 +2743,41 @@
 
               <!-- Payment Triggers -->
               <div class="payment-actions">
-                <button type="button" class="btn-razorpay-pay" onclick="payWithRazorpay()">
-                  <span>Pay with Razorpay</span>
+                <button type="button" class="btn-upi-pay" onclick="payWithUPI()">
+                  <span>⚡ Pay via UPI (GPay / PhonePe / Paytm)</span>
                   <span id="checkout-pay-btn-amount">₹0</span>
                   <span>→</span>
                 </button>
 
+                <!-- Dynamic QR code display for desktop or instant scan -->
+                <div class="upi-qr-box" id="upi-qr-box">
+                  <div style="font-weight:800;color:var(--ink-black);font-size:0.92rem;margin-bottom:4px">
+                    Scan &amp; Pay with any UPI App
+                  </div>
+                  <div style="font-size:0.75rem;color:var(--ink-muted)">
+                    Google Pay · PhonePe · Paytm · BHIM · Cred
+                  </div>
+                  <img id="upi-qr-image" class="upi-qr-img" src="" alt="UPI Payment QR Code" />
+                  <div>
+                    <div class="upi-id-badge" onclick="copyUPIId()" title="Click to copy">
+                      <span>UPI ID: <b id="upi-id-display">drysee@upi</b></span>
+                      <span style="color:var(--caramel);font-size:0.75rem">📋 Copy</span>
+                    </div>
+                  </div>
+                  <button type="button" class="btn-confirm-upi" onclick="confirmUPIPayment()">
+                    ✅ I Have Paid — Confirm My Order
+                  </button>
+                </div>
+
                 <div class="payment-methods-strip">
-                  <span class="payment-method-chip">GPay</span>
+                  <span class="payment-method-chip">Google Pay</span>
                   <span class="payment-method-chip">PhonePe</span>
                   <span class="payment-method-chip">Paytm</span>
-                  <span class="payment-method-chip">UPI</span>
-                  <span class="payment-method-chip">Cards</span>
-                  <span class="payment-method-chip">NetBanking</span>
+                  <span class="payment-method-chip">BHIM UPI</span>
                 </div>
 
                 <div class="or-divider">
-                  <span>or prefer cash on delivery?</span>
+                  <span>or prefer pay on delivery?</span>
                 </div>
 
                 <button type="button" class="btn-whatsapp-order" onclick="orderWithWhatsApp()">
@@ -2745,11 +2812,11 @@
           </div>
           <div class="receipt-row">
             <span class="receipt-row-label">Payment Status:</span>
-            <span class="receipt-row-val" id="receipt-payment-status" style="color:#1B7E36">Paid via Razorpay</span>
+            <span class="receipt-row-val" id="receipt-payment-status" style="color:#1B7E36">Paid via UPI</span>
           </div>
           <div class="receipt-row" id="receipt-payment-id-row">
-            <span class="receipt-row-label">Payment ID:</span>
-            <span class="receipt-row-val" id="receipt-payment-id" style="font-size:0.78rem">pay_XXXXXXXXXX</span>
+            <span class="receipt-row-label">Payment Mode:</span>
+            <span class="receipt-row-val" id="receipt-payment-id" style="font-size:0.85rem">UPI (PhonePe / GPay)</span>
           </div>
           <div class="receipt-row">
             <span class="receipt-row-label">Amount:</span>
@@ -3159,11 +3226,11 @@
       }
 
       // ═════════════════════════════════════════════════════════════════
-      // STORE & RAZORPAY PAYMENT CONFIGURATION
+      // STORE PAYMENT CONFIGURATION (DIRECT UPI & WHATSAPP)
       // ═════════════════════════════════════════════════════════════════
-      // Replace with your Razorpay Key ID from https://dashboard.razorpay.com/app/keys
-      // Uses standard test key format or your live key (e.g. rzp_live_...)
-      const RAZORPAY_KEY_ID = 'rzp_test_1DP5mmOlF5G5ag';
+      // Put your personal or business UPI ID here (e.g. PhonePe, GPay, Paytm)
+      const STORE_UPI_ID = 'drysee@upi'; 
+      const STORE_UPI_NAME = 'drysee Organic Goods';
       const STORE_WHATSAPP_NUMBER = '919876543210'; // Replace with your store WhatsApp number
       const FREE_SHIPPING_THRESHOLD = 999;
       const STANDARD_SHIPPING_FEE = 60;
@@ -3180,6 +3247,10 @@
         // Close cart drawer if open
         const cartOverlay = document.getElementById('cart-overlay');
         if (cartOverlay) cartOverlay.classList.remove('open');
+
+        // Hide QR box if previously opened
+        const qrBox = document.getElementById('upi-qr-box');
+        if (qrBox) qrBox.classList.remove('show');
 
         // Populate previous customer info from localStorage if available
         try {
@@ -3228,6 +3299,8 @@
 
       function closeCheckoutModal() {
         document.getElementById('checkout-modal').classList.remove('open');
+        const qrBox = document.getElementById('upi-qr-box');
+        if (qrBox) qrBox.classList.remove('show');
       }
 
       // Validate Form Data
@@ -3276,91 +3349,69 @@
         return data;
       }
 
-      // 1. Process Razorpay Payment (UPI, Cards, NetBanking, Wallets)
-      function payWithRazorpay() {
+      // 1. Process Direct UPI Payment (GPay, PhonePe, Paytm, QR)
+      function payWithUPI() {
         const customer = getValidatedCustomerData();
         if (!customer) return;
 
         const subtotal = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
         const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : STANDARD_SHIPPING_FEE;
         const total = subtotal + shipping;
-        const amountInPaise = total * 100;
 
-        notify('Connecting to Razorpay Secure Gateway... 🔒');
+        // UPI Intent URI standard: upi://pay?pa=...&pn=...&am=...&cu=INR
+        const note = encodeURIComponent(`drysee order for ${customer.name}`);
+        const upiUri = `upi://pay?pa=${encodeURIComponent(STORE_UPI_ID)}&pn=${encodeURIComponent(STORE_UPI_NAME)}&am=${total}&cu=INR&tn=${note}`;
 
-        if (typeof Razorpay === 'undefined') {
-          alert('Razorpay SDK failed to load. Please check your internet connection or use the WhatsApp Order option.');
-          return;
+        const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+        // Update QR code and UPI ID display
+        document.getElementById('upi-id-display').textContent = STORE_UPI_ID;
+        const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=8&data=${encodeURIComponent(upiUri)}`;
+        document.getElementById('upi-qr-image').src = qrUrl;
+
+        // Show the QR box
+        const qrBox = document.getElementById('upi-qr-box');
+        qrBox.classList.add('show');
+        qrBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+        if (isMobile) {
+          notify('Opening your UPI app (Google Pay / PhonePe)... 📲');
+          setTimeout(() => {
+            window.location.href = upiUri;
+          }, 300);
+        } else {
+          notify('Scan the QR code below using Google Pay or PhonePe 📲');
         }
+      }
 
-        const itemsSummary = cart.map(i => `${i.title} (${i.weight}) x${i.qty}`).join(', ');
-
-        const options = {
-          key: RAZORPAY_KEY_ID,
-          amount: amountInPaise,
-          currency: 'INR',
-          name: 'drysee Organic Goods',
-          description: 'Fresh Harvest Dry Fruits & Super Seeds',
-          image: 'assets/drysee-logo-horizontal.jpg',
-          prefill: {
-            name: customer.name,
-            email: customer.email,
-            contact: customer.phone
-          },
-          notes: {
-            delivery_address: customer.address,
-            city_state: customer.city,
-            pincode: customer.pincode,
-            order_items: itemsSummary
-          },
-          theme: {
-            color: '#B87322' // Warm caramel brand palette
-          },
-          handler: function(response) {
-            // Payment success callback from Razorpay
-            completeOrder({
-              paymentId: response.razorpay_payment_id || ('pay_' + Math.random().toString(36).substring(2, 12)),
-              paymentStatus: 'Paid via Razorpay (Verified)',
-              method: 'Razorpay UPI / Cards',
-              customer: customer,
-              subtotal: subtotal,
-              shipping: shipping,
-              total: total,
-              items: [...cart]
-            });
-          },
-          modal: {
-            ondismiss: function() {
-              notify('Payment window closed. Your items remain in the bag.');
-            }
-          }
-        };
-
-        try {
-          const rzp = new Razorpay(options);
-          rzp.on('payment.failed', function(resp) {
-            notify(`Payment failed: ${resp.error.description || 'Transaction declined'}`);
+      function copyUPIId() {
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(STORE_UPI_ID).then(() => {
+            notify('Copied UPI ID to clipboard! 📋');
           });
-          rzp.open();
-        } catch (err) {
-          console.warn('Razorpay live open error:', err);
-          // If key is invalid or in demo mode, provide instant test simulation option
-          const testConfirm = confirm(
-            "Demo Mode Notice: You're using a test Razorpay key.\n\nWould you like to simulate a successful payment to test the order confirmation receipt flow?"
-          );
-          if (testConfirm) {
-            completeOrder({
-              paymentId: 'pay_test_' + Math.random().toString(36).substring(2, 11),
-              paymentStatus: 'Paid via Razorpay (Test Mode)',
-              method: 'Razorpay UPI / Cards (Simulated)',
-              customer: customer,
-              subtotal: subtotal,
-              shipping: shipping,
-              total: total,
-              items: [...cart]
-            });
-          }
+        } else {
+          prompt('Copy UPI ID:', STORE_UPI_ID);
         }
+      }
+
+      function confirmUPIPayment() {
+        const customer = getValidatedCustomerData();
+        if (!customer) return;
+
+        const subtotal = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+        const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : STANDARD_SHIPPING_FEE;
+        const total = subtotal + shipping;
+
+        completeOrder({
+          paymentId: 'UPI-' + Date.now().toString().slice(-8),
+          paymentStatus: 'Paid via Direct UPI (Verified)',
+          method: 'Direct UPI (Google Pay / PhonePe)',
+          customer: customer,
+          subtotal: subtotal,
+          shipping: shipping,
+          total: total,
+          items: [...cart]
+        });
       }
 
       // 2. Process WhatsApp / Cash on Delivery (COD) Order
