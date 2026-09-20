@@ -7,23 +7,28 @@
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,600;1,700;1,800;1,900&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600;1,700;1,800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600;1,700;1,800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --forest: #1b2e23;
-      --leaf: #4d7143;
-      --gold: #c87a1e;
-      --cream: #FAF6EF;
-      --sand: #E7DCBF;
-      --ink: #1C1917;
+      --bg-base: #F7F3EC;
+      --bg-card: #FFFFFF;
+      --bg-subtle: #FDFBF7;
+      --border: #E5DDD0;
+      --border-soft: #EFE7DA;
+      --ink-black: #141312;
+      --ink: #23201D;
+      --ink-muted: #645E56;
+      --caramel: #B87322;
+      --caramel-light: #FBF4EA;
       --white: #FFFFFF;
-      --border: #E8DECC;
+      --shadow-soft: 0 8px 24px rgba(40, 30, 20, 0.04);
+      --shadow-card: 0 14px 34px rgba(45, 35, 25, 0.06);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
       font-weight: 500;
-      background: var(--cream);
+      background: var(--bg-base);
       color: var(--ink);
       line-height: 1.6;
       padding: 40px 20px;
@@ -41,40 +46,41 @@
       align-items: center;
       gap: 6px;
       padding: 6px 16px;
-      background: #E2ECE0;
-      color: #2D5838;
-      font-size: 0.82rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
+      background: var(--caramel-light);
+      color: var(--caramel);
+      border: 1px solid rgba(184, 115, 34, 0.25);
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       border-radius: 999px;
       margin-bottom: 14px;
     }
     h1 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: clamp(2.4rem, 4.5vw, 3.4rem);
-      color: var(--forest);
-      font-weight: 800;
-      letter-spacing: -0.04em;
+      color: var(--ink-black);
+      font-weight: 900;
+      letter-spacing: -0.035em;
       margin-bottom: 10px;
     }
     .subhead {
-      color: #5D6D62;
+      color: var(--ink-muted);
       font-size: 1.05rem;
       max-width: 640px;
       margin: 0 auto;
     }
     .hero-card {
-      background: var(--white);
-      border-radius: 18px;
-      border: 1px solid var(--border);
+      background: var(--bg-card);
+      border-radius: 20px;
+      border: 1.5px solid var(--border);
       overflow: hidden;
-      box-shadow: 0 16px 40px rgba(28, 56, 43, 0.08);
+      box-shadow: var(--shadow-card);
       margin-bottom: 40px;
     }
     .hero-stage {
       padding: 60px 40px;
-      background: #FAF7F2;
+      background: var(--bg-subtle);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -95,13 +101,15 @@
       gap: 20px;
     }
     .hero-text h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      color: var(--forest);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.45rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--ink-black);
       margin-bottom: 6px;
     }
     .hero-text p {
-      color: #5D6D62;
+      color: var(--ink-muted);
       font-size: 0.95rem;
       max-width: 580px;
     }
@@ -110,29 +118,31 @@
       gap: 12px;
     }
     .btn {
-      padding: 10px 18px;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      font-weight: 700;
+      padding: 11px 20px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 800;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      border: 1px solid var(--border);
-      background: var(--white);
-      color: var(--forest);
+      border: 1.5px solid var(--border);
+      background: var(--bg-card);
+      color: var(--ink-black);
       transition: 0.2s;
     }
     .btn:hover {
-      background: #F4ECE0;
+      background: var(--border-soft);
+      border-color: var(--ink-black);
     }
     .btn.primary {
-      background: var(--forest);
+      background: var(--ink-black);
       color: #fff;
-      border-color: var(--forest);
+      border-color: var(--ink-black);
     }
     .btn.primary:hover {
-      background: #152B21;
+      background: #2D2A26;
+      border-color: #2D2A26;
     }
     .grid {
       display: grid;
@@ -141,26 +151,26 @@
       margin-bottom: 45px;
     }
     .tile {
-      background: var(--white);
-      border-radius: 14px;
-      border: 1px solid var(--border);
+      background: var(--bg-card);
+      border-radius: 16px;
+      border: 1.5px solid var(--border);
       padding: 28px;
     }
     .tile.dark {
-      background: #1C342B;
+      background: #141312;
       color: #fff;
-      border-color: #27473B;
+      border-color: #2D2A26;
     }
     .tile-label {
       font-size: 0.74rem;
-      font-weight: 700;
+      font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.12em;
-      color: var(--leaf);
+      color: var(--caramel);
       margin-bottom: 16px;
     }
     .tile.dark .tile-label {
-      color: #9EC694;
+      color: #E2AD68;
     }
     .tile-preview {
       height: 120px;
@@ -168,12 +178,12 @@
       align-items: center;
       justify-content: center;
       margin-bottom: 20px;
-      background: #FAF7F2;
+      background: var(--bg-subtle);
       border-radius: 10px;
       padding: 20px;
     }
     .tile.dark .tile-preview {
-      background: #152922;
+      background: #1C1A18;
     }
     .tile-preview img {
       max-height: 100%;
@@ -187,9 +197,9 @@
       box-shadow: 0 8px 20px rgba(0,0,0,0.12);
     }
     .colors-section {
-      background: var(--white);
-      border-radius: 16px;
-      border: 1px solid var(--border);
+      background: var(--bg-card);
+      border-radius: 18px;
+      border: 1.5px solid var(--border);
       padding: 36px;
     }
     .swatches {
@@ -199,15 +209,15 @@
       margin-top: 20px;
     }
     .swatch {
-      border-radius: 10px;
+      border-radius: 12px;
       padding: 14px;
       color: #fff;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
       height: 95px;
-      font-size: 0.8rem;
-      font-weight: 600;
+      font-size: 0.82rem;
+      font-weight: 700;
     }
     .swatch span { font-size: 0.72rem; opacity: 0.85; font-weight: 400; }
   </style>
@@ -215,23 +225,23 @@
 <body>
   <div class="container">
     <header>
-      <div class="badge">✓ Selected Concept 2 · Official Logo</div>
+      <div class="badge">✓ Official Brand Visual Identity</div>
       <h1>drysee Brand Identity</h1>
-      <p class="subhead">Editorial Botanical Wordmark — Soft organic twin seeds and curling tendril, paired with strong high-contrast serif typography.</p>
+      <p class="subhead">Clean Aesthetic Wordmark — Pure harvest botanical emblem paired with Modern Luxury Sans bold typography.</p>
     </header>
 
-    <!-- Main Hero Stage: Concept 2 -->
+    <!-- Main Hero Stage -->
     <div class="hero-card">
       <div class="hero-stage">
-        <img src="assets/logo.svg" alt="drysee Official Logo (Concept 2)">
+        <img src="assets/logo.svg" alt="drysee Official Logo">
       </div>
       <div class="hero-body">
         <div class="hero-text">
-          <h3>Editorial Botanical Lockup (Primary)</h3>
-          <p>Delicate sprouting vine with twin golden-rimmed seed kernels and a tender sage leaf, paired with a bold, authoritative serif wordmark.</p>
+          <h3>Clean Aesthetic Lockup (Primary)</h3>
+          <p>Delicate sprouting botanical vine with twin golden-rimmed seed kernels, paired with bold, striking modern luxury sans typography.</p>
         </div>
         <div class="btn-row">
-          <a href="index.html" class="btn primary">View Live on Website →</a>
+          <a href="index.html" class="btn primary">View Live Website →</a>
           <a href="assets/logo.svg" download class="btn">Download SVG</a>
         </div>
       </div>
@@ -245,7 +255,7 @@
         <div class="tile-preview">
           <img src="assets/logo-light.svg" alt="drysee Light Logo">
         </div>
-        <p style="font-size:0.86rem;color:#D3DDD5;">Optimized for deep evergreen and dark backgrounds with crisp white typography and luminous golden contours.</p>
+        <p style="font-size:0.86rem;color:#CFC7BC;">Optimized for deep chic black and dark backgrounds with crisp white typography and luminous golden contours.</p>
       </div>
 
       <!-- Standalone Mark -->
@@ -254,7 +264,7 @@
         <div class="tile-preview">
           <img src="assets/logo-mark.svg" alt="drysee Logo Mark" style="height:70px">
         </div>
-        <p style="font-size:0.86rem;color:#5D6D62;">Standalone botanical emblem for packaging labels, jar lids, stamps, and profile pictures.</p>
+        <p style="font-size:0.86rem;color:var(--ink-muted);">Standalone botanical emblem for packaging labels, jar lids, stamps, and profile pictures.</p>
       </div>
 
       <!-- Favicon -->
@@ -263,20 +273,21 @@
         <div class="tile-preview">
           <img src="assets/favicon.svg" alt="drysee Favicon" class="favicon-badge">
         </div>
-        <p style="font-size:0.86rem;color:#5D6D62;">High-visibility 64x64 vector favicon embedded in the website's browser tab.</p>
+        <p style="font-size:0.86rem;color:var(--ink-muted);">High-visibility 64x64 vector favicon embedded in the website's browser tab.</p>
       </div>
     </div>
 
     <!-- Color Palette -->
     <div class="colors-section">
-      <h3 style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--forest);margin-bottom:6px;">Brand Color Tokens</h3>
-      <p style="font-size:0.9rem;color:#5D6D62;">Harmonious botanical tones reflecting pure dry fruits and wholesome seeds.</p>
+      <h3 style="font-size:1.45rem;font-weight:900;letter-spacing:-0.02em;color:var(--ink-black);margin-bottom:6px;">Clean Aesthetic Color Palette</h3>
+      <p style="font-size:0.9rem;color:var(--ink-muted);">Warm cream, crisp white, rich caramel, and deep chic black reflecting luxury dry fruits and seeds.</p>
       <div class="swatches">
-        <div class="swatch" style="background:#1C382B;">#1C382B<span>Deep Forest</span></div>
-        <div class="swatch" style="background:#244B3B;">#244B3B<span>Primary Pine</span></div>
-        <div class="swatch" style="background:#6F9264;">#6F9264<span>Sage Leaf</span></div>
-        <div class="swatch" style="background:#C5975F; color:#1E2A24;">#C5975F<span>Golden Kernel</span></div>
-        <div class="swatch" style="background:#EEE3CE; color:#1E2A24;">#EEE3CE<span>Sand / Cream</span></div>
+        <div class="swatch" style="background:#141312;">#141312<span>Chic Luxury Black</span></div>
+        <div class="swatch" style="background:#B87322;">#B87322<span>Warm Caramel</span></div>
+        <div class="swatch" style="background:#B25232;">#B25232<span>Terracotta Spice</span></div>
+        <div class="swatch" style="background:#EDE5D8; color:#141312;">#EDE5D8<span>Oatmeal Sand</span></div>
+        <div class="swatch" style="background:#F7F3EC; color:#141312; border: 1px solid var(--border);">#F7F3EC<span>Warm Beige Canvas</span></div>
+        <div class="swatch" style="background:#FFFFFF; color:#141312; border: 1px solid var(--border);">#FFFFFF<span>Crisp Pure White</span></div>
       </div>
     </div>
   </div>
