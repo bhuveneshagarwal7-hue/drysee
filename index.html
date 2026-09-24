@@ -1533,11 +1533,118 @@
         font-weight: 700;
       }
 
+      /* Payment Method Option Selector */
+      .payment-method-selector {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 4px;
+      }
+      .payment-option-card {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        background: var(--bg-card);
+        border: 2px solid var(--border);
+        border-radius: var(--radius-md);
+        padding: 12px 14px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        position: relative;
+      }
+      .payment-option-card:hover {
+        border-color: rgba(184, 115, 34, 0.4);
+        background: #FDFBF7;
+      }
+      .payment-option-card.selected {
+        border-color: var(--caramel);
+        background: #FDF9F2;
+        box-shadow: 0 4px 14px rgba(184, 115, 34, 0.12);
+      }
+      .payment-option-card input[type="radio"] {
+        margin-top: 3px;
+        accent-color: var(--caramel);
+        cursor: pointer;
+        width: 17px;
+        height: 17px;
+        flex-shrink: 0;
+      }
+      .payment-option-info {
+        flex: 1;
+      }
+      .payment-option-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        margin-bottom: 3px;
+      }
+      .payment-option-name {
+        font-weight: 800;
+        font-size: 0.92rem;
+        color: var(--ink-black);
+      }
+      .payment-tag {
+        font-size: 0.68rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        padding: 2px 8px;
+        border-radius: var(--radius-full);
+        flex-shrink: 0;
+      }
+      .payment-tag-green {
+        background: #E8F5E9;
+        color: #1B7E36;
+      }
+      .payment-tag-caramel {
+        background: #FBF4EA;
+        color: var(--caramel);
+      }
+      .payment-option-sub {
+        font-size: 0.77rem;
+        color: var(--ink-muted);
+        line-height: 1.35;
+      }
+
       /* Payment Action Buttons */
       .payment-actions {
         display: flex;
         flex-direction: column;
         gap: 12px;
+      }
+      .btn-cod-pay {
+        width: 100%;
+        background: var(--ink-black);
+        color: #FFFFFF;
+        font-weight: 800;
+        font-size: 1.02rem;
+        padding: 16px 20px;
+        border-radius: var(--radius-md);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        box-shadow: 0 10px 24px rgba(20, 19, 18, 0.22);
+        cursor: pointer;
+        transition: all 0.25s ease;
+      }
+      .btn-cod-pay:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 30px rgba(20, 19, 18, 0.32);
+        background: #2D2A26;
+      }
+      .cod-notice {
+        background: var(--bg-card);
+        border: 1px dashed var(--border);
+        border-radius: var(--radius-md);
+        padding: 12px 14px;
+        font-size: 0.78rem;
+        color: var(--ink-muted);
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        line-height: 1.45;
       }
       .btn-upi-pay {
         width: 100%;
@@ -1777,6 +1884,8 @@
       <div class="announcement-inner">
         <span class="badge-live">✨ Autumn Harvest Special</span>
         <span><b>Free shipping</b> on all orders above ₹999</span>
+        <span>•</span>
+        <span>🚚 <b>Cash on Delivery (COD)</b> Available</span>
         <span>•</span>
         <span>Vacuum-packed within 24h of roasting</span>
         <span>•</span>
@@ -2631,7 +2740,7 @@
             Proceed to Checkout →
           </button>
           <div style="text-align:center;font-size:0.75rem;color:#85938a;margin-top:10px">
-            🔒 256-Bit SSL Encrypted Checkout · UPI, Cards &amp; COD Accepted
+            🔒 256-Bit SSL Encrypted Checkout · Cash on Delivery (COD) &amp; Instant UPI Accepted
           </div>
         </div>
       </div>
@@ -2743,14 +2852,71 @@
                   <span>Express Air Shipping</span>
                   <span id="checkout-shipping" class="free-badge">FREE</span>
                 </div>
+                <div class="checkout-line">
+                  <span>Cash on Delivery (COD)</span>
+                  <span class="free-badge">FREE (₹0)</span>
+                </div>
                 <div class="checkout-line total-line">
                   <span>Total Amount</span>
                   <span id="checkout-total">₹0</span>
                 </div>
               </div>
 
-              <!-- Payment Triggers -->
-              <div class="payment-actions">
+              <!-- Payment Method Selection -->
+              <div class="checkout-section-title" style="margin-bottom:8px">
+                <span>💳 3. Choose Payment Method</span>
+              </div>
+
+              <div class="payment-method-selector">
+                <label class="payment-option-card selected" id="opt-card-cod" onclick="selectPaymentMode('cod')">
+                  <input type="radio" name="payment_mode" id="pay-mode-cod" value="cod" checked />
+                  <div class="payment-option-info">
+                    <div class="payment-option-header">
+                      <span class="payment-option-name">💵 Cash on Delivery (COD)</span>
+                      <span class="payment-tag payment-tag-green">Zero Advance Fee</span>
+                    </div>
+                    <div class="payment-option-sub">Pay via Cash or UPI to the delivery partner when your package arrives.</div>
+                  </div>
+                </label>
+
+                <label class="payment-option-card" id="opt-card-upi" onclick="selectPaymentMode('upi')">
+                  <input type="radio" name="payment_mode" id="pay-mode-upi" value="upi" />
+                  <div class="payment-option-info">
+                    <div class="payment-option-header">
+                      <span class="payment-option-name">⚡ Pay Online via UPI / QR</span>
+                      <span class="payment-tag payment-tag-caramel">Instant Dispatch</span>
+                    </div>
+                    <div class="payment-option-sub">Google Pay, PhonePe, Paytm, Cred, BHIM or any UPI scanner.</div>
+                  </div>
+                </label>
+              </div>
+
+              <!-- COD Payment Section (Active by Default) -->
+              <div id="cod-payment-section" class="payment-actions">
+                <div class="cod-notice">
+                  <span style="font-size:1.15rem">🚚</span>
+                  <div>
+                    <strong style="color:var(--ink-black)">Cash on Delivery Available:</strong> No advance payment required today! We will dispatch your sealed package within 24 hours. Keep cash ready or scan courier's UPI QR upon delivery.
+                  </div>
+                </div>
+
+                <button type="button" class="btn-cod-pay" onclick="placeCODOrder()">
+                  <span>📦 Place Cash on Delivery (COD) Order</span>
+                  <span id="checkout-cod-btn-amount">₹0</span>
+                  <span>→</span>
+                </button>
+
+                <div class="or-divider">
+                  <span>or prefer WhatsApp confirmation?</span>
+                </div>
+
+                <button type="button" class="btn-whatsapp-order" onclick="orderWithWhatsApp()">
+                  <span>💬 Place COD Order on WhatsApp</span>
+                </button>
+              </div>
+
+              <!-- UPI Payment Section (Hidden by Default) -->
+              <div id="upi-payment-section" class="payment-actions" style="display:none">
                 <button type="button" class="btn-upi-pay" onclick="payWithUPI()">
                   <span>⚡ Pay via UPI (GPay / PhonePe / Paytm)</span>
                   <span id="checkout-pay-btn-amount">₹0</span>
@@ -2768,7 +2934,7 @@
                   <img id="upi-qr-image" class="upi-qr-img" src="" alt="UPI Payment QR Code" />
                   <div>
                     <div class="upi-id-badge" onclick="copyUPIId()" title="Click to copy">
-                      <span>UPI ID: <b id="upi-id-display">drysee@upi</b></span>
+                      <span>UPI ID: <b id="upi-id-display">9376506911@upi</b></span>
                       <span style="color:var(--caramel);font-size:0.75rem">📋 Copy</span>
                     </div>
                   </div>
@@ -2783,14 +2949,6 @@
                   <span class="payment-method-chip">Paytm</span>
                   <span class="payment-method-chip">BHIM UPI</span>
                 </div>
-
-                <div class="or-divider">
-                  <span>or prefer pay on delivery?</span>
-                </div>
-
-                <button type="button" class="btn-whatsapp-order" onclick="orderWithWhatsApp()">
-                  <span>💬 Confirm Order on WhatsApp (COD / Pay Later)</span>
-                </button>
               </div>
 
               <div style="font-size:0.74rem;color:var(--ink-light);text-align:center;line-height:1.4">
@@ -3244,6 +3402,32 @@
       const STANDARD_SHIPPING_FEE = 60;
 
       let currentOrderDetails = null;
+      let selectedPaymentMode = 'cod';
+
+      // Toggle Payment Mode (COD vs Online UPI)
+      function selectPaymentMode(mode) {
+        selectedPaymentMode = mode;
+        const codRadio = document.getElementById('pay-mode-cod');
+        const upiRadio = document.getElementById('pay-mode-upi');
+        const codCard = document.getElementById('opt-card-cod');
+        const upiCard = document.getElementById('opt-card-upi');
+        const codSec = document.getElementById('cod-payment-section');
+        const upiSec = document.getElementById('upi-payment-section');
+
+        if (mode === 'cod') {
+          if (codRadio) codRadio.checked = true;
+          if (codCard) codCard.classList.add('selected');
+          if (upiCard) upiCard.classList.remove('selected');
+          if (codSec) codSec.style.display = 'flex';
+          if (upiSec) upiSec.style.display = 'none';
+        } else {
+          if (upiRadio) upiRadio.checked = true;
+          if (upiCard) upiCard.classList.add('selected');
+          if (codCard) codCard.classList.remove('selected');
+          if (codSec) codSec.style.display = 'none';
+          if (upiSec) upiSec.style.display = 'flex';
+        }
+      }
 
       // Open Checkout Modal
       function openCheckoutModal() {
@@ -3300,7 +3484,15 @@
           shipEl.className = '';
         }
         document.getElementById('checkout-total').textContent = '₹' + total.toLocaleString('en-IN');
-        document.getElementById('checkout-pay-btn-amount').textContent = '₹' + total.toLocaleString('en-IN');
+        
+        // Update both payment buttons with current total
+        const codBtnAmount = document.getElementById('checkout-cod-btn-amount');
+        if (codBtnAmount) codBtnAmount.textContent = '₹' + total.toLocaleString('en-IN');
+        const upiBtnAmount = document.getElementById('checkout-pay-btn-amount');
+        if (upiBtnAmount) upiBtnAmount.textContent = '₹' + total.toLocaleString('en-IN');
+
+        // Set default selection to COD
+        selectPaymentMode(selectedPaymentMode || 'cod');
 
         document.getElementById('checkout-modal').classList.add('open');
       }
@@ -3357,7 +3549,31 @@
         return data;
       }
 
-      // 1. Process Direct UPI Payment (GPay, PhonePe, Paytm, QR)
+      // 1. Process Direct Cash on Delivery (COD) Order
+      function placeCODOrder() {
+        const customer = getValidatedCustomerData();
+        if (!customer) return;
+
+        const subtotal = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+        const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : STANDARD_SHIPPING_FEE;
+        const total = subtotal + shipping;
+
+        const orderId = '#DRY-' + Math.floor(100000 + Math.random() * 900000);
+
+        completeOrder({
+          orderId: orderId,
+          paymentId: 'Cash / UPI on Delivery',
+          paymentStatus: 'Cash on Delivery (Pay ₹' + total.toLocaleString('en-IN') + ' on arrival)',
+          method: 'Cash on Delivery (COD)',
+          customer: customer,
+          subtotal: subtotal,
+          shipping: shipping,
+          total: total,
+          items: [...cart]
+        });
+      }
+
+      // 2. Process Direct UPI Payment (GPay, PhonePe, Paytm, QR)
       function payWithUPI() {
         const customer = getValidatedCustomerData();
         if (!customer) return;
@@ -3410,7 +3626,10 @@
         const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : STANDARD_SHIPPING_FEE;
         const total = subtotal + shipping;
 
+        const orderId = '#DRY-' + Math.floor(100000 + Math.random() * 900000);
+
         completeOrder({
+          orderId: orderId,
           paymentId: 'UPI-' + Date.now().toString().slice(-8),
           paymentStatus: 'Paid via Direct UPI (Verified)',
           method: 'Direct UPI (Google Pay / PhonePe)',
@@ -3422,7 +3641,7 @@
         });
       }
 
-      // 2. Process WhatsApp / Cash on Delivery (COD) Order
+      // 3. Process WhatsApp / Cash on Delivery (COD) Order
       function orderWithWhatsApp() {
         const customer = getValidatedCustomerData();
         if (!customer) return;
@@ -3431,10 +3650,10 @@
         const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : STANDARD_SHIPPING_FEE;
         const total = subtotal + shipping;
 
-        const itemsList = cart.map(i => `• ${i.title} (${i.weight}) &times; ${i.qty} — ₹${(i.price * i.qty).toLocaleString('en-IN')}`).join('\n');
+        const itemsList = cart.map(i => `• ${i.title} (${i.weight}) x ${i.qty} — ₹${(i.price * i.qty).toLocaleString('en-IN')}`).join('\n');
 
         const message = 
-`*NEW ORDER — drysee.in* ☀️
+`*NEW COD ORDER — drysee.in* ☀️
 ----------------------------------
 *Customer Details:*
 • Name: ${customer.name}
@@ -3450,18 +3669,22 @@ ${itemsList}
 ----------------------------------
 *Subtotal:* ₹${subtotal.toLocaleString('en-IN')}
 *Shipping:* ${shipping === 0 ? 'FREE (Express Air)' : '₹' + shipping}
+*COD Handling:* FREE (₹0)
 *Total Payable:* ₹${total.toLocaleString('en-IN')}
-*Payment Preference:* Pay on Delivery (COD / UPI on arrival)
+*Payment Preference:* Cash on Delivery (COD / UPI on arrival)
 ----------------------------------
 Please confirm dispatch and tracking details!`;
 
         const waUrl = `https://wa.me/${STORE_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
         window.open(waUrl, '_blank');
 
+        const orderId = '#DRY-' + Math.floor(100000 + Math.random() * 900000);
+
         completeOrder({
+          orderId: orderId,
           paymentId: 'COD-' + Math.floor(100000 + Math.random() * 900000),
           paymentStatus: 'Cash on Delivery (WhatsApp Confirmed)',
-          method: 'COD / WhatsApp',
+          method: 'Cash on Delivery (WhatsApp)',
           customer: customer,
           subtotal: subtotal,
           shipping: shipping,
@@ -3472,7 +3695,7 @@ Please confirm dispatch and tracking details!`;
 
       // Complete Order & Show Receipt
       function completeOrder(orderMeta) {
-        const orderId = '#DRY-' + Math.floor(100000 + Math.random() * 900000);
+        const orderId = orderMeta.orderId || ('#DRY-' + Math.floor(100000 + Math.random() * 900000));
         currentOrderDetails = {
           orderId,
           ...orderMeta,
@@ -3488,7 +3711,14 @@ Please confirm dispatch and tracking details!`;
 
         // Populate Receipt Modal
         document.getElementById('receipt-order-id').textContent = orderId;
-        document.getElementById('receipt-payment-status').textContent = orderMeta.paymentStatus;
+        const statusEl = document.getElementById('receipt-payment-status');
+        statusEl.textContent = orderMeta.paymentStatus;
+        if ((orderMeta.method || '').includes('COD')) {
+          statusEl.style.color = '#B87322';
+        } else {
+          statusEl.style.color = '#1B7E36';
+        }
+
         document.getElementById('receipt-payment-id').textContent = orderMeta.paymentId;
         document.getElementById('receipt-amount').textContent = '₹' + orderMeta.total.toLocaleString('en-IN');
         document.getElementById('receipt-address').textContent = `${orderMeta.customer.name}, ${orderMeta.customer.address}, ${orderMeta.customer.city} - ${orderMeta.customer.pincode}`;
@@ -3510,15 +3740,20 @@ Please confirm dispatch and tracking details!`;
 
       function shareReceiptOnWhatsApp() {
         if (!currentOrderDetails) return;
+        const isCOD = (currentOrderDetails.method || '').includes('COD');
         const msg = 
 `*ORDER CONFIRMATION — drysee.in* ☀️
 Order Reference: ${currentOrderDetails.orderId}
+Payment Mode: ${currentOrderDetails.method}
 Payment Status: ${currentOrderDetails.paymentStatus}
-Payment Reference: ${currentOrderDetails.paymentId}
-Total Paid: ₹${currentOrderDetails.total.toLocaleString('en-IN')}
+Total Amount: ₹${currentOrderDetails.total.toLocaleString('en-IN')} ${isCOD ? '(To pay upon delivery)' : '(Paid)'}
 Deliver to: ${currentOrderDetails.customer.name}, ${currentOrderDetails.customer.city} - ${currentOrderDetails.customer.pincode}
+Mobile: +91 ${currentOrderDetails.customer.phone}
 
-Please share shipment tracking details once dispatched!`;
+Items:
+${(currentOrderDetails.items || []).map(i => `• ${i.title} (${i.weight}) x ${i.qty}`).join('\n')}
+
+Please share tracking details once dispatched!`;
         window.open(`https://wa.me/${STORE_WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
       }
 
