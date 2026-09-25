@@ -2708,6 +2708,11 @@
           <a href="#" style="margin:0">Privacy Policy</a>
           <span>·</span>
           <a href="#" style="margin:0">Terms of Service</a>
+          <span>·</span>
+          <a href="admin.html" style="margin:0;color:#B87322;display:inline-flex;align-items:center;gap:4px">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            Admin Portal
+          </a>
         </div>
       </div>
     </footer>
@@ -3699,15 +3704,35 @@ Please confirm dispatch and tracking details!`;
         currentOrderDetails = {
           orderId,
           ...orderMeta,
-          timestamp: new Date().toLocaleString('en-IN')
+          timestamp: new Date().toLocaleString('en-IN'),
+          status: 'New'
         };
 
-        // Save order to history
+        // Save order to history & admin dashboard
         try {
+          // 1. Customer order history
           const orders = JSON.parse(localStorage.getItem('drysee_orders') || '[]');
           orders.unshift(currentOrderDetails);
-          localStorage.setItem('drysee_orders', JSON.stringify(orders.slice(0, 10)));
-        } catch (e) {}
+          localStorage.setItem('drysee_orders', JSON.stringify(orders.slice(0, 15)));
+
+          // 2. Central Admin store
+          const adminOrders = JSON.parse(localStorage.getItem('drysee_admin_orders') || '[]');
+          adminOrders.unshift(currentOrderDetails);
+          localStorage.setItem('drysee_admin_orders', JSON.stringify(adminOrders));
+
+          // 3. Cloud webhook sync (e.g. Google Sheets)
+          const syncUrl = localStorage.getItem('drysee_sync_url');
+          if (syncUrl && syncUrl.startsWith('http')) {
+            fetch(syncUrl, {
+              method: 'POST',
+              mode: 'no-cors',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(currentOrderDetails)
+            }).catch(e => console.log('Cloud sync error:', e));
+          }
+        } catch (e) {
+          console.error('Error saving order to admin storage:', e);
+        }
 
         // Populate Receipt Modal
         document.getElementById('receipt-order-id').textContent = orderId;

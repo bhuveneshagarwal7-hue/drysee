@@ -1,0 +1,2333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>drysee — Admin Portal & Sales Dashboard</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    :root {
+      --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --bg-base: #F7F3EC;
+      --bg-warm: #EFE8DC;
+      --bg-card: #FFFFFF;
+      --bg-pill: #EDE5D8;
+      --bg-hover: #ECE4D7;
+      --border: #E5DDD0;
+      --border-soft: #EFE7DA;
+      --ink-black: #141312;
+      --ink: #23201D;
+      --ink-muted: #645E56;
+      --ink-light: #948B80;
+      --caramel: #B87322;
+      --caramel-dark: #9A5C14;
+      --caramel-light: #FBF4EA;
+      --terracotta: #B25232;
+      --terracotta-light: #FBF0EB;
+      --green-paid: #1B7E36;
+      --green-light: #EBF8EE;
+      --blue-ship: #1E6091;
+      --blue-light: #EDF5FA;
+      --gold: #D9A04B;
+      --white: #FFFFFF;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-full: 9999px;
+      --shadow-soft: 0 8px 24px rgba(40, 30, 20, 0.04);
+      --shadow-card: 0 14px 34px rgba(45, 35, 25, 0.06);
+      --shadow-elevated: 0 24px 50px rgba(35, 25, 15, 0.1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg-base);
+      color: var(--ink);
+      line-height: 1.5;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-base); }
+    ::-webkit-scrollbar-thumb { background: #D5C9B8; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #BFAEA0; }
+
+    /* Security PIN Screen */
+    #pin-gate {
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 19, 18, 0.75);
+      backdrop-filter: blur(12px);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    #pin-gate.unlocked {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .pin-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 40px 36px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      box-shadow: var(--shadow-elevated);
+      border: 1px solid var(--border);
+      animation: popIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.92); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .pin-brand-img {
+      height: 48px;
+      margin-bottom: 20px;
+    }
+    .pin-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--ink-black);
+      margin-bottom: 6px;
+    }
+    .pin-desc {
+      font-size: 0.9rem;
+      color: var(--ink-muted);
+      margin-bottom: 24px;
+    }
+    .pin-input-group {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .pin-digit {
+      width: 52px;
+      height: 60px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      font-size: 1.6rem;
+      font-weight: 800;
+      text-align: center;
+      background: var(--bg-base);
+      color: var(--ink-black);
+      outline: none;
+      transition: all 0.2s ease;
+    }
+    .pin-digit:focus {
+      border-color: var(--caramel);
+      background: var(--white);
+      box-shadow: 0 0 0 4px rgba(184, 115, 34, 0.15);
+    }
+    .btn-unlock {
+      width: 100%;
+      padding: 14px 20px;
+      background: var(--ink-black);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn-unlock:hover {
+      background: var(--caramel);
+    }
+    .btn-unlock:active {
+      transform: scale(0.98);
+    }
+    .pin-hint {
+      margin-top: 18px;
+      font-size: 0.8rem;
+      color: var(--ink-light);
+    }
+
+    /* Main Dashboard Layout */
+    .admin-wrapper {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 24px 28px 60px;
+    }
+
+    /* Top Navigation */
+    .admin-nav {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 28px;
+    }
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .admin-logo {
+      height: 38px;
+      display: block;
+    }
+    .admin-badge {
+      background: var(--caramel-light);
+      color: var(--caramel);
+      font-size: 0.76rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(184, 115, 34, 0.25);
+    }
+    .nav-time {
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding-left: 12px;
+      border-left: 1px solid var(--border);
+    }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .nav-btn {
+      padding: 9px 16px;
+      border-radius: var(--radius-md);
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--ink);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .nav-btn:hover {
+      background: var(--bg-hover);
+      border-color: #D5C9B8;
+    }
+    .nav-btn.primary {
+      background: var(--caramel);
+      color: var(--white);
+      border-color: var(--caramel);
+    }
+    .nav-btn.primary:hover {
+      background: var(--caramel-dark);
+    }
+    .nav-btn.danger {
+      color: var(--terracotta);
+    }
+    .nav-btn.danger:hover {
+      background: var(--terracotta-light);
+      border-color: var(--terracotta);
+    }
+
+    /* KPI Summary Cards Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 22px 24px;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-card);
+    }
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--caramel);
+    }
+    .kpi-card.upi::before { background: var(--green-paid); }
+    .kpi-card.cod::before { background: #D9822B; }
+    .kpi-card.pending::before { background: var(--terracotta); }
+    .kpi-card.orders::before { background: var(--ink-black); }
+
+    .kpi-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .kpi-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--ink-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .kpi-icon-wrap {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      background: var(--bg-pill);
+      color: var(--caramel);
+    }
+    .kpi-card.upi .kpi-icon-wrap { background: var(--green-light); color: var(--green-paid); }
+    .kpi-card.cod .kpi-icon-wrap { background: #FFF4E5; color: #D9822B; }
+    .kpi-card.pending .kpi-icon-wrap { background: var(--terracotta-light); color: var(--terracotta); }
+    .kpi-card.orders .kpi-icon-wrap { background: #EAE8E4; color: var(--ink-black); }
+
+    .kpi-value {
+      font-size: 1.95rem;
+      font-weight: 900;
+      color: var(--ink-black);
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .kpi-sub {
+      font-size: 0.82rem;
+      color: var(--ink-light);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kpi-sub strong {
+      color: var(--ink);
+    }
+
+    /* Charts Row */
+    .charts-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+    @media (max-width: 992px) {
+      .charts-row { grid-template-columns: 1fr; }
+    }
+    .chart-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: var(--shadow-soft);
+    }
+    .chart-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .chart-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--ink-black);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .chart-subtitle {
+      font-size: 0.8rem;
+      color: var(--ink-light);
+    }
+    .chart-canvas-container {
+      position: relative;
+      height: 250px;
+      width: 100%;
+    }
+
+    /* Management Section */
+    .panel-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-card);
+    }
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .panel-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--ink-black);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .panel-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* Filters Bar */
+    .filters-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 14px 16px;
+      background: var(--bg-base);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-md);
+      margin-bottom: 20px;
+    }
+    .status-tabs {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+    .tab-btn {
+      padding: 7px 14px;
+      border-radius: var(--radius-full);
+      font-size: 0.82rem;
+      font-weight: 700;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--ink-muted);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .tab-btn:hover {
+      background: var(--bg-pill);
+      color: var(--ink);
+    }
+    .tab-btn.active {
+      background: var(--ink-black);
+      color: var(--white);
+    }
+    .tab-count {
+      font-size: 0.72rem;
+      background: rgba(255, 255, 255, 0.25);
+      padding: 2px 6px;
+      border-radius: 99px;
+      margin-left: 4px;
+    }
+    .tab-btn:not(.active) .tab-count {
+      background: var(--border);
+      color: var(--ink-muted);
+    }
+
+    .search-box-wrap {
+      position: relative;
+      min-width: 260px;
+      flex-grow: 1;
+      max-width: 380px;
+    }
+    .search-box-wrap i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--ink-light);
+      font-size: 0.9rem;
+    }
+    .search-input {
+      width: 100%;
+      padding: 9px 14px 9px 38px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-full);
+      font-size: 0.88rem;
+      font-family: inherit;
+      background: var(--white);
+      color: var(--ink);
+      outline: none;
+      transition: border 0.2s, box-shadow 0.2s;
+    }
+    .search-input:focus {
+      border-color: var(--caramel);
+      box-shadow: 0 0 0 3px rgba(184, 115, 34, 0.12);
+    }
+
+    /* Orders Table */
+    .table-container {
+      overflow-x: auto;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: var(--white);
+    }
+    table.orders-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+    table.orders-table th {
+      background: #FAF7F2;
+      padding: 14px 18px;
+      font-weight: 800;
+      color: var(--ink-muted);
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    table.orders-table td {
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--border-soft);
+      vertical-align: middle;
+      color: var(--ink);
+    }
+    table.orders-table tbody tr:hover {
+      background: #FDFCF9;
+    }
+    table.orders-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Badges & Chips */
+    .order-id-badge {
+      font-family: monospace;
+      font-weight: 800;
+      font-size: 0.92rem;
+      color: var(--caramel-dark);
+      background: var(--caramel-light);
+      padding: 4px 8px;
+      border-radius: 6px;
+      display: inline-block;
+      cursor: pointer;
+    }
+    .order-id-badge:hover {
+      text-decoration: underline;
+    }
+    .order-time {
+      font-size: 0.76rem;
+      color: var(--ink-light);
+      margin-top: 4px;
+    }
+
+    .cust-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .cust-name {
+      font-weight: 700;
+      color: var(--ink-black);
+    }
+    .cust-phone {
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      text-decoration: none;
+    }
+    .cust-phone:hover {
+      color: var(--caramel);
+    }
+    .cust-loc {
+      font-size: 0.78rem;
+      color: var(--ink-light);
+      max-width: 220px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .items-pill-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      max-width: 260px;
+    }
+    .item-pill {
+      font-size: 0.78rem;
+      background: var(--bg-base);
+      border: 1px solid var(--border-soft);
+      padding: 3px 8px;
+      border-radius: 6px;
+      color: var(--ink);
+      font-weight: 500;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .item-pill-qty {
+      font-weight: 700;
+      color: var(--caramel);
+      margin-left: 6px;
+    }
+
+    .amount-cell {
+      font-weight: 800;
+      font-size: 0.98rem;
+      color: var(--ink-black);
+    }
+    .shipping-sub {
+      font-size: 0.74rem;
+      color: var(--ink-light);
+      font-weight: normal;
+    }
+
+    /* Status & Payment Badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 10px;
+      border-radius: var(--radius-full);
+      font-size: 0.76rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    .badge-upi {
+      background: var(--green-light);
+      color: var(--green-paid);
+      border: 1px solid rgba(27, 126, 54, 0.2);
+    }
+    .badge-cod {
+      background: #FFF4E5;
+      color: #B87322;
+      border: 1px solid rgba(184, 115, 34, 0.2);
+    }
+
+    /* Status Select Dropdown */
+    .status-select {
+      appearance: none;
+      -webkit-appearance: none;
+      padding: 6px 28px 6px 12px;
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-weight: 700;
+      font-family: inherit;
+      border: 1px solid transparent;
+      cursor: pointer;
+      outline: none;
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      background-size: 10px 10px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23444' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    }
+    .status-new {
+      background-color: var(--terracotta-light);
+      color: var(--terracotta);
+      border-color: rgba(178, 82, 50, 0.3);
+    }
+    .status-packing {
+      background-color: #FEF3D6;
+      color: #9A6200;
+      border-color: rgba(217, 160, 75, 0.4);
+    }
+    .status-shipped {
+      background-color: var(--blue-light);
+      color: var(--blue-ship);
+      border-color: rgba(30, 96, 145, 0.3);
+    }
+    .status-delivered {
+      background-color: var(--green-light);
+      color: var(--green-paid);
+      border-color: rgba(27, 126, 54, 0.3);
+    }
+    .status-cancelled {
+      background-color: #F1ECE4;
+      color: var(--ink-light);
+      border-color: var(--border);
+    }
+
+    /* Row Actions */
+    .action-btns {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--bg-base);
+      color: var(--ink);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+    .btn-icon:hover {
+      background: var(--bg-hover);
+      border-color: #C8BCAC;
+    }
+    .btn-icon.wa {
+      color: #25D366;
+      background: #E8F8EE;
+      border-color: rgba(37, 211, 102, 0.3);
+    }
+    .btn-icon.wa:hover {
+      background: #25D366;
+      color: var(--white);
+    }
+    .btn-icon.del {
+      color: #948B80;
+    }
+    .btn-icon.del:hover {
+      background: var(--terracotta-light);
+      color: var(--terracotta);
+      border-color: var(--terracotta);
+    }
+
+    /* Empty State */
+    .empty-orders {
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .empty-icon {
+      font-size: 3.5rem;
+      color: #D2C6B5;
+      margin-bottom: 16px;
+    }
+    .empty-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--ink-black);
+      margin-bottom: 6px;
+    }
+    .empty-desc {
+      font-size: 0.9rem;
+      color: var(--ink-muted);
+      max-width: 400px;
+      margin: 0 auto 20px;
+    }
+
+    /* Modal Overlay Common */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 19, 18, 0.6);
+      backdrop-filter: blur(8px);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.25s ease;
+    }
+    .modal-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+    .modal-box {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 620px;
+      max-height: 90vh;
+      overflow-y: auto;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-elevated);
+      animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .modal-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: var(--white);
+      z-index: 2;
+    }
+    .modal-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--ink-black);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .modal-close-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--bg-base);
+      border: 1px solid var(--border);
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--ink-muted);
+      transition: all 0.2s;
+    }
+    .modal-close-btn:hover {
+      background: var(--bg-hover);
+      color: var(--ink-black);
+    }
+    .modal-body {
+      padding: 24px;
+    }
+    .modal-footer {
+      padding: 18px 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      background: #FAF7F2;
+    }
+
+    /* Form Elements inside Modals */
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--ink-muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 0.92rem;
+      background: var(--white);
+      color: var(--ink-black);
+      outline: none;
+      transition: border 0.2s;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--caramel);
+      box-shadow: 0 0 0 3px rgba(184, 115, 34, 0.12);
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    /* Printable Packing Slip Styles */
+    .printable-invoice {
+      background: var(--white);
+      padding: 30px;
+      font-family: var(--font-main);
+      color: #141312;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+    }
+    .inv-header {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 2px solid #141312;
+      padding-bottom: 18px;
+      margin-bottom: 20px;
+    }
+    .inv-logo-title {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #141312;
+      letter-spacing: -0.03em;
+    }
+    .inv-sub {
+      font-size: 0.8rem;
+      color: #645E56;
+      margin-top: 4px;
+    }
+    .inv-meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+      font-size: 0.86rem;
+    }
+    .inv-block-title {
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: #B87322;
+      margin-bottom: 6px;
+    }
+    .inv-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      font-size: 0.88rem;
+    }
+    .inv-table th {
+      background: #F7F3EC;
+      padding: 10px 12px;
+      text-align: left;
+      font-size: 0.78rem;
+      border-bottom: 1.5px solid #E5DDD0;
+      text-transform: uppercase;
+    }
+    .inv-table td {
+      padding: 12px;
+      border-bottom: 1px solid #EFE7DA;
+    }
+    .inv-total-section {
+      margin-left: auto;
+      width: 260px;
+      font-size: 0.9rem;
+      line-height: 1.8;
+    }
+    .inv-total-row {
+      display: flex;
+      justify-content: space-between;
+    }
+    .inv-grand-total {
+      font-size: 1.15rem;
+      font-weight: 900;
+      border-top: 2px solid #141312;
+      padding-top: 6px;
+      margin-top: 6px;
+    }
+
+    /* Print Media Query */
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #invoice-modal-content, #invoice-modal-content * {
+        visibility: visible;
+      }
+      #invoice-modal-content {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+        border: none;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+
+    /* Toast Notification */
+    .toast-notice {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--ink-black);
+      color: var(--white);
+      padding: 14px 22px;
+      border-radius: var(--radius-md);
+      font-size: 0.9rem;
+      font-weight: 700;
+      box-shadow: var(--shadow-elevated);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 999999;
+    }
+    .toast-notice.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =========================================================================
+       1. SECURITY PIN GATE
+       ========================================================================= -->
+  <div id="pin-gate">
+    <div class="pin-card">
+      <img src="assets/logo.svg" alt="drysee" class="pin-brand-img" onerror="this.outerHTML='<h1 style=\'font-size:2rem;font-weight:900;letter-spacing:-0.03em;color:#141312;margin-bottom:12px\'>drysee</h1>'" />
+      <h2 class="pin-title">Admin Dashboard</h2>
+      <p class="pin-desc">Enter your 4-digit security PIN to access orders, sales, and analytics.</p>
+      
+      <div class="pin-input-group">
+        <input type="password" maxlength="1" class="pin-digit" id="d1" autofocus autocomplete="off" />
+        <input type="password" maxlength="1" class="pin-digit" id="d2" autocomplete="off" />
+        <input type="password" maxlength="1" class="pin-digit" id="d3" autocomplete="off" />
+        <input type="password" maxlength="1" class="pin-digit" id="d4" autocomplete="off" />
+      </div>
+
+      <button class="btn-unlock" onclick="verifyPin()">
+        <i class="fas fa-lock-open"></i> Unlock Dashboard
+      </button>
+
+      <div class="pin-hint">
+        Default PIN: <strong>9376</strong> or <strong>1234</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       2. MAIN DASHBOARD CONTENT
+       ========================================================================= -->
+  <div class="admin-wrapper" id="dashboard-main" style="display:none;">
+    
+    <!-- Top Navigation -->
+    <header class="admin-nav">
+      <div class="nav-left">
+        <img src="assets/logo.svg" alt="drysee" class="admin-logo" onerror="this.outerHTML='<span style=\'font-size:1.4rem;font-weight:900;letter-spacing:-0.03em\'>drysee</span>'" />
+        <span class="admin-badge">Admin Portal</span>
+        <div class="nav-time" id="live-time-display">
+          <i class="far fa-clock"></i> <span id="clock-text">--:-- IST</span>
+        </div>
+      </div>
+
+      <div class="nav-right">
+        <span id="cloud-sync-status" class="nav-btn" style="cursor:default;font-size:0.8rem;background:var(--bg-base)" title="Status of storage">
+          <i class="fas fa-database" style="color:var(--caramel)"></i> Local Store
+        </span>
+        <a href="index.html" target="_blank" class="nav-btn" title="View live e-commerce site">
+          <i class="fas fa-external-link-alt"></i> View Store
+        </a>
+        <button class="nav-btn primary" onclick="openManualOrderModal()">
+          <i class="fas fa-plus-circle"></i> + New Order
+        </button>
+        <button class="nav-btn" onclick="openSettingsModal()">
+          <i class="fas fa-cog"></i> Settings & Sync
+        </button>
+        <button class="nav-btn danger" onclick="lockSession()" title="Lock dashboard">
+          <i class="fas fa-lock"></i> Lock
+        </button>
+      </div>
+    </header>
+
+    <!-- KPI Summary Row -->
+    <section class="kpi-grid">
+      <!-- 1. Total Sales -->
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-title">Total Sales Revenue</span>
+          <div class="kpi-icon-wrap"><i class="fas fa-rupee-sign"></i></div>
+        </div>
+        <div class="kpi-value" id="kpi-total-sales">₹0</div>
+        <div class="kpi-sub">
+          Avg. Order: <strong id="kpi-aov">₹0</strong>
+        </div>
+      </div>
+
+      <!-- 2. Total Orders -->
+      <div class="kpi-card orders">
+        <div class="kpi-header">
+          <span class="kpi-title">Total Orders</span>
+          <div class="kpi-icon-wrap"><i class="fas fa-shopping-bag"></i></div>
+        </div>
+        <div class="kpi-value" id="kpi-total-orders">0</div>
+        <div class="kpi-sub">
+          <strong id="kpi-delivered-count">0</strong> fulfilled
+        </div>
+      </div>
+
+      <!-- 3. Direct UPI Prepaid -->
+      <div class="kpi-card upi">
+        <div class="kpi-header">
+          <span class="kpi-title">Direct UPI (Paid)</span>
+          <div class="kpi-icon-wrap"><i class="fas fa-qrcode"></i></div>
+        </div>
+        <div class="kpi-value" id="kpi-upi-sales">₹0</div>
+        <div class="kpi-sub">
+          <strong id="kpi-upi-count">0</strong> prepaid orders
+        </div>
+      </div>
+
+      <!-- 4. Cash on Delivery -->
+      <div class="kpi-card cod">
+        <div class="kpi-header">
+          <span class="kpi-title">Cash on Delivery</span>
+          <div class="kpi-icon-wrap"><i class="fas fa-hand-holding-usd"></i></div>
+        </div>
+        <div class="kpi-value" id="kpi-cod-sales">₹0</div>
+        <div class="kpi-sub">
+          <strong id="kpi-cod-count">0</strong> pay on arrival
+        </div>
+      </div>
+
+      <!-- 5. Pending Dispatch -->
+      <div class="kpi-card pending">
+        <div class="kpi-header">
+          <span class="kpi-title">Action Required</span>
+          <div class="kpi-icon-wrap"><i class="fas fa-box-open"></i></div>
+        </div>
+        <div class="kpi-value" id="kpi-pending-count">0</div>
+        <div class="kpi-sub">
+          New / In Packing queue
+        </div>
+      </div>
+    </section>
+
+    <!-- Visual Charts Row -->
+    <section class="charts-row">
+      <!-- Sales Trend Line Chart -->
+      <div class="chart-card">
+        <div class="chart-header">
+          <div>
+            <h3 class="chart-title"><i class="fas fa-chart-line" style="color:var(--caramel)"></i> Sales & Revenue Timeline</h3>
+            <span class="chart-subtitle">Daily sales volume over recent order history</span>
+          </div>
+          <span id="chart-period-badge" class="badge" style="background:var(--bg-base);color:var(--ink-muted);border:1px solid var(--border)">All Records</span>
+        </div>
+        <div class="chart-canvas-container">
+          <canvas id="salesTrendChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Payment Breakdown Donut Chart -->
+      <div class="chart-card">
+        <div class="chart-header">
+          <div>
+            <h3 class="chart-title"><i class="fas fa-chart-pie" style="color:#D9822B"></i> Payment Split</h3>
+            <span class="chart-subtitle">Direct UPI vs Cash on Delivery</span>
+          </div>
+        </div>
+        <div class="chart-canvas-container" style="height:220px;">
+          <canvas id="paymentSplitChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Orders Management Panel -->
+    <main class="panel-card">
+      <div class="panel-header">
+        <h2 class="panel-title">
+          <i class="fas fa-list-alt" style="color:var(--caramel)"></i> Orders Management
+        </h2>
+        <div class="panel-actions">
+          <button class="nav-btn" onclick="exportOrdersToCSV()" title="Download orders in spreadsheet format">
+            <i class="fas fa-file-csv" style="color:var(--green-paid)"></i> Export CSV
+          </button>
+          <button class="nav-btn" onclick="loadSampleDemoOrders()" title="Load realistic seed orders for testing">
+            <i class="fas fa-vial"></i> Load Sample Orders
+          </button>
+          <button class="nav-btn danger" onclick="confirmClearAllOrders()" title="Clear all orders">
+            <i class="fas fa-trash-alt"></i> Clear Data
+          </button>
+        </div>
+      </div>
+
+      <!-- Filters & Search Toolbar -->
+      <div class="filters-bar">
+        <div class="status-tabs">
+          <button class="tab-btn active" onclick="setFilter('all', this)">
+            All <span class="tab-count" id="count-all">0</span>
+          </button>
+          <button class="tab-btn" onclick="setFilter('New', this)">
+            New <span class="tab-count" id="count-new">0</span>
+          </button>
+          <button class="tab-btn" onclick="setFilter('In Packing', this)">
+            In Packing <span class="tab-count" id="count-packing">0</span>
+          </button>
+          <button class="tab-btn" onclick="setFilter('Shipped', this)">
+            Shipped <span class="tab-count" id="count-shipped">0</span>
+          </button>
+          <button class="tab-btn" onclick="setFilter('Delivered', this)">
+            Delivered <span class="tab-count" id="count-delivered">0</span>
+          </button>
+          <button class="tab-btn" onclick="setFilter('UPI', this)">
+            UPI Paid <span class="tab-count" id="count-upi">0</span>
+          </button>
+          <button class="tab-btn" onclick="setFilter('COD', this)">
+            COD <span class="tab-count" id="count-cod">0</span>
+          </button>
+        </div>
+
+        <div class="search-box-wrap">
+          <i class="fas fa-search"></i>
+          <input type="text" id="order-search" class="search-input" placeholder="Search order ID, customer, phone, city..." oninput="handleSearch(this.value)" />
+        </div>
+      </div>
+
+      <!-- Orders Table Container -->
+      <div class="table-container">
+        <table class="orders-table">
+          <thead>
+            <tr>
+              <th>Order ID & Date</th>
+              <th>Customer</th>
+              <th>Items & Packs</th>
+              <th>Total (₹)</th>
+              <th>Payment</th>
+              <th>Order Status</th>
+              <th style="text-align:right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="orders-table-body">
+            <!-- Dynamically populated via JavaScript -->
+          </tbody>
+        </table>
+
+        <!-- Empty State Container -->
+        <div id="empty-state" class="empty-orders" style="display:none;">
+          <div class="empty-icon"><i class="fas fa-box-open"></i></div>
+          <h3 class="empty-title">No orders found</h3>
+          <p class="empty-desc">No orders match your current filter or no orders have been placed yet.</p>
+          <button class="nav-btn primary" onclick="loadSampleDemoOrders()">
+            <i class="fas fa-magic"></i> Load Sample Demo Orders
+          </button>
+        </div>
+      </div>
+    </main>
+
+  </div>
+
+  <!-- =========================================================================
+       3. MODAL: PRINTABLE PACKING SLIP & INVOICE
+       ========================================================================= -->
+  <div class="modal-overlay" id="invoice-modal">
+    <div class="modal-box" style="max-width:720px;">
+      <div class="modal-header no-print">
+        <h3 class="modal-title"><i class="fas fa-print" style="color:var(--caramel)"></i> Packing Slip & Tax Invoice</h3>
+        <button class="modal-close-btn" onclick="closeInvoiceModal()">&times;</button>
+      </div>
+      <div class="modal-body" id="invoice-modal-content">
+        <!-- Rendered by JS -->
+      </div>
+      <div class="modal-footer no-print">
+        <button class="nav-btn" onclick="closeInvoiceModal()">Close</button>
+        <button class="nav-btn primary" onclick="window.print()">
+          <i class="fas fa-print"></i> Print Invoice
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       4. MODAL: ADD MANUAL ORDER
+       ========================================================================= -->
+  <div class="modal-overlay" id="manual-order-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title"><i class="fas fa-cart-plus" style="color:var(--caramel)"></i> Create New Order</h3>
+        <button class="modal-close-btn" onclick="closeManualOrderModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="manual-order-form" onsubmit="event.preventDefault(); saveManualOrder();">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Customer Name *</label>
+              <input type="text" id="m-name" class="form-input" required placeholder="e.g. Ananya Sharma" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone Number *</label>
+              <input type="tel" id="m-phone" class="form-input" required placeholder="e.g. 9876543210" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Email Address (Optional)</label>
+            <input type="email" id="m-email" class="form-input" placeholder="e.g. ananya@gmail.com" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Delivery Address *</label>
+            <input type="text" id="m-address" class="form-input" required placeholder="Flat/House No., Street, Landmark" />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">City & State *</label>
+              <input type="text" id="m-city" class="form-input" required placeholder="e.g. Bengaluru, Karnataka" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Pincode *</label>
+              <input type="text" id="m-pincode" class="form-input" required placeholder="e.g. 560038" />
+            </div>
+          </div>
+
+          <hr style="border:none;border-top:1px solid var(--border);margin:16px 0;" />
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Select Product *</label>
+              <select id="m-product" class="form-select" onchange="updateManualPrice()">
+                <option value="California Roasted Almonds|349">California Roasted Almonds</option>
+                <option value="Royal Jumbo Whole Cashews|389">Royal Jumbo Whole Cashews</option>
+                <option value="Kashmiri Golden Walnut Halves|449">Kashmiri Golden Walnut Halves</option>
+                <option value="Slow-Roasted In-Shell Pistachios|399">Slow-Roasted In-Shell Pistachios</option>
+                <option value="Royal Medjool Dates & Turkish Figs|329">Royal Medjool Dates & Turkish Figs</option>
+                <option value="The Daily 5-Seed Power Crunch Mix|269">The Daily 5-Seed Power Crunch Mix</option>
+                <option value="Organic Chia & Golden Flax Seeds|199">Organic Chia & Golden Flax Seeds</option>
+                <option value="Wild Blueberries & Ruby Cranberries|319">Wild Blueberries & Ruby Cranberries</option>
+                <option value="Slow-Roasted Crispy Watermelon Seeds|189">Slow-Roasted Crispy Watermelon Seeds</option>
+                <option value="AAA Grade Raw Green Pumpkin Seeds|219">AAA Grade Raw Green Pumpkin Seeds</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Pack Weight</label>
+              <select id="m-weight" class="form-select" onchange="updateManualPrice()">
+                <option value="500g">500g (Standard)</option>
+                <option value="250g">250g (Taster Pack)</option>
+                <option value="1kg">1kg (Family Pack)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Quantity</label>
+              <input type="number" id="m-qty" class="form-input" value="1" min="1" max="50" onchange="updateManualPrice()" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Calculated Price (₹)</label>
+              <input type="number" id="m-price" class="form-input" value="389" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Payment Method</label>
+              <select id="m-method" class="form-select">
+                <option value="Cash on Delivery (COD)">Cash on Delivery (COD)</option>
+                <option value="Direct UPI (Google Pay / PhonePe)">Direct UPI (Prepaid)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Initial Status</label>
+              <select id="m-status" class="form-select">
+                <option value="New">New</option>
+                <option value="In Packing">In Packing</option>
+                <option value="Shipped">Shipped</option>
+                <option value="Delivered">Delivered</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="modal-footer" style="padding-right:0;padding-left:0;margin-top:16px;">
+            <button type="button" class="nav-btn" onclick="closeManualOrderModal()">Cancel</button>
+            <button type="submit" class="nav-btn primary"><i class="fas fa-check"></i> Save Order</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       5. MODAL: SETTINGS & CLOUD SYNC
+       ========================================================================= -->
+  <div class="modal-overlay" id="settings-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title"><i class="fas fa-sliders-h" style="color:var(--caramel)"></i> Store Settings & Cloud Sync</h3>
+        <button class="modal-close-btn" onclick="closeSettingsModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        
+        <div style="margin-bottom:24px;">
+          <h4 style="font-size:0.95rem;font-weight:800;color:var(--ink-black);margin-bottom:6px;">
+            <i class="fas fa-cloud-upload-alt" style="color:var(--caramel)"></i> Google Sheets Cloud Sync (Free)
+          </h4>
+          <p style="font-size:0.84rem;color:var(--ink-muted);line-height:1.6;margin-bottom:12px;">
+            Want orders to automatically record into a <strong>Google Sheet</strong> in real-time? Paste your Google Apps Script Webhook URL below:
+          </p>
+
+          <div class="form-group">
+            <label class="form-label">Google Apps Script Webhook URL</label>
+            <input type="url" id="cfg-sync-url" class="form-input" placeholder="https://script.google.com/macros/s/.../exec" />
+          </div>
+
+          <div style="background:var(--bg-base);padding:14px;border-radius:var(--radius-sm);border:1px solid var(--border-soft);font-size:0.8rem;line-height:1.6;">
+            <strong>Quick Setup (3 minutes):</strong><br>
+            1. Open a new Google Sheet.<br>
+            2. Click <em>Extensions &rarr; Apps Script</em>.<br>
+            3. Paste this free webhook code:
+            <pre style="background:#141312;color:#FAF6EF;padding:8px 10px;border-radius:6px;margin:6px 0;overflow-x:auto;font-size:0.75rem;">function doPost(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var data = JSON.parse(e.postData.contents);
+  sheet.appendRow([new Date(), data.orderId, data.customer.name, data.customer.phone, data.total, data.method, data.status]);
+  return ContentService.createTextOutput("OK");
+}</pre>
+            4. Click <em>Deploy &rarr; New Deployment &rarr; Select Web App (Who has access: Anyone)</em>.<br>
+            5. Copy the generated Web App URL and paste it above!
+          </div>
+        </div>
+
+        <hr style="border:none;border-top:1px solid var(--border);margin:20px 0;" />
+
+        <div style="margin-bottom:20px;">
+          <h4 style="font-size:0.95rem;font-weight:800;color:var(--ink-black);margin-bottom:10px;">
+            <i class="fas fa-key" style="color:var(--caramel)"></i> Admin Security PIN
+          </h4>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Change 4-Digit PIN</label>
+              <input type="password" maxlength="4" id="cfg-pin" class="form-input" placeholder="9376" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Store Helpline (WhatsApp)</label>
+              <input type="text" id="cfg-phone" class="form-input" value="919376506911" />
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button class="nav-btn" onclick="closeSettingsModal()">Cancel</button>
+        <button class="nav-btn primary" onclick="saveSettings()"><i class="fas fa-save"></i> Save Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast-notice">
+    <i class="fas fa-check-circle" style="color:#25D366;font-size:1.1rem"></i>
+    <span id="toast-msg">Settings saved!</span>
+  </div>
+
+  <!-- =========================================================================
+       6. APPLICATION JAVASCRIPT
+       ========================================================================= -->
+  <script>
+    // System Constants & Storage Keys
+    const STORAGE_KEY = 'drysee_admin_orders';
+    const PIN_KEY = 'drysee_admin_pin';
+    const AUTH_KEY = 'drysee_admin_authenticated';
+    const SYNC_URL_KEY = 'drysee_sync_url';
+
+    let allOrders = [];
+    let currentFilter = 'all';
+    let searchQuery = '';
+    let salesChartInstance = null;
+    let paymentChartInstance = null;
+
+    // Default PIN: 9376 (store phone digits) or 1234
+    function getStoredPin() {
+      return localStorage.getItem(PIN_KEY) || '9376';
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // PIN SECURITY HANDLING
+    // ─────────────────────────────────────────────────────────────────────────
+    const pinInputs = [document.getElementById('d1'), document.getElementById('d2'), document.getElementById('d3'), document.getElementById('d4')];
+    pinInputs.forEach((input, idx) => {
+      input.addEventListener('input', (e) => {
+        if (e.target.value.length === 1 && idx < 3) {
+          pinInputs[idx + 1].focus();
+        }
+        if (idx === 3 && e.target.value.length === 1) {
+          verifyPin();
+        }
+      });
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && !input.value && idx > 0) {
+          pinInputs[idx - 1].focus();
+        }
+      });
+    });
+
+    function verifyPin() {
+      const enteredPin = pinInputs.map(i => i.value).join('');
+      const validPin = getStoredPin();
+
+      if (enteredPin === validPin || enteredPin === '1234') {
+        sessionStorage.setItem(AUTH_KEY, 'true');
+        document.getElementById('pin-gate').classList.add('unlocked');
+        document.getElementById('dashboard-main').style.display = 'block';
+        initDashboard();
+        showToast('🔓 Welcome to drysee Admin!');
+      } else {
+        showToast('❌ Incorrect PIN. Default is 9376 or 1234');
+        pinInputs.forEach(i => i.value = '');
+        pinInputs[0].focus();
+      }
+    }
+
+    function checkAuth() {
+      if (sessionStorage.getItem(AUTH_KEY) === 'true') {
+        document.getElementById('pin-gate').classList.add('unlocked');
+        document.getElementById('dashboard-main').style.display = 'block';
+        initDashboard();
+      } else {
+        document.getElementById('pin-gate').classList.remove('unlocked');
+        document.getElementById('dashboard-main').style.display = 'none';
+        pinInputs[0].focus();
+      }
+    }
+
+    function lockSession() {
+      sessionStorage.removeItem(AUTH_KEY);
+      pinInputs.forEach(i => i.value = '');
+      document.getElementById('pin-gate').classList.remove('unlocked');
+      document.getElementById('dashboard-main').style.display = 'none';
+      pinInputs[0].focus();
+      showToast('🔒 Session locked');
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // DATA LOADING & PERSISTENCE
+    // ─────────────────────────────────────────────────────────────────────────
+    function loadOrders() {
+      try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+          allOrders = JSON.parse(stored);
+        } else {
+          // Check if customer orders exist from index.html
+          const customerOrders = localStorage.getItem('drysee_orders');
+          if (customerOrders) {
+            allOrders = JSON.parse(customerOrders).map(o => ({
+              ...o,
+              status: o.status || 'New'
+            }));
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(allOrders));
+          } else {
+            allOrders = [];
+          }
+        }
+      } catch (e) {
+        console.error('Error loading orders:', e);
+        allOrders = [];
+      }
+    }
+
+    function saveOrders() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(allOrders));
+        // Keep customer copy in sync
+        localStorage.setItem('drysee_orders', JSON.stringify(allOrders.slice(0, 15)));
+      } catch (e) {
+        console.error('Error saving orders:', e);
+      }
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // DASHBOARD INITIALIZATION
+    // ─────────────────────────────────────────────────────────────────────────
+    function initDashboard() {
+      loadOrders();
+      startLiveClock();
+      checkCloudSyncBadge();
+
+      // If empty on first launch, inform user
+      if (allOrders.length === 0) {
+        // Will show empty state
+      }
+
+      renderDashboard();
+    }
+
+    function startLiveClock() {
+      function update() {
+        const now = new Date();
+        const opts = { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+        const timeStr = now.toLocaleTimeString('en-IN', opts);
+        const dateStr = now.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
+        const clockEl = document.getElementById('clock-text');
+        if (clockEl) clockEl.textContent = `${dateStr} • ${timeStr} IST`;
+      }
+      update();
+      setInterval(update, 1000);
+    }
+
+    function checkCloudSyncBadge() {
+      const syncUrl = localStorage.getItem(SYNC_URL_KEY);
+      const statusEl = document.getElementById('cloud-sync-status');
+      if (syncUrl && syncUrl.startsWith('http')) {
+        statusEl.innerHTML = '<i class="fas fa-cloud" style="color:var(--green-paid)"></i> Cloud Connected';
+        statusEl.title = 'Syncing to: ' + syncUrl;
+      } else {
+        statusEl.innerHTML = '<i class="fas fa-database" style="color:var(--caramel)"></i> Local Store';
+        statusEl.title = 'Saved in browser storage';
+      }
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // RENDER METRICS, CHARTS & TABLES
+    // ─────────────────────────────────────────────────────────────────────────
+    function renderDashboard() {
+      calculateMetrics();
+      renderCharts();
+      renderTable();
+      updateFilterCounts();
+    }
+
+    function calculateMetrics() {
+      const totalOrders = allOrders.length;
+      const totalSales = allOrders.reduce((sum, o) => sum + (Number(o.total) || 0), 0);
+      const aov = totalOrders > 0 ? Math.round(totalSales / totalOrders) : 0;
+
+      const upiOrders = allOrders.filter(o => (o.method || '').toLowerCase().includes('upi'));
+      const upiSales = upiOrders.reduce((sum, o) => sum + (Number(o.total) || 0), 0);
+
+      const codOrders = allOrders.filter(o => (o.method || '').toLowerCase().includes('cod') || (o.method || '').toLowerCase().includes('delivery'));
+      const codSales = codOrders.reduce((sum, o) => sum + (Number(o.total) || 0), 0);
+
+      const pendingOrders = allOrders.filter(o => o.status === 'New' || o.status === 'In Packing');
+      const deliveredOrders = allOrders.filter(o => o.status === 'Delivered');
+
+      // Update UI elements
+      document.getElementById('kpi-total-sales').textContent = '₹' + totalSales.toLocaleString('en-IN');
+      document.getElementById('kpi-aov').textContent = '₹' + aov.toLocaleString('en-IN');
+      document.getElementById('kpi-total-orders').textContent = totalOrders;
+      document.getElementById('kpi-delivered-count').textContent = deliveredOrders.length;
+      document.getElementById('kpi-upi-sales').textContent = '₹' + upiSales.toLocaleString('en-IN');
+      document.getElementById('kpi-upi-count').textContent = upiOrders.length;
+      document.getElementById('kpi-cod-sales').textContent = '₹' + codSales.toLocaleString('en-IN');
+      document.getElementById('kpi-cod-count').textContent = codOrders.length;
+      document.getElementById('kpi-pending-count').textContent = pendingOrders.length;
+    }
+
+    function updateFilterCounts() {
+      document.getElementById('count-all').textContent = allOrders.length;
+      document.getElementById('count-new').textContent = allOrders.filter(o => o.status === 'New').length;
+      document.getElementById('count-packing').textContent = allOrders.filter(o => o.status === 'In Packing').length;
+      document.getElementById('count-shipped').textContent = allOrders.filter(o => o.status === 'Shipped').length;
+      document.getElementById('count-delivered').textContent = allOrders.filter(o => o.status === 'Delivered').length;
+      document.getElementById('count-upi').textContent = allOrders.filter(o => (o.method || '').toLowerCase().includes('upi')).length;
+      document.getElementById('count-cod').textContent = allOrders.filter(o => (o.method || '').toLowerCase().includes('cod') || (o.method || '').toLowerCase().includes('delivery')).length;
+    }
+
+    function renderCharts() {
+      // 1. Sales Trend Line Chart (Last 7 Days or chronological)
+      const salesCtx = document.getElementById('salesTrendChart').getContext('2d');
+      
+      // Group orders by date
+      const dateMap = {};
+      const sorted = [...allOrders].reverse(); // oldest first
+
+      if (sorted.length === 0) {
+        // default placeholder
+        dateMap['Today'] = 0;
+      } else {
+        sorted.forEach(o => {
+          let dateStr = 'Recent';
+          if (o.timestamp) {
+            const parts = o.timestamp.split(',');
+            dateStr = parts[0] ? parts[0].trim() : 'Order';
+          }
+          dateMap[dateStr] = (dateMap[dateStr] || 0) + (Number(o.total) || 0);
+        });
+      }
+
+      const labels = Object.keys(dateMap);
+      const values = Object.values(dateMap);
+
+      if (salesChartInstance) salesChartInstance.destroy();
+
+      salesChartInstance = new Chart(salesCtx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Sales (₹)',
+            data: values,
+            borderColor: '#B87322',
+            backgroundColor: 'rgba(184, 115, 34, 0.12)',
+            fill: true,
+            tension: 0.35,
+            borderWidth: 3,
+            pointBackgroundColor: '#B87322',
+            pointRadius: 4,
+            pointHoverRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => ' Revenue: ₹' + ctx.parsed.y.toLocaleString('en-IN')
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: { font: { family: 'Plus Jakarta Sans', size: 11 }, color: '#948B80' }
+            },
+            y: {
+              grid: { color: '#EFE7DA' },
+              ticks: {
+                font: { family: 'Plus Jakarta Sans', size: 11 },
+                color: '#948B80',
+                callback: (val) => '₹' + val
+              }
+            }
+          }
+        }
+      });
+
+      // 2. Payment Split Donut Chart
+      const paymentCtx = document.getElementById('paymentSplitChart').getContext('2d');
+      const upiSales = allOrders.filter(o => (o.method || '').toLowerCase().includes('upi')).reduce((s, o) => s + (Number(o.total) || 0), 0);
+      const codSales = allOrders.filter(o => !(o.method || '').toLowerCase().includes('upi')).reduce((s, o) => s + (Number(o.total) || 0), 0);
+
+      if (paymentChartInstance) paymentChartInstance.destroy();
+
+      paymentChartInstance = new Chart(paymentCtx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Direct UPI', 'Cash on Delivery'],
+          datasets: [{
+            data: (upiSales === 0 && codSales === 0) ? [1, 1] : [upiSales, codSales],
+            backgroundColor: ['#1B7E36', '#D9822B'],
+            borderWidth: 3,
+            borderColor: '#FFFFFF'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: { font: { family: 'Plus Jakarta Sans', size: 12, weight: 600 }, color: '#23201D', padding: 14 }
+            },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => ` ${ctx.label}: ₹${ctx.parsed.toLocaleString('en-IN')}`
+              }
+            }
+          },
+          cutout: '70%'
+        }
+      });
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // TABLE RENDERING & FILTERING
+    // ─────────────────────────────────────────────────────────────────────────
+    function setFilter(filter, btn) {
+      currentFilter = filter;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderTable();
+    }
+
+    function handleSearch(val) {
+      searchQuery = (val || '').toLowerCase().trim();
+      renderTable();
+    }
+
+    function getFilteredOrders() {
+      return allOrders.filter(order => {
+        // Status filter
+        if (currentFilter === 'UPI' && !(order.method || '').toLowerCase().includes('upi')) return false;
+        if (currentFilter === 'COD' && !(order.method || '').toLowerCase().includes('cod') && !(order.method || '').toLowerCase().includes('delivery')) return false;
+        if (['New', 'In Packing', 'Shipped', 'Delivered'].includes(currentFilter) && order.status !== currentFilter) return false;
+
+        // Search query filter
+        if (searchQuery) {
+          const matchId = (order.orderId || '').toLowerCase().includes(searchQuery);
+          const matchCust = (order.customer?.name || '').toLowerCase().includes(searchQuery);
+          const matchPhone = (order.customer?.phone || '').toLowerCase().includes(searchQuery);
+          const matchCity = (order.customer?.city || '').toLowerCase().includes(searchQuery);
+          const matchItem = (order.items || []).some(i => (i.title || '').toLowerCase().includes(searchQuery));
+          if (!matchId && !matchCust && !matchPhone && !matchCity && !matchItem) return false;
+        }
+
+        return true;
+      });
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('orders-table-body');
+      const emptyState = document.getElementById('empty-state');
+      const filtered = getFilteredOrders();
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '';
+        emptyState.style.display = 'block';
+        return;
+      }
+
+      emptyState.style.display = 'none';
+
+      tbody.innerHTML = filtered.map(order => {
+        const isUPI = (order.method || '').toLowerCase().includes('upi');
+        const paymentBadge = isUPI 
+          ? `<span class="badge badge-upi"><i class="fas fa-check-circle"></i> UPI (Paid)</span>`
+          : `<span class="badge badge-cod"><i class="fas fa-truck"></i> COD (Collect)</span>`;
+
+        const itemsHtml = (order.items || []).map(i => `
+          <div class="item-pill">
+            <span>${escapeHtml(i.title)} <small style="color:var(--ink-light)">(${i.weight || '500g'})</small></span>
+            <span class="item-pill-qty">&times; ${i.qty || 1}</span>
+          </div>
+        `).join('');
+
+        const statusClass = {
+          'New': 'status-new',
+          'In Packing': 'status-packing',
+          'Shipped': 'status-shipped',
+          'Delivered': 'status-delivered',
+          'Cancelled': 'status-cancelled'
+        }[order.status || 'New'] || 'status-new';
+
+        const cust = order.customer || {};
+
+        return `
+          <tr>
+            <td>
+              <span class="order-id-badge" onclick="viewInvoice('${order.orderId}')" title="Click to view/print invoice">
+                ${order.orderId}
+              </span>
+              <div class="order-time">${order.timestamp || 'Recent'}</div>
+            </td>
+            <td>
+              <div class="cust-info">
+                <span class="cust-name">${escapeHtml(cust.name || 'Anonymous Customer')}</span>
+                <a href="tel:${cust.phone}" class="cust-phone">
+                  <i class="fas fa-phone-alt" style="font-size:0.7rem"></i> +91 ${cust.phone || 'N/A'}
+                </a>
+                <span class="cust-loc" title="${escapeHtml(cust.address || '')}, ${escapeHtml(cust.city || '')}">
+                  <i class="fas fa-map-marker-alt" style="font-size:0.7rem"></i> ${escapeHtml(cust.city || 'India')} ${cust.pincode ? '('+cust.pincode+')' : ''}
+                </span>
+              </div>
+            </td>
+            <td>
+              <div class="items-pill-list">
+                ${itemsHtml || '<span style="color:var(--ink-light)">Standard Pack</span>'}
+              </div>
+            </td>
+            <td>
+              <div class="amount-cell">₹${Number(order.total || 0).toLocaleString('en-IN')}</div>
+              <div class="shipping-sub">${order.shipping === 0 ? 'Free Shipping' : '+ ₹' + (order.shipping || 0) + ' ship'}</div>
+            </td>
+            <td>
+              ${paymentBadge}
+            </td>
+            <td>
+              <select class="status-select ${statusClass}" onchange="updateOrderStatus('${order.orderId}', this.value, this)">
+                <option value="New" ${order.status === 'New' ? 'selected' : ''}>New</option>
+                <option value="In Packing" ${order.status === 'In Packing' ? 'selected' : ''}>In Packing</option>
+                <option value="Shipped" ${order.status === 'Shipped' ? 'selected' : ''}>Shipped</option>
+                <option value="Delivered" ${order.status === 'Delivered' ? 'selected' : ''}>Delivered</option>
+                <option value="Cancelled" ${order.status === 'Cancelled' ? 'selected' : ''}>Cancelled</option>
+              </select>
+            </td>
+            <td style="text-align:right">
+              <div class="action-btns" style="justify-content:flex-end">
+                <button class="btn-icon wa" onclick="sendCustomerWhatsApp('${order.orderId}')" title="Chat with customer on WhatsApp">
+                  <i class="fab fa-whatsapp"></i>
+                </button>
+                <button class="btn-icon" onclick="viewInvoice('${order.orderId}')" title="Print Invoice / Packing Slip">
+                  <i class="fas fa-print"></i>
+                </button>
+                <button class="btn-icon del" onclick="deleteOrder('${order.orderId}')" title="Delete Order">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function updateOrderStatus(orderId, newStatus, selectEl) {
+      const order = allOrders.find(o => o.orderId === orderId);
+      if (order) {
+        order.status = newStatus;
+        saveOrders();
+        calculateMetrics();
+        updateFilterCounts();
+
+        // Update CSS class on the select element immediately
+        selectEl.className = 'status-select ' + {
+          'New': 'status-new',
+          'In Packing': 'status-packing',
+          'Shipped': 'status-shipped',
+          'Delivered': 'status-delivered',
+          'Cancelled': 'status-cancelled'
+        }[newStatus];
+
+        showToast(`📦 Order ${orderId} marked as ${newStatus}`);
+      }
+    }
+
+    function deleteOrder(orderId) {
+      if (confirm(`Are you sure you want to remove order ${orderId}?`)) {
+        allOrders = allOrders.filter(o => o.orderId !== orderId);
+        saveOrders();
+        renderDashboard();
+        showToast(`🗑️ Order ${orderId} deleted`);
+      }
+    }
+
+    function sendCustomerWhatsApp(orderId) {
+      const order = allOrders.find(o => o.orderId === orderId);
+      if (!order || !order.customer?.phone) {
+        showToast('❌ Customer phone number missing');
+        return;
+      }
+
+      let phone = order.customer.phone.replace(/\D/g, '');
+      if (phone.length === 10) phone = '91' + phone;
+
+      let msg = '';
+      if (order.status === 'Shipped') {
+        msg = `Hi ${order.customer.name}! ☀️ Your drysee order ${order.orderId} has been carefully packed and dispatched for delivery. Tracking will update shortly. Thank you for choosing pure sunshine crunch!`;
+      } else if (order.status === 'Delivered') {
+        msg = `Hi ${order.customer.name}! ☀️ Your drysee harvest order ${order.orderId} has been successfully delivered. We hope you enjoy the wholesome goodness!`;
+      } else {
+        msg = `Hi ${order.customer.name}! ☀️ We are reviewing your drysee order ${order.orderId} (₹${order.total}). Our packaging team is preparing your fresh harvest.`;
+      }
+
+      window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // INVOICE / PACKING SLIP MODAL
+    // ─────────────────────────────────────────────────────────────────────────
+    function viewInvoice(orderId) {
+      const order = allOrders.find(o => o.orderId === orderId);
+      if (!order) return;
+
+      const cust = order.customer || {};
+      const isUPI = (order.method || '').toLowerCase().includes('upi');
+
+      const itemsRows = (order.items || []).map((item, idx) => `
+        <tr>
+          <td>${idx + 1}</td>
+          <td><strong>${escapeHtml(item.title)}</strong><br><small style="color:#645E56">${item.weight || '500g'}</small></td>
+          <td>₹${Number(item.price || 0).toLocaleString('en-IN')}</td>
+          <td>${item.qty || 1}</td>
+          <td style="text-align:right"><strong>₹${((item.price || 0) * (item.qty || 1)).toLocaleString('en-IN')}</strong></td>
+        </tr>
+      `).join('');
+
+      const html = `
+        <div class="printable-invoice">
+          <div class="inv-header">
+            <div>
+              <div class="inv-logo-title">drysee ☀️</div>
+              <div class="inv-sub">Purely Packed. Joyfully Shared.</div>
+              <div class="inv-sub">drysee Organic Goods Pvt Ltd • FSSAI Lic. 10021011000421</div>
+              <div class="inv-sub">Helpline: +91 9376506911 • drysee.hello@gmail.com</div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:1.1rem;font-weight:900;color:#B87322">PACKING SLIP & INVOICE</div>
+              <div style="font-family:monospace;font-weight:800;font-size:1rem;margin-top:4px">${order.orderId}</div>
+              <div style="font-size:0.8rem;color:#645E56;margin-top:2px">${order.timestamp || new Date().toLocaleDateString('en-IN')}</div>
+              <div style="margin-top:8px">
+                <span class="badge ${isUPI ? 'badge-upi' : 'badge-cod'}">${isUPI ? 'PREPAID ONLINE' : 'CASH ON DELIVERY'}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="inv-meta-grid">
+            <div>
+              <div class="inv-block-title">Ship To Customer</div>
+              <div style="font-weight:800;font-size:0.95rem">${escapeHtml(cust.name || 'Valued Customer')}</div>
+              <div>${escapeHtml(cust.address || 'Address provided')}</div>
+              <div>${escapeHtml(cust.city || '')} - <strong>${cust.pincode || ''}</strong></div>
+              <div>Mobile: <strong>+91 ${cust.phone || ''}</strong></div>
+              ${cust.email ? `<div>Email: ${escapeHtml(cust.email)}</div>` : ''}
+            </div>
+
+            <div>
+              <div class="inv-block-title">Dispatch Details</div>
+              <div><strong>Status:</strong> ${order.status || 'Processing'}</div>
+              <div><strong>Payment Mode:</strong> ${order.method || 'Standard'}</div>
+              <div><strong>Payment Ref:</strong> ${order.paymentId || 'N/A'}</div>
+              <div><strong>Carrier:</strong> Express Air Courier</div>
+            </div>
+          </div>
+
+          <table class="inv-table">
+            <thead>
+              <tr>
+                <th style="width:40px">#</th>
+                <th>Product Description</th>
+                <th>Rate</th>
+                <th>Qty</th>
+                <th style="text-align:right">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${itemsRows}
+            </tbody>
+          </table>
+
+          <div class="inv-total-section">
+            <div class="inv-total-row">
+              <span>Subtotal:</span>
+              <span>₹${Number(order.subtotal || order.total).toLocaleString('en-IN')}</span>
+            </div>
+            <div class="inv-total-row">
+              <span>Shipping Fee:</span>
+              <span>${order.shipping === 0 ? 'FREE' : '₹' + order.shipping}</span>
+            </div>
+            <div class="inv-total-row inv-grand-total">
+              <span>Total Payable:</span>
+              <span style="color:#B87322">₹${Number(order.total || 0).toLocaleString('en-IN')}</span>
+            </div>
+          </div>
+
+          <div style="margin-top:24px;padding-top:14px;border-top:1px solid #EFE7DA;font-size:0.78rem;color:#948B80;text-align:center">
+            Handcrafted with love. Store in a cool, dry place away from sunlight. Visit us at drysee.in
+          </div>
+        </div>
+      `;
+
+      document.getElementById('invoice-modal-content').innerHTML = html;
+      document.getElementById('invoice-modal').classList.add('open');
+    }
+
+    function closeInvoiceModal() {
+      document.getElementById('invoice-modal').classList.remove('open');
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // MANUAL ORDER CREATION
+    // ─────────────────────────────────────────────────────────────────────────
+    function openManualOrderModal() {
+      document.getElementById('manual-order-form').reset();
+      updateManualPrice();
+      document.getElementById('manual-order-modal').classList.add('open');
+    }
+
+    function closeManualOrderModal() {
+      document.getElementById('manual-order-modal').classList.remove('open');
+    }
+
+    function updateManualPrice() {
+      const prodSelect = document.getElementById('m-product');
+      const [title, basePrice] = prodSelect.value.split('|');
+      const weight = document.getElementById('m-weight').value;
+      const qty = Number(document.getElementById('m-qty').value) || 1;
+
+      let multiplier = 1;
+      if (weight === '250g') multiplier = 0.55;
+      if (weight === '1kg') multiplier = 1.9;
+
+      const unitPrice = Math.round(Number(basePrice) * multiplier);
+      const total = unitPrice * qty;
+      document.getElementById('m-price').value = total;
+    }
+
+    function saveManualOrder() {
+      const name = document.getElementById('m-name').value.trim();
+      const phone = document.getElementById('m-phone').value.trim();
+      const email = document.getElementById('m-email').value.trim();
+      const address = document.getElementById('m-address').value.trim();
+      const city = document.getElementById('m-city').value.trim();
+      const pincode = document.getElementById('m-pincode').value.trim();
+      
+      const prodSelect = document.getElementById('m-product');
+      const [title, basePrice] = prodSelect.value.split('|');
+      const weight = document.getElementById('m-weight').value;
+      const qty = Number(document.getElementById('m-qty').value) || 1;
+      const total = Number(document.getElementById('m-price').value) || 389;
+      const method = document.getElementById('m-method').value;
+      const status = document.getElementById('m-status').value;
+
+      const orderId = '#DRY-' + Math.floor(100000 + Math.random() * 900000);
+      const newOrder = {
+        orderId: orderId,
+        timestamp: new Date().toLocaleString('en-IN'),
+        status: status,
+        method: method,
+        paymentId: method.includes('UPI') ? ('UPI-' + Date.now().toString().slice(-8)) : 'COD-Manual',
+        paymentStatus: method.includes('UPI') ? 'Paid via UPI (Verified)' : 'Cash on Delivery',
+        subtotal: total,
+        shipping: total >= 999 ? 0 : 60,
+        total: total >= 999 ? total : (total + 60),
+        customer: { name, phone, email, address, city, pincode },
+        items: [{
+          title: title,
+          price: Math.round(total / qty),
+          qty: qty,
+          weight: weight
+        }]
+      };
+
+      allOrders.unshift(newOrder);
+      saveOrders();
+      renderDashboard();
+      closeManualOrderModal();
+      showToast(`🎉 Order ${orderId} added successfully!`);
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // EXPORT TO CSV
+    // ─────────────────────────────────────────────────────────────────────────
+    function exportOrdersToCSV() {
+      if (allOrders.length === 0) {
+        showToast('⚠️ No orders to export!');
+        return;
+      }
+
+      const headers = ['Order ID', 'Date', 'Customer Name', 'Mobile', 'Email', 'Address', 'City', 'Pincode', 'Items', 'Subtotal', 'Shipping', 'Total', 'Payment Mode', 'Status'];
+      const rows = allOrders.map(o => {
+        const c = o.customer || {};
+        const itemsStr = (o.items || []).map(i => `${i.title} (${i.weight || '500g'}) x ${i.qty || 1}`).join('; ');
+        return [
+          `"${o.orderId}"`,
+          `"${o.timestamp || ''}"`,
+          `"${(c.name || '').replace(/"/g, '""')}"`,
+          `"${c.phone || ''}"`,
+          `"${c.email || ''}"`,
+          `"${(c.address || '').replace(/"/g, '""')}"`,
+          `"${(c.city || '').replace(/"/g, '""')}"`,
+          `"${c.pincode || ''}"`,
+          `"${itemsStr.replace(/"/g, '""')}"`,
+          Number(o.subtotal || o.total),
+          Number(o.shipping || 0),
+          Number(o.total || 0),
+          `"${o.method || ''}"`,
+          `"${o.status || 'New'}"`
+        ].join(',');
+      });
+
+      const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows].join('\n');
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement('a');
+      link.setAttribute('href', encodedUri);
+      link.setAttribute('download', `drysee_orders_${new Date().toISOString().slice(0, 10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast('📥 Orders CSV downloaded!');
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // DEMO DATA GENERATOR
+    // ─────────────────────────────────────────────────────────────────────────
+    function loadSampleDemoOrders() {
+      const sampleOrders = [
+        {
+          orderId: '#DRY-842910',
+          timestamp: '24/09/2026, 05:45 PM',
+          status: 'New',
+          method: 'Direct UPI (Google Pay / PhonePe)',
+          paymentId: 'UPI-98432104',
+          paymentStatus: 'Paid via Direct UPI (Verified)',
+          subtotal: 1048,
+          shipping: 0,
+          total: 1048,
+          customer: {
+            name: 'Priya Sharma',
+            phone: '9820144582',
+            email: 'priya.sharma@gmail.com',
+            address: 'B-402, Sunshine Heights, Indiranagar',
+            city: 'Bengaluru, Karnataka',
+            pincode: '560038'
+          },
+          items: [
+            { title: 'Royal Jumbo Whole Cashews', price: 389, qty: 1, weight: '500g' },
+            { title: 'California Roasted Almonds', price: 349, qty: 2, weight: '500g' }
+          ]
+        },
+        {
+          orderId: '#DRY-793214',
+          timestamp: '24/09/2026, 03:12 PM',
+          status: 'In Packing',
+          method: 'Cash on Delivery (COD)',
+          paymentId: 'Cash on Arrival',
+          paymentStatus: 'Cash on Delivery (Pay ₹708 on arrival)',
+          subtotal: 648,
+          shipping: 60,
+          total: 708,
+          customer: {
+            name: 'Aarav Mehta',
+            phone: '9819234810',
+            email: 'aarav.mehta@yahoo.com',
+            address: '14, Marine Drive, Near Nariman Point',
+            city: 'Mumbai, Maharashtra',
+            pincode: '400021'
+          },
+          items: [
+            { title: 'Royal Medjool Dates & Turkish Figs', price: 329, qty: 1, weight: '500g' },
+            { title: 'Wild Blueberries & Ruby Cranberries', price: 319, qty: 1, weight: '500g' }
+          ]
+        },
+        {
+          orderId: '#DRY-654812',
+          timestamp: '23/09/2026, 07:30 PM',
+          status: 'Shipped',
+          method: 'Direct UPI (Google Pay / PhonePe)',
+          paymentId: 'UPI-77621908',
+          paymentStatus: 'Paid via Direct UPI (Verified)',
+          subtotal: 1247,
+          shipping: 0,
+          total: 1247,
+          customer: {
+            name: 'Devika Singhania',
+            phone: '9940128490',
+            email: 'devika.singh@gmail.com',
+            address: 'Plot 45, Vasant Vihar, Block C',
+            city: 'New Delhi, Delhi',
+            pincode: '110057'
+          },
+          items: [
+            { title: 'Kashmiri Golden Walnut Halves', price: 449, qty: 1, weight: '500g' },
+            { title: 'Slow-Roasted In-Shell Pistachios', price: 399, qty: 2, weight: '500g' }
+          ]
+        },
+        {
+          orderId: '#DRY-512093',
+          timestamp: '23/09/2026, 11:20 AM',
+          status: 'Delivered',
+          method: 'Cash on Delivery (COD)',
+          paymentId: 'COD-512093',
+          paymentStatus: 'Cash on Delivery (Collected)',
+          subtotal: 488,
+          shipping: 60,
+          total: 548,
+          customer: {
+            name: 'Vikramaditya Rathore',
+            phone: '9414029381',
+            email: 'vikram.rathore@outlook.com',
+            address: 'Villa 12, Civil Lines',
+            city: 'Jaipur, Rajasthan',
+            pincode: '302006'
+          },
+          items: [
+            { title: 'The Daily 5-Seed Power Crunch Mix', price: 269, qty: 1, weight: '500g' },
+            { title: 'AAA Grade Raw Green Pumpkin Seeds', price: 219, qty: 1, weight: '500g' }
+          ]
+        },
+        {
+          orderId: '#DRY-489104',
+          timestamp: '22/09/2026, 04:10 PM',
+          status: 'Delivered',
+          method: 'Direct UPI (Google Pay / PhonePe)',
+          paymentId: 'UPI-33421890',
+          paymentStatus: 'Paid via Direct UPI (Verified)',
+          subtotal: 1396,
+          shipping: 0,
+          total: 1396,
+          customer: {
+            name: 'Kavita Nair',
+            phone: '9845192834',
+            email: 'kavita.nair@gmail.com',
+            address: 'Tower 4, 1102, Prestige Golfshire',
+            city: 'Hyderabad, Telangana',
+            pincode: '500081'
+          },
+          items: [
+            { title: 'California Roasted Almonds', price: 349, qty: 4, weight: '500g' }
+          ]
+        }
+      ];
+
+      allOrders = sampleOrders;
+      saveOrders();
+      renderDashboard();
+      showToast('🌟 Loaded 5 sample orders for preview!');
+    }
+
+    function confirmClearAllOrders() {
+      if (confirm('Are you sure you want to clear all orders? This cannot be undone.')) {
+        allOrders = [];
+        saveOrders();
+        renderDashboard();
+        showToast('🧹 All orders cleared.');
+      }
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // SETTINGS MODAL
+    // ─────────────────────────────────────────────────────────────────────────
+    function openSettingsModal() {
+      document.getElementById('cfg-sync-url').value = localStorage.getItem(SYNC_URL_KEY) || '';
+      document.getElementById('cfg-pin').value = getStoredPin();
+      document.getElementById('settings-modal').classList.add('open');
+    }
+
+    function closeSettingsModal() {
+      document.getElementById('settings-modal').classList.remove('open');
+    }
+
+    function saveSettings() {
+      const url = document.getElementById('cfg-sync-url').value.trim();
+      const pin = document.getElementById('cfg-pin').value.trim();
+
+      if (url) localStorage.setItem(SYNC_URL_KEY, url);
+      else localStorage.removeItem(SYNC_URL_KEY);
+
+      if (pin && pin.length === 4) {
+        localStorage.setItem(PIN_KEY, pin);
+      }
+
+      checkCloudSyncBadge();
+      closeSettingsModal();
+      showToast('✅ Settings updated successfully!');
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // HELPERS
+    // ─────────────────────────────────────────────────────────────────────────
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-msg').textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3500);
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      return String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // Run auth check on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      checkAuth();
+    });
+  </script>
+</body>
+</html>
