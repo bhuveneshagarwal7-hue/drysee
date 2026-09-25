@@ -3757,6 +3757,28 @@ Please confirm dispatch and tracking details!`;
         closeCheckoutModal();
         document.getElementById('receipt-modal').classList.add('open');
         notify('🎉 Order placed successfully!');
+
+        // Auto-open WhatsApp message with order details to store owner (+91 9376506911)
+        try {
+          const itemsText = (orderMeta.items || []).map(i => `• ${i.title} (${i.weight || '500g'}) x ${i.qty || 1}`).join('\n');
+          const waOrderMsg = 
+`*NEW ORDER — drysee.in* ☀️
+Order ID: ${orderId}
+Payment: ${orderMeta.method}
+Total: ₹${orderMeta.total.toLocaleString('en-IN')}
+
+*Customer Details:*
+• Name: ${orderMeta.customer.name}
+• Mobile: +91 ${orderMeta.customer.phone}
+• Delivery: ${orderMeta.customer.address}, ${orderMeta.customer.city} - ${orderMeta.customer.pincode}
+
+*Items Ordered:*
+${itemsText}`;
+
+          setTimeout(() => {
+            window.open(`https://wa.me/${STORE_WHATSAPP_NUMBER}?text=${encodeURIComponent(waOrderMsg)}`, '_blank');
+          }, 800);
+        } catch (e) {}
       }
 
       function closeReceiptModal() {

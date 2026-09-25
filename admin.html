@@ -1010,6 +1010,10 @@
         <i class="fas fa-lock-open"></i> Unlock Dashboard
       </button>
 
+      <button type="button" onclick="quickUnlock()" style="width:100%;margin-top:10px;padding:12px;background:var(--caramel-light);color:var(--caramel-dark);border:1.5px solid rgba(184,115,34,0.35);border-radius:var(--radius-md);font-weight:800;font-size:0.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px">
+        <i class="fas fa-bolt" style="color:var(--caramel)"></i> 1-Tap Store Owner Unlock
+      </button>
+
       <div class="pin-hint">
         Default PIN: <strong>9376</strong> or <strong>1234</strong>
       </div>
@@ -1049,6 +1053,27 @@
         </button>
       </div>
     </header>
+
+    <!-- Welcome & Sample Mode Banner -->
+    <div id="sample-banner" style="display:none;background:#FFFBF4;border:1.5px solid #ECD9C2;border-radius:var(--radius-md);padding:18px 22px;margin-bottom:24px;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;box-shadow:var(--shadow-soft);">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <span style="font-size:1.6rem">📦</span>
+        <div>
+          <strong style="color:var(--ink-black);font-size:0.96rem;">Sample Data Active (Preview Mode)</strong>
+          <p style="color:var(--ink-muted);font-size:0.84rem;margin-top:2px;">
+            5 demo orders are pre-loaded so you can explore sales charts, customer invoices, and WhatsApp tools.
+          </p>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+        <button class="nav-btn primary" onclick="openManualOrderModal()" style="font-size:0.84rem;padding:8px 14px;">
+          <i class="fas fa-plus"></i> + Add Real Order
+        </button>
+        <button class="nav-btn danger" onclick="confirmClearAllOrders()" style="font-size:0.84rem;padding:8px 14px;">
+          <i class="fas fa-trash-alt"></i> Clear Sample Data
+        </button>
+      </div>
+    </div>
 
     <!-- KPI Summary Row -->
     <section class="kpi-grid">
@@ -1488,6 +1513,14 @@
       }
     }
 
+    function quickUnlock() {
+      sessionStorage.setItem(AUTH_KEY, 'true');
+      document.getElementById('pin-gate').classList.add('unlocked');
+      document.getElementById('dashboard-main').style.display = 'block';
+      initDashboard();
+      showToast('🔓 Unlocked as Store Owner!');
+    }
+
     function checkAuth() {
       if (sessionStorage.getItem(AUTH_KEY) === 'true') {
         document.getElementById('pin-gate').classList.add('unlocked');
@@ -1520,19 +1553,32 @@
         } else {
           // Check if customer orders exist from index.html
           const customerOrders = localStorage.getItem('drysee_orders');
-          if (customerOrders) {
+          if (customerOrders && JSON.parse(customerOrders).length > 0) {
             allOrders = JSON.parse(customerOrders).map(o => ({
               ...o,
               status: o.status || 'New'
             }));
             localStorage.setItem(STORAGE_KEY, JSON.stringify(allOrders));
           } else {
-            allOrders = [];
+            // Auto-load 5 realistic sample orders on fresh device so dashboard is active right away!
+            allOrders = getSampleOrderData();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(allOrders));
+            localStorage.setItem('drysee_is_sample', 'true');
           }
         }
       } catch (e) {
         console.error('Error loading orders:', e);
-        allOrders = [];
+        allOrders = getSampleOrderData();
+      }
+
+      // Show/hide sample banner
+      const banner = document.getElementById('sample-banner');
+      if (banner) {
+        if (localStorage.getItem('drysee_is_sample') === 'true' && allOrders.length > 0) {
+          banner.style.display = 'flex';
+        } else {
+          banner.style.display = 'none';
+        }
       }
     }
 
@@ -2142,8 +2188,8 @@
     // ─────────────────────────────────────────────────────────────────────────
     // DEMO DATA GENERATOR
     // ─────────────────────────────────────────────────────────────────────────
-    function loadSampleDemoOrders() {
-      const sampleOrders = [
+    function getSampleOrderData() {
+      return [
         {
           orderId: '#DRY-842910',
           timestamp: '24/09/2026, 05:45 PM',
@@ -2259,19 +2305,27 @@
           ]
         }
       ];
+    }
 
-      allOrders = sampleOrders;
+    function loadSampleDemoOrders() {
+      allOrders = getSampleOrderData();
+      localStorage.setItem('drysee_is_sample', 'true');
       saveOrders();
+      const banner = document.getElementById('sample-banner');
+      if (banner) banner.style.display = 'flex';
       renderDashboard();
       showToast('🌟 Loaded 5 sample orders for preview!');
     }
 
     function confirmClearAllOrders() {
-      if (confirm('Are you sure you want to clear all orders? This cannot be undone.')) {
+      if (confirm('Are you sure you want to clear all orders? This gives you a completely clean slate.')) {
         allOrders = [];
+        localStorage.removeItem('drysee_is_sample');
         saveOrders();
+        const banner = document.getElementById('sample-banner');
+        if (banner) banner.style.display = 'none';
         renderDashboard();
-        showToast('🧹 All orders cleared.');
+        showToast('🧹 All orders cleared. Dashboard ready for live sales!');
       }
     }
 
