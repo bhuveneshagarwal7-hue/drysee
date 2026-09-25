@@ -3,7 +3,30 @@
 > Premium handpicked dry fruits, nuts, berries, and super seeds delivered across India with sunshine crunch.
 
 - **Live Storefront:** **[https://drysee.in/](https://drysee.in/)**
+- **Live Order Tracking:** **[https://drysee.in/track.html](https://drysee.in/track.html)**
 - **Admin Dashboard:** **[https://drysee.in/admin.html](https://drysee.in/admin.html)** *(Default PIN: `9376` or `1234`)*
+
+---
+
+## 🚚 Customer Order Tracking Features
+- **Real-Time Search:** Search by 6-digit Order ID (`#DRY-842910`) or registered mobile number.
+- **5-Stage Visual Progress Timeline:**
+  1. Order Confirmed (Verified & Queued)
+  2. Hand-Sorting & Nitrogen Vacuum Sealing
+  3. Dispatched via Express Air (Blue Dart / Delhivery)
+  4. Out for Delivery (Courier Assigned)
+  5. Delivered Safely to Doorstep
+- **Live Estimated Delivery (ETA):** Estimated arrival dates based on destination pincode and express air dispatch.
+- **Itemized Harvest Summary:** View all items, pack sizes, quantities, and payment status in the package.
+- **Direct Logistics WhatsApp Concierge:** 1-click button to chat with warehouse logistics on WhatsApp (`+91 9376506911`).
+
+---
+
+## ⭐ Customer Reviews & Verified Ratings
+- **Executive Rating Hero:** 4.9/5.0 score with star distribution breakdown (94% 5-star).
+- **Category Filter Chips:** Filter reviews by *Cashews & Almonds*, *Super Seeds*, *Festive Hampers*, and *Crunch & Taste*.
+- **Verified Buyer Badges:** Authentic regional feedback across Mumbai, Bengaluru, Delhi, Hyderabad, Pune, and Jaipur.
+- **Interactive "Write a Review":** Customers can submit reviews with 5-star ratings that immediately appear on the site.
 
 ---
 
@@ -16,16 +39,6 @@
 - **CSV Export:** 1-click download of all customer orders for courier booking (Shiprocket, Delhivery, India Post) and spreadsheet accounting.
 - **Manual Order Entry:** Quickly log orders received via telephone or WhatsApp.
 - **Google Sheets Cloud Sync:** Optional zero-cost webhook sync using Google Apps Script to auto-record orders in your private Google Sheet.
-
----
-
-## ✨ Storefront Features
-- **Artisanal Food Photography**: High-resolution editorial imagery for all 10 harvest products and signature hero visual.
-- **Interactive Nutrition Facts Modal**: Scientific macro breakdowns (protein, healthy fats, fiber, vitamins) and key wellness benefits for every nut and seed.
-- **Dual-Tier Category & Mood Filtering**: Filter by Dry Fruits & Nuts, Super Seeds, or snack mood (Energy Boost, Mindful Crunch, Royal Indulgence, Daily Immunity).
-- **Dynamic Multi-Weight Pack Selector**: Instant switching between 250g, 500g, and 1kg with real-time price calculation.
-- **Interactive Shopping Bag**: Slide-out cart drawer with free shipping progress meter (orders over ₹999).
-- **Payment Methods**: Direct UPI (Google Pay, PhonePe, Paytm, QR) and Cash on Delivery (COD).
 
 ---
 

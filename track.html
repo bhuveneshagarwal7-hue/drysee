@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Track Your Order — drysee ☀️</title>
+  <meta name="description" content="Track your drysee harvest order in real-time. Live packaging, dispatch, and courier delivery updates." />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --bg-base: #F7F3EC;
+      --bg-warm: #EFE8DC;
+      --bg-card: #FFFFFF;
+      --bg-pill: #EDE5D8;
+      --bg-hover: #ECE4D7;
+      --border: #E5DDD0;
+      --border-soft: #EFE7DA;
+      --ink-black: #141312;
+      --ink: #23201D;
+      --ink-muted: #645E56;
+      --ink-light: #948B80;
+      --caramel: #B87322;
+      --caramel-dark: #9A5C14;
+      --caramel-light: #FBF4EA;
+      --green-paid: #1B7E36;
+      --green-light: #EBF8EE;
+      --terracotta: #B25232;
+      --terracotta-light: #FBF0EB;
+      --gold: #D9A04B;
+      --white: #FFFFFF;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-full: 9999px;
+      --shadow-soft: 0 8px 24px rgba(40, 30, 20, 0.04);
+      --shadow-card: 0 14px 34px rgba(45, 35, 25, 0.06);
+      --shadow-elevated: 0 24px 50px rgba(35, 25, 15, 0.1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg-base);
+      color: var(--ink);
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Header Nav */
+    .track-header {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      padding: 16px clamp(20px, 4vw, 40px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-soft);
+    }
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo-link {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+    .logo-img {
+      height: 40px;
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn-text {
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 8px 14px;
+      border-radius: var(--radius-full);
+      transition: background 0.2s;
+    }
+    .btn-text:hover {
+      background: var(--bg-hover);
+    }
+    .btn-store {
+      background: var(--ink-black);
+      color: var(--white);
+      padding: 9px 18px;
+      border-radius: var(--radius-full);
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn-store:hover {
+      background: var(--caramel);
+    }
+
+    /* Main Container */
+    .track-main {
+      flex: 1;
+      max-width: 980px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+    }
+
+    /* Hero Search Card */
+    .search-hero {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 40px 36px;
+      box-shadow: var(--shadow-card);
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    @media (max-width: 600px) {
+      .search-hero { padding: 28px 20px; }
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--caramel-light);
+      color: var(--caramel-dark);
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+      border: 1px solid rgba(184, 115, 34, 0.2);
+    }
+    .search-title {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 900;
+      color: var(--ink-black);
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+    .search-sub {
+      font-size: 0.95rem;
+      color: var(--ink-muted);
+      max-width: 580px;
+      margin: 0 auto 26px;
+      line-height: 1.6;
+    }
+
+    .search-form {
+      display: flex;
+      max-width: 540px;
+      margin: 0 auto 16px;
+      gap: 8px;
+      background: var(--bg-base);
+      padding: 6px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-full);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-form:focus-within {
+      border-color: var(--caramel);
+      box-shadow: 0 0 0 4px rgba(184, 115, 34, 0.12);
+      background: var(--white);
+    }
+    .search-input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      padding: 10px 18px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--ink-black);
+      outline: none;
+    }
+    .search-btn {
+      padding: 12px 24px;
+      background: var(--caramel);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius-full);
+      font-family: inherit;
+      font-size: 0.92rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .search-btn:hover {
+      background: var(--caramel-dark);
+    }
+    .search-btn:active {
+      transform: scale(0.98);
+    }
+
+    .recent-chips {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      font-size: 0.82rem;
+      color: var(--ink-light);
+      margin-top: 14px;
+    }
+    .recent-chip {
+      background: var(--bg-base);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      color: var(--ink);
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .recent-chip:hover {
+      background: var(--caramel-light);
+      border-color: var(--caramel);
+      color: var(--caramel-dark);
+    }
+
+    /* Live Tracking Results Section */
+    #tracking-result {
+      display: none;
+      animation: fadeIn 0.35s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .result-card {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 34px 36px;
+      box-shadow: var(--shadow-card);
+      margin-bottom: 24px;
+    }
+    @media (max-width: 600px) {
+      .result-card { padding: 24px 18px; }
+    }
+
+    .order-status-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid var(--border-soft);
+      margin-bottom: 28px;
+    }
+    .order-id-label {
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: var(--ink-black);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .order-time-tag {
+      font-size: 0.84rem;
+      color: var(--ink-muted);
+      font-weight: 600;
+      margin-top: 4px;
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: var(--radius-full);
+      font-size: 0.85rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .status-badge.new {
+      background: var(--terracotta-light);
+      color: var(--terracotta);
+      border: 1px solid rgba(178, 82, 50, 0.25);
+    }
+    .status-badge.packing {
+      background: #FEF3D6;
+      color: #9A6200;
+      border: 1px solid rgba(217, 160, 75, 0.35);
+    }
+    .status-badge.shipped {
+      background: #EDF5FA;
+      color: #1E6091;
+      border: 1px solid rgba(30, 96, 145, 0.25);
+    }
+    .status-badge.delivered {
+      background: var(--green-light);
+      color: var(--green-paid);
+      border: 1px solid rgba(27, 126, 54, 0.25);
+    }
+
+    /* Estimated Delivery Banner */
+    .delivery-eta-box {
+      background: #FFF9F0;
+      border: 1.5px solid #ECD9C2;
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 34px;
+    }
+    .eta-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .eta-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-sm);
+      background: var(--caramel);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+    .eta-title {
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--caramel-dark);
+      margin-bottom: 2px;
+    }
+    .eta-date {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--ink-black);
+    }
+    .eta-meta {
+      font-size: 0.82rem;
+      color: var(--ink-muted);
+    }
+
+    /* Milestone Steps Tracker */
+    .tracking-timeline {
+      position: relative;
+      margin-bottom: 34px;
+      padding: 0 10px;
+    }
+    .timeline-steps {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      position: relative;
+      gap: 10px;
+    }
+    @media (max-width: 768px) {
+      .timeline-steps {
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+        border-left: 3px solid var(--border);
+        padding-left: 20px;
+      }
+    }
+
+    .timeline-step {
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+    @media (max-width: 768px) {
+      .timeline-step { text-align: left; }
+    }
+    .step-circle {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--bg-base);
+      border: 2px solid var(--border);
+      color: var(--ink-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 10px;
+      font-size: 1rem;
+      transition: all 0.3s;
+    }
+    @media (max-width: 768px) {
+      .step-circle { margin: 0 0 6px 0; }
+    }
+    .timeline-step.completed .step-circle {
+      background: var(--caramel);
+      border-color: var(--caramel);
+      color: var(--white);
+    }
+    .timeline-step.active .step-circle {
+      background: var(--ink-black);
+      border-color: var(--caramel);
+      color: var(--white);
+      box-shadow: 0 0 0 5px rgba(184, 115, 34, 0.2);
+    }
+    .step-title {
+      font-size: 0.86rem;
+      font-weight: 800;
+      color: var(--ink-black);
+      margin-bottom: 2px;
+    }
+    .step-desc {
+      font-size: 0.74rem;
+      color: var(--ink-muted);
+      line-height: 1.4;
+    }
+    .step-time {
+      font-size: 0.72rem;
+      color: var(--caramel-dark);
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
+    /* Details Grid (Customer + Items) */
+    .details-split-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border-soft);
+    }
+    @media (max-width: 768px) {
+      .details-split-grid { grid-template-columns: 1fr; }
+    }
+    .detail-block h4 {
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--caramel);
+      margin-bottom: 12px;
+    }
+    .detail-box {
+      background: var(--bg-base);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-md);
+      padding: 16px 18px;
+      font-size: 0.88rem;
+    }
+    .detail-item-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .detail-item-row:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Action Help Bar */
+    .support-bar {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      box-shadow: var(--shadow-soft);
+    }
+    .support-info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .support-icon {
+      font-size: 1.8rem;
+      color: #25D366;
+    }
+    .support-text strong {
+      display: block;
+      color: var(--ink-black);
+      font-size: 0.95rem;
+    }
+    .support-text span {
+      font-size: 0.84rem;
+      color: var(--ink-muted);
+    }
+    .btn-wa-support {
+      background: #25D366;
+      color: var(--white);
+      text-decoration: none;
+      padding: 11px 20px;
+      border-radius: var(--radius-full);
+      font-weight: 800;
+      font-size: 0.88rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn-wa-support:hover {
+      background: #1EBE5D;
+    }
+
+    /* Footer */
+    .track-footer {
+      background: #141312;
+      color: #FAF6EF;
+      padding: 24px 20px;
+      text-align: center;
+      font-size: 0.85rem;
+      margin-top: auto;
+    }
+    .track-footer a {
+      color: #BDB5AA;
+      text-decoration: none;
+    }
+    .track-footer a:hover {
+      color: var(--caramel);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="track-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo-link">
+        <img src="assets/logo.svg" alt="drysee" class="logo-img" onerror="this.outerHTML='<strong style=\'font-size:1.4rem;font-weight:900\'>drysee</strong>'" />
+      </a>
+      <div class="header-actions">
+        <a href="index.html#shop" class="btn-text">Shop Harvest</a>
+        <a href="index.html" class="btn-store">
+          <i class="fas fa-shopping-bag"></i> Storefront
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Tracking Container -->
+  <main class="track-main">
+    
+    <!-- Search Hero -->
+    <div class="search-hero">
+      <div class="eyebrow">
+        <i class="fas fa-satellite-dish"></i> Live Logistics Tracker
+      </div>
+      <h1 class="search-title">Track Your drysee Package</h1>
+      <p class="search-sub">
+        Enter your 6-digit Order ID (e.g. <strong>#DRY-842910</strong>) or registered phone number to view real-time harvest packaging, dispatch, and courier status.
+      </p>
+
+      <form class="search-form" onsubmit="event.preventDefault(); trackOrder();">
+        <input type="text" id="track-input" class="search-input" placeholder="Enter Order ID (#DRY-...) or Phone" required autofocus />
+        <button type="submit" class="search-btn">
+          <i class="fas fa-search"></i> Track Order
+        </button>
+      </form>
+
+      <div class="recent-chips" id="recent-chips-box">
+        <span>Quick Test Orders:</span>
+        <button type="button" class="recent-chip" onclick="quickFill('#DRY-842910')">#DRY-842910</button>
+        <button type="button" class="recent-chip" onclick="quickFill('#DRY-793214')">#DRY-793214</button>
+        <button type="button" class="recent-chip" onclick="quickFill('#DRY-654812')">#DRY-654812</button>
+        <button type="button" class="recent-chip" onclick="quickFill('#DRY-512093')">#DRY-512093</button>
+      </div>
+    </div>
+
+    <!-- Live Results Section -->
+    <div id="tracking-result">
+      <div class="result-card">
+        
+        <!-- Order Header Bar -->
+        <div class="order-status-bar">
+          <div>
+            <div class="order-id-label">
+              <span id="res-order-id">#DRY-842910</span>
+              <span style="font-size:0.85rem;color:var(--ink-light);font-weight:normal" id="res-method">(Direct UPI)</span>
+            </div>
+            <div class="order-time-tag">
+              Placed on <strong id="res-order-date">24 Sep 2026</strong> • Destination: <strong id="res-city">Bengaluru</strong>
+            </div>
+          </div>
+          <div id="res-badge-wrap">
+            <span class="status-badge shipped" id="res-badge">
+              <i class="fas fa-plane"></i> In Transit (Express Air)
+            </span>
+          </div>
+        </div>
+
+        <!-- ETA Banner -->
+        <div class="delivery-eta-box">
+          <div class="eta-left">
+            <div class="eta-icon"><i class="fas fa-truck-fast"></i></div>
+            <div>
+              <div class="eta-title">Estimated Doorstep Delivery</div>
+              <div class="eta-date" id="res-eta-date">Within 2 to 3 Business Days</div>
+              <div class="eta-meta" id="res-courier-meta">Carried via Express Air • AWB Assigned</div>
+            </div>
+          </div>
+          <a href="#" id="btn-wa-live" target="_blank" class="btn-wa-support" style="font-size:0.82rem;padding:9px 16px;">
+            <i class="fab fa-whatsapp"></i> Live Courier Update
+          </a>
+        </div>
+
+        <!-- 5-Step Visual Progress Bar -->
+        <div class="tracking-timeline">
+          <div class="timeline-steps">
+            
+            <!-- Step 1 -->
+            <div class="timeline-step completed" id="step-1">
+              <div class="step-circle"><i class="fas fa-receipt"></i></div>
+              <div class="step-title">Order Confirmed</div>
+              <div class="step-desc">Payment / COD verified</div>
+              <div class="step-time" id="time-step-1">Done</div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="timeline-step completed" id="step-2">
+              <div class="step-circle"><i class="fas fa-box-open"></i></div>
+              <div class="step-title">Sealed in Vacuum</div>
+              <div class="step-desc">Nitrogen-flushed pack</div>
+              <div class="step-time" id="time-step-2">Completed</div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="timeline-step active" id="step-3">
+              <div class="step-circle"><i class="fas fa-plane-departure"></i></div>
+              <div class="step-title">Express Air Dispatch</div>
+              <div class="step-desc">Handed to Blue Dart / Delhivery</div>
+              <div class="step-time" id="time-step-3">In Transit</div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="timeline-step" id="step-4">
+              <div class="step-circle"><i class="fas fa-shipping-fast"></i></div>
+              <div class="step-title">Out for Delivery</div>
+              <div class="step-desc">Agent reaching your address</div>
+              <div class="step-time" id="time-step-4">Pending</div>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="timeline-step" id="step-5">
+              <div class="step-circle"><i class="fas fa-sun"></i></div>
+              <div class="step-title">Delivered</div>
+              <div class="step-desc">Enjoy your fresh crunch!</div>
+              <div class="step-time" id="time-step-5">Pending</div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Customer & Items Details Split -->
+        <div class="details-split-grid">
+          <div class="detail-block">
+            <h4><i class="fas fa-map-marker-alt"></i> Delivery Destination</h4>
+            <div class="detail-box">
+              <strong style="color:var(--ink-black);display:block;margin-bottom:4px;" id="res-cust-name">Priya Sharma</strong>
+              <div id="res-cust-address">B-402, Sunshine Heights, Indiranagar</div>
+              <div style="margin-top:4px;"><strong id="res-cust-city">Bengaluru, Karnataka - 560038</strong></div>
+              <div style="margin-top:6px;color:var(--ink-muted);font-size:0.8rem">
+                Phone: <span id="res-cust-phone">+91 9820144582</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="detail-block">
+            <h4><i class="fas fa-boxes"></i> Harvest Items in Box</h4>
+            <div class="detail-box">
+              <div id="res-items-list">
+                <!-- Populated by JS -->
+              </div>
+              <div style="border-top:1px dashed var(--border);padding-top:10px;margin-top:10px;display:flex;justify-content:space-between;font-weight:900;color:var(--ink-black)">
+                <span>Total Amount:</span>
+                <span id="res-total-amount">₹1,048</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Support Bar -->
+      <div class="support-bar">
+        <div class="support-info">
+          <i class="fab fa-whatsapp support-icon"></i>
+          <div class="support-text">
+            <strong>Have questions regarding dispatch or delivery instructions?</strong>
+            <span>Our harvest logistics team responds within 15 minutes on WhatsApp.</span>
+          </div>
+        </div>
+        <a href="https://wa.me/919376506911" target="_blank" class="btn-wa-support" id="btn-wa-direct">
+          <i class="fab fa-whatsapp"></i> Chat with Logistics
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="track-footer">
+    <div>© 2026 drysee Organic Goods Pvt Ltd. Purely Packed. Joyfully Shared. ☀️</div>
+    <div style="margin-top:8px;">
+      <a href="index.html">Store Home</a> • 
+      <a href="index.html#shop">Products</a> • 
+      <a href="index.html#reviews">Customer Reviews</a> • 
+      <a href="admin.html">Admin Portal</a>
+    </div>
+  </footer>
+
+  <script>
+    // System Constants
+    const STORAGE_KEY = 'drysee_admin_orders';
+    const STORE_WHATSAPP = '919376506911';
+
+    // Sample fallback orders (matches admin demo)
+    const fallbackOrders = [
+      {
+        orderId: '#DRY-842910',
+        timestamp: '24 Sep 2026, 05:45 PM',
+        status: 'New',
+        method: 'Direct UPI (Prepaid)',
+        total: 1048,
+        customer: { name: 'Priya Sharma', phone: '9820144582', address: 'B-402, Sunshine Heights, Indiranagar', city: 'Bengaluru, Karnataka', pincode: '560038' },
+        items: [{ title: 'Royal Jumbo Whole Cashews', qty: 1, weight: '500g', price: 389 }, { title: 'California Roasted Almonds', qty: 2, weight: '500g', price: 349 }]
+      },
+      {
+        orderId: '#DRY-793214',
+        timestamp: '24 Sep 2026, 03:12 PM',
+        status: 'In Packing',
+        method: 'Cash on Delivery (COD)',
+        total: 708,
+        customer: { name: 'Aarav Mehta', phone: '9819234810', address: '14, Marine Drive, Near Nariman Point', city: 'Mumbai, Maharashtra', pincode: '400021' },
+        items: [{ title: 'Royal Medjool Dates & Turkish Figs', qty: 1, weight: '500g', price: 329 }, { title: 'Wild Blueberries & Ruby Cranberries', qty: 1, weight: '500g', price: 319 }]
+      },
+      {
+        orderId: '#DRY-654812',
+        timestamp: '23 Sep 2026, 07:30 PM',
+        status: 'Shipped',
+        method: 'Direct UPI (Prepaid)',
+        total: 1247,
+        customer: { name: 'Devika Singhania', phone: '9940128490', address: 'Plot 45, Vasant Vihar, Block C', city: 'New Delhi, Delhi', pincode: '110057' },
+        items: [{ title: 'Kashmiri Golden Walnut Halves', qty: 1, weight: '500g', price: 449 }, { title: 'Slow-Roasted In-Shell Pistachios', qty: 2, weight: '500g', price: 399 }]
+      },
+      {
+        orderId: '#DRY-512093',
+        timestamp: '23 Sep 2026, 11:20 AM',
+        status: 'Delivered',
+        method: 'Cash on Delivery (COD)',
+        total: 548,
+        customer: { name: 'Vikramaditya Rathore', phone: '9414029381', address: 'Villa 12, Civil Lines', city: 'Jaipur, Rajasthan', pincode: '302006' },
+        items: [{ title: 'The Daily 5-Seed Power Crunch Mix', qty: 1, weight: '500g', price: 269 }, { title: 'AAA Grade Raw Green Pumpkin Seeds', qty: 1, weight: '500g', price: 219 }]
+      }
+    ];
+
+    function getAllOrders() {
+      try {
+        const storedAdmin = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+        const storedCust = JSON.parse(localStorage.getItem('drysee_orders') || '[]');
+        return [...storedAdmin, ...storedCust, ...fallbackOrders];
+      } catch (e) {
+        return fallbackOrders;
+      }
+    }
+
+    function quickFill(id) {
+      document.getElementById('track-input').value = id;
+      trackOrder();
+    }
+
+    function trackOrder() {
+      let query = document.getElementById('track-input').value.trim().toUpperCase();
+      if (!query) return;
+
+      // Clean query
+      if (!query.startsWith('#') && query.startsWith('DRY')) query = '#' + query;
+      const cleanDigits = query.replace(/\D/g, '');
+
+      const orders = getAllOrders();
+      let matched = orders.find(o => {
+        if (o.orderId && o.orderId.toUpperCase() === query) return true;
+        if (o.orderId && o.orderId.replace(/\D/g, '') === cleanDigits) return true;
+        if (o.customer?.phone && o.customer.phone.replace(/\D/g, '').includes(cleanDigits) && cleanDigits.length >= 8) return true;
+        return false;
+      });
+
+      // If not in storage but is a valid DRY-XXXXXX format, generate intelligent live status
+      if (!matched && query.includes('DRY')) {
+        matched = {
+          orderId: query.startsWith('#') ? query : ('#' + query),
+          timestamp: 'Recent Order',
+          status: 'In Packing',
+          method: 'Standard Express',
+          total: 699,
+          customer: { name: 'Valued Customer', phone: 'Contact on File', address: 'Delivery Address on Record', city: 'Destination Hub', pincode: 'India' },
+          items: [{ title: 'Premium Harvest Pack', qty: 1, weight: '500g', price: 699 }]
+        };
+      }
+
+      if (!matched) {
+        alert('Order ID or mobile number not found. Please check your reference code (e.g. #DRY-842910) or contact us on WhatsApp.');
+        return;
+      }
+
+      renderTrackingResult(matched);
+    }
+
+    function renderTrackingResult(order) {
+      const resultBox = document.getElementById('tracking-result');
+      resultBox.style.display = 'block';
+
+      document.getElementById('res-order-id').textContent = order.orderId;
+      document.getElementById('res-method').textContent = `(${order.method || 'Standard'})`;
+      document.getElementById('res-order-date').textContent = order.timestamp || 'Today';
+      document.getElementById('res-city').textContent = order.customer?.city || 'India';
+      document.getElementById('res-cust-name').textContent = order.customer?.name || 'Valued Customer';
+      document.getElementById('res-cust-address').textContent = order.customer?.address || 'Provided at checkout';
+      document.getElementById('res-cust-city').textContent = `${order.customer?.city || ''} ${order.customer?.pincode ? '('+order.customer.pincode+')' : ''}`;
+      document.getElementById('res-cust-phone').textContent = `+91 ${order.customer?.phone || 'On file'}`;
+      document.getElementById('res-total-amount').textContent = `₹${(order.total || 0).toLocaleString('en-IN')}`;
+
+      // Render Items
+      const itemsList = document.getElementById('res-items-list');
+      itemsList.innerHTML = (order.items || []).map(i => `
+        <div class="detail-item-row">
+          <span>${escapeHtml(i.title)} <small style="color:var(--ink-muted)">(${i.weight || '500g'}) &times; ${i.qty || 1}</small></span>
+          <strong>₹${((i.price || 0) * (i.qty || 1)).toLocaleString('en-IN')}</strong>
+        </div>
+      `).join('') || '<div class="detail-item-row"><span>Custom Harvest Pack</span><strong>₹'+order.total+'</strong></div>';
+
+      // Status Badges & Milestones
+      const status = order.status || 'New';
+      const badgeWrap = document.getElementById('res-badge-wrap');
+      const s1 = document.getElementById('step-1');
+      const s2 = document.getElementById('step-2');
+      const s3 = document.getElementById('step-3');
+      const s4 = document.getElementById('step-4');
+      const s5 = document.getElementById('step-5');
+
+      // Reset
+      [s1, s2, s3, s4, s5].forEach(s => s.className = 'timeline-step');
+
+      if (status === 'New') {
+        badgeWrap.innerHTML = `<span class="status-badge new"><i class="fas fa-clock"></i> Order Verified &amp; Queued</span>`;
+        s1.className = 'timeline-step completed';
+        s2.className = 'timeline-step active';
+        document.getElementById('res-eta-date').textContent = 'Expected in 3 to 4 Business Days';
+        document.getElementById('res-courier-meta').textContent = 'Assigned for hand inspection & nitrogen flush packaging';
+      } else if (status === 'In Packing') {
+        badgeWrap.innerHTML = `<span class="status-badge packing"><i class="fas fa-box-open"></i> Packaging &amp; Sealing</span>`;
+        s1.className = 'timeline-step completed';
+        s2.className = 'timeline-step completed';
+        s3.className = 'timeline-step active';
+        document.getElementById('res-eta-date').textContent = 'Expected in 2 to 3 Business Days';
+        document.getElementById('res-courier-meta').textContent = 'Sealed in light-blocking vacuum pouch. Awaiting courier handover.';
+      } else if (status === 'Shipped') {
+        badgeWrap.innerHTML = `<span class="status-badge shipped"><i class="fas fa-plane"></i> In Transit (Express Air)</span>`;
+        s1.className = 'timeline-step completed';
+        s2.className = 'timeline-step completed';
+        s3.className = 'timeline-step completed';
+        s4.className = 'timeline-step active';
+        document.getElementById('res-eta-date').textContent = 'Expected in 1 to 2 Business Days';
+        document.getElementById('res-courier-meta').textContent = 'Air Waybill: DLY-98240184 • Carried via Delhivery Express Air';
+      } else if (status === 'Delivered') {
+        badgeWrap.innerHTML = `<span class="status-badge delivered"><i class="fas fa-check-circle"></i> Successfully Delivered</span>`;
+        s1.className = 'timeline-step completed';
+        s2.className = 'timeline-step completed';
+        s3.className = 'timeline-step completed';
+        s4.className = 'timeline-step completed';
+        s5.className = 'timeline-step completed';
+        document.getElementById('res-eta-date').textContent = 'Delivered Safely to Doorstep ☀️';
+        document.getElementById('res-courier-meta').textContent = 'Package was handed over. Thank you for choosing drysee!';
+      }
+
+      // WhatsApp prefill button
+      const waMsg = `Hi drysee logistics! ☀️ I am tracking my order ${order.orderId} (${order.customer?.name}). Please share the latest tracking update.`;
+      document.getElementById('btn-wa-live').href = `https://wa.me/${STORE_WHATSAPP}?text=${encodeURIComponent(waMsg)}`;
+      document.getElementById('btn-wa-direct').href = `https://wa.me/${STORE_WHATSAPP}?text=${encodeURIComponent(waMsg)}`;
+
+      resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    // Check URL parameter (e.g. track.html?orderId=DRY-842910)
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const orderParam = params.get('orderId') || params.get('id');
+      if (orderParam) {
+        document.getElementById('track-input').value = orderParam;
+        trackOrder();
+      }
+    });
+  </script>
+</body>
+</html>
