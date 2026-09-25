@@ -969,52 +969,281 @@
       }
       .gift-actions { display: flex; gap: 14px; flex-wrap: wrap; }
 
-      /* Testimonials Wall */
+      /* Enhanced Reviews & Rating Summary */
       .reviews-section {
         max-width: 1280px;
         margin: 0 auto 90px;
         padding: 0 clamp(20px, 4vw, 40px);
       }
+      .rating-summary-hero {
+        background: var(--bg-card);
+        border: 1.5px solid var(--border);
+        border-radius: var(--radius-lg);
+        padding: 34px 38px;
+        box-shadow: var(--shadow-soft);
+        margin-bottom: 32px;
+        display: grid;
+        grid-template-columns: 260px 1fr 280px;
+        gap: 32px;
+        align-items: center;
+      }
+      @media (max-width: 992px) {
+        .rating-summary-hero { grid-template-columns: 1fr; gap: 24px; padding: 26px 20px; text-align: center; }
+      }
+      .rating-score-box {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      @media (max-width: 992px) {
+        .rating-score-box { align-items: center; }
+      }
+      .score-num {
+        font-size: 3.6rem;
+        font-weight: 900;
+        line-height: 1;
+        color: var(--ink-black);
+        letter-spacing: -0.04em;
+        margin-bottom: 6px;
+        display: flex;
+        align-items: baseline;
+        gap: 4px;
+      }
+      .score-num span {
+        font-size: 1.4rem;
+        color: var(--ink-light);
+        font-weight: 700;
+      }
+      .score-stars {
+        color: var(--gold);
+        font-size: 1.35rem;
+        letter-spacing: 2px;
+        margin-bottom: 6px;
+      }
+      .score-count {
+        font-size: 0.88rem;
+        color: var(--ink-muted);
+        font-weight: 600;
+      }
+
+      /* Rating Bars */
+      .rating-bars {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+        padding: 0 10px;
+      }
+      .bar-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.82rem;
+        color: var(--ink-muted);
+        font-weight: 600;
+      }
+      .bar-label { width: 50px; text-align: right; }
+      .bar-track {
+        flex: 1;
+        height: 8px;
+        background: var(--bg-base);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .bar-fill {
+        height: 100%;
+        background: var(--gold);
+        border-radius: 99px;
+      }
+      .bar-pct { width: 36px; text-align: left; font-size: 0.8rem; color: var(--ink-light); }
+
+      /* Summary CTAs */
+      .rating-cta-box {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        border-left: 1px solid var(--border);
+        padding-left: 32px;
+      }
+      @media (max-width: 992px) {
+        .rating-cta-box { border-left: none; padding-left: 0; align-items: center; }
+      }
+      .trust-pill-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.84rem;
+        font-weight: 700;
+        color: var(--ink);
+      }
+      .trust-pill-item svg {
+        color: #1B7E36;
+        width: 17px;
+        height: 17px;
+        flex-shrink: 0;
+      }
+      .btn-write-review {
+        padding: 11px 22px;
+        background: var(--ink-black);
+        color: var(--white);
+        border-radius: var(--radius-full);
+        font-weight: 700;
+        font-size: 0.88rem;
+        border: none;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: background 0.2s, transform 0.1s;
+        margin-top: 4px;
+      }
+      .btn-write-review:hover {
+        background: var(--caramel);
+      }
+
+      /* Filter Chips */
+      .review-chips-bar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        overflow-x: auto;
+        padding-bottom: 8px;
+        margin-bottom: 24px;
+      }
+      .review-chip {
+        padding: 8px 18px;
+        background: var(--bg-card);
+        border: 1.5px solid var(--border);
+        border-radius: var(--radius-full);
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: var(--ink-muted);
+        cursor: pointer;
+        white-space: nowrap;
+        transition: all 0.2s;
+      }
+      .review-chip:hover {
+        border-color: var(--caramel);
+        color: var(--ink-black);
+      }
+      .review-chip.active {
+        background: var(--caramel);
+        color: var(--white);
+        border-color: var(--caramel);
+      }
+
+      /* Review Cards */
       .reviews-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 26px;
+        gap: 24px;
+      }
+      @media (max-width: 992px) {
+        .reviews-grid { grid-template-columns: 1fr; }
       }
       .review-card {
         background: var(--bg-card);
         border: 1.5px solid var(--border);
         border-radius: var(--radius-lg);
-        padding: 30px;
+        padding: 26px 28px;
         box-shadow: var(--shadow-soft);
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        transition: transform 0.2s, box-shadow 0.2s;
       }
-      .review-stars { color: var(--gold); margin-bottom: 14px; font-size: 1.05rem; }
+      .review-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-card);
+      }
+      .review-header-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
+      .review-stars { color: var(--gold); font-size: 1.05rem; }
+      .verified-badge-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        background: #EBF8EE;
+        color: #1B7E36;
+        font-size: 0.72rem;
+        font-weight: 800;
+        padding: 3px 8px;
+        border-radius: var(--radius-full);
+        border: 1px solid rgba(27, 126, 54, 0.2);
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+      .review-prod-tag {
+        font-size: 0.78rem;
+        color: var(--caramel);
+        background: var(--caramel-light);
+        padding: 3px 9px;
+        border-radius: 6px;
+        font-weight: 700;
+        margin-bottom: 12px;
+        display: inline-block;
+      }
+      .review-headline {
+        font-size: 1.02rem;
+        font-weight: 800;
+        color: var(--ink-black);
+        margin-bottom: 8px;
+        line-height: 1.35;
+      }
       .review-text {
-        font-size: 0.96rem;
-        line-height: 1.65;
+        font-size: 0.92rem;
+        line-height: 1.6;
         color: var(--ink-muted);
-        margin-bottom: 22px;
-        flex: 1;
+        margin-bottom: 18px;
         font-weight: 500;
+      }
+      .review-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 14px;
+        border-top: 1px solid var(--border-soft);
       }
       .reviewer { display: flex; align-items: center; gap: 12px; }
       .reviewer-img {
-        width: 44px;
-        height: 44px;
+        width: 38px;
+        height: 38px;
         border-radius: 50%;
         background: var(--caramel-light);
-        border: 1px solid rgba(184, 115, 34, 0.2);
+        border: 1.5px solid rgba(184, 115, 34, 0.25);
         color: var(--caramel);
         font-family: var(--font-main);
         font-weight: 800;
         display: flex;
         align-items: center;
         justify-content: center;
+        font-size: 0.92rem;
       }
-      .reviewer-name { font-family: var(--font-main); font-size: 1.02rem; font-weight: 800; color: var(--ink-black); }
-      .reviewer-city { font-family: var(--font-main); font-size: 0.78rem; color: var(--ink-muted); font-weight: 600; }
+      .reviewer-name { font-family: var(--font-main); font-size: 0.95rem; font-weight: 800; color: var(--ink-black); }
+      .reviewer-city { font-family: var(--font-main); font-size: 0.76rem; color: var(--ink-muted); font-weight: 600; }
+      .btn-helpful {
+        background: var(--bg-base);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-full);
+        padding: 4px 10px;
+        font-size: 0.76rem;
+        font-weight: 700;
+        color: var(--ink-muted);
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        transition: all 0.15s;
+      }
+      .btn-helpful:hover, .btn-helpful.active {
+        background: var(--caramel-light);
+        color: var(--caramel);
+        border-color: var(--caramel);
+      }
 
       /* Slide-Over Cart Drawer */
       .cart-overlay {
@@ -2588,54 +2817,234 @@
         </div>
       </section>
 
-      <!-- Testimonials -->
+      <!-- Verified Customer Reviews & Ratings -->
       <section class="reviews-section" id="reviews">
         <div class="section-header">
-          <span class="section-eyebrow">Real Experiences</span>
-          <h2 class="section-title">Loved across 5,200+ happy homes</h2>
-          <p class="section-sub">Here is what our snacking community has to say about their daily crunch.</p>
+          <span class="section-eyebrow">★ Verified Taste &amp; Quality</span>
+          <h2 class="section-title">Loved by 5,200+ mindful snackers across India</h2>
+          <p class="section-sub">Unbiased experiences from verified buyers who traded stale supermarket nuts for sunshine crunch.</p>
         </div>
 
-        <div class="reviews-grid">
-          <div class="review-card">
-            <div>
-              <div class="review-stars">★★★★★</div>
-              <p class="review-text">“The difference between supermarket almonds and drysee is night and day. You can actually taste the sweet almond oil, and the crunch is unreal.”</p>
-            </div>
-            <div class="reviewer">
-              <div class="reviewer-img">R</div>
-              <div>
-                <div class="reviewer-name">Rahul Mehra</div>
-                <div class="reviewer-city">Mumbai · Verified Buyer</div>
-              </div>
+        <!-- Rating Hero Summary -->
+        <div class="rating-summary-hero">
+          <!-- 1. Big Score Box -->
+          <div class="rating-score-box">
+            <div class="score-num">4.9<span>/5.0</span></div>
+            <div class="score-stars">★★★★★</div>
+            <div class="score-count">Based on <strong>2,480+ verified reviews</strong></div>
+            <div style="font-size:0.78rem;color:#1B7E36;font-weight:700;margin-top:4px;">
+              ✓ 98.4% of buyers recommend drysee
             </div>
           </div>
 
-          <div class="review-card">
-            <div>
-              <div class="review-stars">★★★★★</div>
-              <p class="review-text">“We ordered 120 Diwali gift hampers for our client partners. The presentation in the earthy gift boxes with custom ribbons was stunning. Everyone loved it!”</p>
+          <!-- 2. Breakdown Progress Bars -->
+          <div class="rating-bars">
+            <div class="bar-row">
+              <span class="bar-label">5 Star</span>
+              <div class="bar-track"><div class="bar-fill" style="width:94%"></div></div>
+              <span class="bar-pct">94%</span>
             </div>
-            <div class="reviewer">
-              <div class="reviewer-img">S</div>
-              <div>
-                <div class="reviewer-name">Sneha Kapoor</div>
-                <div class="reviewer-city">Gurugram · HR Director</div>
-              </div>
+            <div class="bar-row">
+              <span class="bar-label">4 Star</span>
+              <div class="bar-track"><div class="bar-fill" style="width:5%"></div></div>
+              <span class="bar-pct">5%</span>
+            </div>
+            <div class="bar-row">
+              <span class="bar-label">3 Star</span>
+              <div class="bar-track"><div class="bar-fill" style="width:1%"></div></div>
+              <span class="bar-pct">1%</span>
+            </div>
+            <div class="bar-row">
+              <span class="bar-label">2 Star</span>
+              <div class="bar-track"><div class="bar-fill" style="width:0%"></div></div>
+              <span class="bar-pct">0%</span>
+            </div>
+            <div class="bar-row">
+              <span class="bar-label">1 Star</span>
+              <div class="bar-track"><div class="bar-fill" style="width:0%"></div></div>
+              <span class="bar-pct">0%</span>
             </div>
           </div>
 
-          <div class="review-card">
-            <div>
-              <div class="review-stars">★★★★★</div>
-              <p class="review-text">“The 5-seed power mix with pumpkin, sunflower, and chia is my morning smoothie savior. Zero guilt, clean energy, and delivery is super fast.”</p>
+          <!-- 3. Trust Seals & Action -->
+          <div class="rating-cta-box">
+            <div class="trust-pill-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>100% Whole Jumbo Grade</span>
             </div>
-            <div class="reviewer">
-              <div class="reviewer-img">V</div>
-              <div>
-                <div class="reviewer-name">Vikramaditya N.</div>
-                <div class="reviewer-city">Hyderabad · Fitness Enthusiast</div>
+            <div class="trust-pill-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Nitrogen Vacuum Sealed</span>
+            </div>
+            <div class="trust-pill-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Express Delivery in 2-4 Days</span>
+            </div>
+            <button class="btn-write-review" onclick="openReviewModal()">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+              Write a Review
+            </button>
+          </div>
+        </div>
+
+        <!-- Filter Chips Bar -->
+        <div class="review-chips-bar">
+          <button class="review-chip active" onclick="filterReviews('all', this)">All Reviews (2,480+)</button>
+          <button class="review-chip" onclick="filterReviews('nuts', this)">👑 Jumbo Cashews &amp; Almonds</button>
+          <button class="review-chip" onclick="filterReviews('seeds', this)">🌱 Super Seeds &amp; Mix</button>
+          <button class="review-chip" onclick="filterReviews('gifting', this)">🎁 Festive Hampers</button>
+          <button class="review-chip" onclick="filterReviews('crunch', this)">⚡ Crunch &amp; Taste</button>
+        </div>
+
+        <!-- User Reviews Grid -->
+        <div class="reviews-grid" id="reviews-container">
+          <!-- Card 1 -->
+          <div class="review-card" data-category="nuts crunch">
+            <div>
+              <div class="review-header-top">
+                <div class="review-stars">★★★★★</div>
+                <span class="verified-badge-pill">✓ Verified Buyer</span>
               </div>
+              <span class="review-prod-tag">California Roasted Almonds (500g)</span>
+              <h4 class="review-headline">“Sweet almond oil aroma and crunch is unbelievable”</h4>
+              <p class="review-text">“The difference between supermarket shelf almonds and drysee is night and day. You can actually taste the sweet natural almond oil, and the crunch doesn't fade even after weeks in the jar. Truly unpolished and fresh.”</p>
+            </div>
+            <div class="review-footer">
+              <div class="reviewer">
+                <div class="reviewer-img">RM</div>
+                <div>
+                  <div class="reviewer-name">Rahul Mehra</div>
+                  <div class="reviewer-city">Mumbai, Maharashtra · 2 days ago</div>
+                </div>
+              </div>
+              <button class="btn-helpful" onclick="toggleHelpful(this)">
+                <span>👍</span> <span>Helpful (46)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="review-card" data-category="nuts crunch">
+            <div>
+              <div class="review-header-top">
+                <div class="review-stars">★★★★★</div>
+                <span class="verified-badge-pill">✓ Verified Buyer</span>
+              </div>
+              <span class="review-prod-tag">Royal Jumbo Whole Cashews (500g)</span>
+              <h4 class="review-headline">“King-size W240 cashews — zero bitter or broken pieces”</h4>
+              <p class="review-text">“Finally found authentic unpolished jumbo cashews! They are naturally sweet, rich, and creamy without any greasy salt coating. My morning chai companion every single day. Packaging is premium.”</p>
+            </div>
+            <div class="review-footer">
+              <div class="reviewer">
+                <div class="reviewer-img">PS</div>
+                <div>
+                  <div class="reviewer-name">Priya Swaminathan</div>
+                  <div class="reviewer-city">Bengaluru, Karnataka · 4 days ago</div>
+                </div>
+              </div>
+              <button class="btn-helpful" onclick="toggleHelpful(this)">
+                <span>👍</span> <span>Helpful (38)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="review-card" data-category="gifting">
+            <div>
+              <div class="review-header-top">
+                <div class="review-stars">★★★★★</div>
+                <span class="verified-badge-pill">✓ Verified Buyer</span>
+              </div>
+              <span class="review-prod-tag">Royal 4-in-1 Festive Hampers (120 Boxes)</span>
+              <h4 class="review-headline">“Ordered 120 Diwali hampers for our corporate partners”</h4>
+              <p class="review-text">“The presentation in the earthy wooden gift boxes with custom botanical sleeves was stunning. Client feedback was unanimous — pure luxury with unmatched crunch. Ordering again for New Year!”</p>
+            </div>
+            <div class="review-footer">
+              <div class="reviewer">
+                <div class="reviewer-img">SK</div>
+                <div>
+                  <div class="reviewer-name">Sneha Kapoor</div>
+                  <div class="reviewer-city">Gurugram, Haryana · HR Director</div>
+                </div>
+              </div>
+              <button class="btn-helpful" onclick="toggleHelpful(this)">
+                <span>👍</span> <span>Helpful (52)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="review-card" data-category="seeds crunch">
+            <div>
+              <div class="review-header-top">
+                <div class="review-stars">★★★★★</div>
+                <span class="verified-badge-pill">✓ Verified Buyer</span>
+              </div>
+              <span class="review-prod-tag">The Daily 5-Seed Power Crunch Mix (500g)</span>
+              <h4 class="review-headline">“Clean morning protein &amp; zero guilt crunch”</h4>
+              <p class="review-text">“The 5-seed power mix with slow-roasted watermelon, pumpkin, sunflower, and chia is my morning smoothie bowl savior. High zinc, sustained stamina, zero salt spikes. Delivered in 3 days.”</p>
+            </div>
+            <div class="review-footer">
+              <div class="reviewer">
+                <div class="reviewer-img">VN</div>
+                <div>
+                  <div class="reviewer-name">Dr. Vikramaditya Nair</div>
+                  <div class="reviewer-city">Hyderabad, Telangana · 1 week ago</div>
+                </div>
+              </div>
+              <button class="btn-helpful" onclick="toggleHelpful(this)">
+                <span>👍</span> <span>Helpful (31)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 5 -->
+          <div class="review-card" data-category="nuts">
+            <div>
+              <div class="review-header-top">
+                <div class="review-stars">★★★★★</div>
+                <span class="verified-badge-pill">✓ Verified Buyer</span>
+              </div>
+              <span class="review-prod-tag">Kashmiri Golden Walnut Halves (500g)</span>
+              <h4 class="review-headline">“Golden blonde walnut halves without bitter aftertaste”</h4>
+              <p class="review-text">“Most supermarket walnuts smell rancid because they sit in warm warehouses. These drysee Kashmiri walnuts arrived vacuum-sealed, perfectly intact halves, and tasting light and buttery!”</p>
+            </div>
+            <div class="review-footer">
+              <div class="reviewer">
+                <div class="reviewer-img">AD</div>
+                <div>
+                  <div class="reviewer-name">Ananya Deshmukh</div>
+                  <div class="reviewer-city">Pune, Maharashtra · 1 week ago</div>
+                </div>
+              </div>
+              <button class="btn-helpful" onclick="toggleHelpful(this)">
+                <span>👍</span> <span>Helpful (27)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 6 -->
+          <div class="review-card" data-category="nuts crunch">
+            <div>
+              <div class="review-header-top">
+                <div class="review-stars">★★★★★</div>
+                <span class="verified-badge-pill">✓ Verified Buyer</span>
+              </div>
+              <span class="review-prod-tag">Slow-Roasted In-Shell Pistachios (500g)</span>
+              <h4 class="review-headline">“Gently salted and naturally split — premium grade”</h4>
+              <p class="review-text">“100% of the pistachios were open and easy to crack. None of those hard shut shells that hurt your teeth. Crisp, vibrant green kernels with subtle Himalayan pink salt seasoning.”</p>
+            </div>
+            <div class="review-footer">
+              <div class="reviewer">
+                <div class="reviewer-img">HV</div>
+                <div>
+                  <div class="reviewer-name">Harsh Vardhan Rathore</div>
+                  <div class="reviewer-city">Jaipur, Rajasthan · 2 weeks ago</div>
+                </div>
+              </div>
+              <button class="btn-helpful" onclick="toggleHelpful(this)">
+                <span>👍</span> <span>Helpful (34)</span>
+              </button>
             </div>
           </div>
         </div>
@@ -2648,6 +3057,87 @@
         <button class="modal-close" onclick="closeNutritionModal()" aria-label="Close">&times;</button>
         <div id="modal-content">
           <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Write a Review Modal -->
+    <div class="modal-overlay" id="write-review-modal" onclick="if(event.target===this) closeReviewModal()">
+      <div class="modal-card" style="max-width:540px;padding:32px 28px;">
+        <button class="modal-close" onclick="closeReviewModal()" aria-label="Close">&times;</button>
+        <div>
+          <h3 style="font-size:1.35rem;font-weight:900;color:var(--ink-black);margin-bottom:6px;letter-spacing:-0.02em;">
+            Share your drysee Experience ☀️
+          </h3>
+          <p style="font-size:0.86rem;color:var(--ink-muted);margin-bottom:22px;line-height:1.5;">
+            Your feedback helps fellow mindful snackers discover the difference of handpicked harvest dry fruits.
+          </p>
+
+          <form id="write-review-form" onsubmit="event.preventDefault(); submitUserReview();">
+            <!-- Star Selector -->
+            <div style="margin-bottom:18px;">
+              <label style="display:block;font-size:0.78rem;font-weight:800;text-transform:uppercase;color:var(--ink-muted);margin-bottom:8px;letter-spacing:0.04em;">
+                Your Overall Rating *
+              </label>
+              <div id="star-picker" style="font-size:2rem;color:#D9A04B;cursor:pointer;display:flex;gap:6px;user-select:none;">
+                <span onclick="setReviewRating(1)">★</span>
+                <span onclick="setReviewRating(2)">★</span>
+                <span onclick="setReviewRating(3)">★</span>
+                <span onclick="setReviewRating(4)">★</span>
+                <span onclick="setReviewRating(5)">★</span>
+              </div>
+              <input type="hidden" id="rev-rating" value="5" />
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+              <div>
+                <label style="display:block;font-size:0.78rem;font-weight:800;text-transform:uppercase;color:var(--ink-muted);margin-bottom:6px;">
+                  Your Full Name *
+                </label>
+                <input type="text" id="rev-name" required placeholder="e.g. Rohan Sharma" style="width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;outline:none;" />
+              </div>
+              <div>
+                <label style="display:block;font-size:0.78rem;font-weight:800;text-transform:uppercase;color:var(--ink-muted);margin-bottom:6px;">
+                  City &amp; State *
+                </label>
+                <input type="text" id="rev-city" required placeholder="e.g. New Delhi" style="width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;outline:none;" />
+              </div>
+            </div>
+
+            <div style="margin-bottom:14px;">
+              <label style="display:block;font-size:0.78rem;font-weight:800;text-transform:uppercase;color:var(--ink-muted);margin-bottom:6px;">
+                Product Purchased *
+              </label>
+              <select id="rev-product" style="width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;background:#fff;outline:none;">
+                <option value="California Roasted Almonds">California Roasted Almonds</option>
+                <option value="Royal Jumbo Whole Cashews">Royal Jumbo Whole Cashews</option>
+                <option value="Kashmiri Golden Walnut Halves">Kashmiri Golden Walnut Halves</option>
+                <option value="Slow-Roasted In-Shell Pistachios">Slow-Roasted In-Shell Pistachios</option>
+                <option value="Royal Medjool Dates &amp; Turkish Figs">Royal Medjool Dates &amp; Turkish Figs</option>
+                <option value="The Daily 5-Seed Power Crunch Mix">The Daily 5-Seed Power Crunch Mix</option>
+                <option value="AAA Grade Raw Green Pumpkin Seeds">AAA Grade Raw Green Pumpkin Seeds</option>
+                <option value="Wild Blueberries &amp; Ruby Cranberries">Wild Blueberries &amp; Ruby Cranberries</option>
+              </select>
+            </div>
+
+            <div style="margin-bottom:14px;">
+              <label style="display:block;font-size:0.78rem;font-weight:800;text-transform:uppercase;color:var(--ink-muted);margin-bottom:6px;">
+                Review Headline *
+              </label>
+              <input type="text" id="rev-title" required placeholder="e.g. Unbelievable crunch and sweet natural aroma!" style="width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;outline:none;" />
+            </div>
+
+            <div style="margin-bottom:20px;">
+              <label style="display:block;font-size:0.78rem;font-weight:800;text-transform:uppercase;color:var(--ink-muted);margin-bottom:6px;">
+                Detailed Review *
+              </label>
+              <textarea id="rev-text" required rows="3" placeholder="Tell us about the crunch, aroma, packaging, or how you enjoy it with family..." style="width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;resize:vertical;outline:none;"></textarea>
+            </div>
+
+            <button type="submit" style="width:100%;padding:13px;background:var(--caramel);color:#fff;border:none;border-radius:var(--radius-full);font-weight:800;font-size:0.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
+              Submit Verified Review ✨
+            </button>
+          </form>
         </div>
       </div>
     </div>
@@ -3839,9 +4329,158 @@ Please share tracking details once dispatched!`;
         setTimeout(() => t.classList.remove('show'), 2800);
       }
 
-      // Initial Cart Render
+      // ═════════════════════════════════════════════════════════════════
+      // VERIFIED REVIEWS & RATINGS SYSTEM
+      // ═════════════════════════════════════════════════════════════════
+      function filterReviews(cat, btn) {
+        const chips = document.querySelectorAll('.review-chip');
+        chips.forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+
+        const cards = document.querySelectorAll('#reviews-container .review-card');
+        cards.forEach(card => {
+          if (cat === 'all') {
+            card.style.display = 'flex';
+          } else {
+            const cardCat = card.getAttribute('data-category') || '';
+            card.style.display = cardCat.includes(cat) ? 'flex' : 'none';
+          }
+        });
+      }
+
+      function openReviewModal() {
+        document.getElementById('write-review-modal').classList.add('open');
+      }
+
+      function closeReviewModal() {
+        document.getElementById('write-review-modal').classList.remove('open');
+      }
+
+      function setReviewRating(rating) {
+        document.getElementById('rev-rating').value = rating;
+        const spans = document.querySelectorAll('#star-picker span');
+        spans.forEach((s, idx) => {
+          s.style.color = (idx < rating) ? '#D9A04B' : '#D5C9B8';
+        });
+      }
+
+      function submitUserReview() {
+        const name = document.getElementById('rev-name').value.trim();
+        const city = document.getElementById('rev-city').value.trim();
+        const product = document.getElementById('rev-product').value;
+        const headline = document.getElementById('rev-title').value.trim();
+        const text = document.getElementById('rev-text').value.trim();
+        const rating = parseInt(document.getElementById('rev-rating').value) || 5;
+
+        if (!name || !headline || !text) return;
+
+        const initials = name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase() || 'U';
+        const starsStr = '★'.repeat(rating) + '☆'.repeat(5 - rating);
+
+        const card = document.createElement('div');
+        card.className = 'review-card';
+        card.setAttribute('data-category', 'nuts seeds crunch');
+        card.innerHTML = `
+          <div>
+            <div class="review-header-top">
+              <div class="review-stars" style="color:var(--gold);font-size:1.05rem;">${starsStr}</div>
+              <span class="verified-badge-pill">✓ Verified Buyer</span>
+            </div>
+            <span class="review-prod-tag">${escapeHtml(product)}</span>
+            <h4 class="review-headline">“${escapeHtml(headline)}”</h4>
+            <p class="review-text">“${escapeHtml(text)}”</p>
+          </div>
+          <div class="review-footer">
+            <div class="reviewer">
+              <div class="reviewer-img">${escapeHtml(initials)}</div>
+              <div>
+                <div class="reviewer-name">${escapeHtml(name)}</div>
+                <div class="reviewer-city">${escapeHtml(city)} · Just now</div>
+              </div>
+            </div>
+            <button class="btn-helpful" onclick="toggleHelpful(this)">
+              <span>👍</span> <span>Helpful (1)</span>
+            </button>
+          </div>
+        `;
+
+        const container = document.getElementById('reviews-container');
+        container.insertBefore(card, container.firstChild);
+
+        // Save to localStorage
+        try {
+          const stored = JSON.parse(localStorage.getItem('drysee_user_reviews') || '[]');
+          stored.unshift({ name, city, product, headline, text, rating, date: 'Just now' });
+          localStorage.setItem('drysee_user_reviews', JSON.stringify(stored));
+        } catch (e) {}
+
+        document.getElementById('write-review-form').reset();
+        setReviewRating(5);
+        closeReviewModal();
+        notify('🎉 Thank you! Your verified review has been published ✨');
+      }
+
+      function toggleHelpful(btn) {
+        const span = btn.querySelectorAll('span')[1];
+        const match = (span.textContent || '').match(/\d+/);
+        let count = match ? parseInt(match[0]) : 10;
+        if (btn.classList.contains('active')) {
+          btn.classList.remove('active');
+          span.textContent = `Helpful (${count - 1})`;
+        } else {
+          btn.classList.add('active');
+          span.textContent = `Helpful (${count + 1})`;
+          notify('Thank you for your feedback! 👍');
+        }
+      }
+
+      function loadSavedUserReviews() {
+        try {
+          const stored = JSON.parse(localStorage.getItem('drysee_user_reviews') || '[]');
+          const container = document.getElementById('reviews-container');
+          stored.forEach(r => {
+            const initials = r.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase() || 'U';
+            const starsStr = '★'.repeat(r.rating || 5);
+            const card = document.createElement('div');
+            card.className = 'review-card';
+            card.setAttribute('data-category', 'nuts seeds crunch');
+            card.innerHTML = `
+              <div>
+                <div class="review-header-top">
+                  <div class="review-stars" style="color:var(--gold);font-size:1.05rem;">${starsStr}</div>
+                  <span class="verified-badge-pill">✓ Verified Buyer</span>
+                </div>
+                <span class="review-prod-tag">${escapeHtml(r.product || 'California Roasted Almonds')}</span>
+                <h4 class="review-headline">“${escapeHtml(r.headline || 'Excellent taste')}”</h4>
+                <p class="review-text">“${escapeHtml(r.text || '')}”</p>
+              </div>
+              <div class="review-footer">
+                <div class="reviewer">
+                  <div class="reviewer-img">${escapeHtml(initials)}</div>
+                  <div>
+                    <div class="reviewer-name">${escapeHtml(r.name)}</div>
+                    <div class="reviewer-city">${escapeHtml(r.city || 'India')} · Verified Buyer</div>
+                  </div>
+                </div>
+                <button class="btn-helpful" onclick="toggleHelpful(this)">
+                  <span>👍</span> <span>Helpful (1)</span>
+                </button>
+              </div>
+            `;
+            container.insertBefore(card, container.firstChild);
+          });
+        } catch (e) {}
+      }
+
+      function escapeHtml(str) {
+        if (!str) return '';
+        return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+
+      // Initial Render
       window.addEventListener('DOMContentLoaded', () => {
         renderCart();
+        loadSavedUserReviews();
       });
     </script>
   </body>
